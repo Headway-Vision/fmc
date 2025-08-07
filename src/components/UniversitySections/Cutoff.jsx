@@ -44,43 +44,43 @@ const cutoffData = [
 ];
 
 const Cutoff = () => {
-  return (
-    <div className="max-w-5xl mx-auto p-6 bg-gray-900 rounded-lg shadow-lg">
-      <h2 className="text-center text-2xl font-semibold text-white mb-6">
-        Cutoff for Year 2024
-      </h2>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-700 text-white">
-          <thead className="bg-blue-600">
-            <tr>
-              <th className="px-4 py-3 text-left font-medium">Course</th>
-              <th className="px-4 py-3 font-medium">Open</th>
-              <th className="px-4 py-3 font-medium">General</th>
-              <th className="px-4 py-3 font-medium">EWS</th>
-              <th className="px-4 py-3 font-medium">OBC</th>
-              <th className="px-4 py-3 font-medium">SC</th>
-              <th className="px-4 py-3 font-medium">ST</th>
-              <th className="px-4 py-3 font-medium">PWD</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-700">
-            {cutoffData.map(({ course, open, general, ews, obc, sc, st, pwd }) => (
-              <tr key={course} className="hover:bg-gray-800">
-                <td className="px-4 py-3 font-semibold text-left">{course}</td>
-                <td className="px-4 py-3">{open}</td>
-                <td className="px-4 py-3">{general}</td>
-                <td className="px-4 py-3">{ews}</td>
-                <td className="px-4 py-3">{obc}</td>
-                <td className="px-4 py-3">{sc}</td>
-                <td className="px-4 py-3">{st === '-' ? '-' : st}</td>
-                <td className="px-4 py-3">{pwd === '-' ? '-' : pwd}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-};
+      return (
+        <div className="max-w-4xl mx-auto p-4 bg-gray-900 rounded-lg shadow-md">
+          <h2 className="text-center text-lg font-semibold text-white mb-4">
+            Cutoff for Year 2024
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-700 text-white text-sm">
+              <thead className="bg-blue-600">
+                <tr>
+                  <th className="px-3 py-2 text-left font-medium">Course</th>
+                  <th className="px-3 py-2 font-medium">Open</th>
+                  <th className="px-3 py-2 font-medium">General</th>
+                  <th className="px-3 py-2 font-medium">EWS</th>
+                  <th className="px-3 py-2 font-medium">OBC</th>
+                  <th className="px-3 py-2 font-medium">SC</th>
+                  <th className="px-3 py-2 font-medium">ST</th>
+                  <th className="px-3 py-2 font-medium">PWD</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-700">
+                {cutoffData.map(({ course, open, general, ews, obc, sc, st, pwd }) => (
+                  <tr key={course} className="hover:bg-gray-800">
+                    <td className="px-3 py-2 font-medium text-left">{course}</td>
+                    <td className="px-3 py-2">{open}</td>
+                    <td className="px-3 py-2">{general}</td>
+                    <td className="px-3 py-2">{ews}</td>
+                    <td className="px-3 py-2">{obc}</td>
+                    <td className="px-3 py-2">{sc}</td>
+                    <td className="px-3 py-2">{st === '-' ? '-' : st}</td>
+                    <td className="px-3 py-2">{pwd === '-' ? '-' : pwd}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    };
 
 export default Cutoff;

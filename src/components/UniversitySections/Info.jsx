@@ -11,15 +11,14 @@ import {
   faFutbol,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
+import './Info.css';
 
 const Info = () => {
   return (
-    <div className="mt-8">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-        Delhi Technological University (DTU) Details
-      </h2>
+    <div className="info-container">
+      <h2 className="info-title">Delhi Technological University (DTU) Details</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="info-grid">
         {/* Detail cards */}
         {[
           {
@@ -87,20 +86,12 @@ const Info = () => {
         ].map((item, index) => (
           <div
             key={index}
-            className={`${
-              item.highlight ? 'bg-blue-100 dark:bg-blue-900' : 'bg-white dark:bg-gray-800'
-            } p-4 rounded-lg shadow-md flex items-start space-x-3`}
+            className={`info-card ${item.highlight ? 'highlight' : ''}`}
           >
-            <FontAwesomeIcon icon={item.icon} className="text-blue-500 text-2xl" />
+            <FontAwesomeIcon icon={item.icon} className="info-icon" />
             <div>
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{item.title}</h3>
-              <p
-                className={`${
-                  item.highlight
-                    ? 'text-2xl font-bold text-blue-600 dark:text-blue-400'
-                    : 'text-gray-600 dark:text-gray-300'
-                }`}
-              >
+              <h3 className="info-card-title">{item.title}</h3>
+              <p className={`info-card-value ${item.highlight ? 'highlight-text' : ''}`}>
                 {item.value}
               </p>
             </div>
@@ -109,18 +100,18 @@ const Info = () => {
       </div>
 
       {/* Call-to-Action Buttons */}
-      <div className="mt-6 flex justify-center space-x-4">
+      <div className="info-cta">
         <a
           href="https://dtu.ac.in"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm font-semibold"
+          className="cta-button primary"
         >
           Visit Website
         </a>
         <a
           href="mailto:admissions@dtu.ac.in"
-          className="bg-yellow-400 text-blue-900 px-4 py-2 rounded hover:bg-yellow-500 text-sm font-semibold"
+          className="cta-button accent"
         >
           Contact Admission
         </a>

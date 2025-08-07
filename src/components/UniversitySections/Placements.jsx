@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import './Placement.css';
 
 const recruiters = [
   'https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png',
@@ -26,14 +29,12 @@ const Placement = () => {
   };
 
   return (
-    <div className="text-white bg-gray-900 min-h-screen p-8">
+    <div className="placement-container">
       {/* Hero */}
-      <section className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Placement Highlights 2024</h1>
-        <p className="text-lg mb-6 text-gray-300">
-          Empowering Futures with Top Recruiters and Record-Breaking Packages
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 text-lg font-semibold">
+      <section className="hero-section">
+        <h1 className="hero-title">Placement Highlights 2024</h1>
+        <p className="hero-subtitle">Empowering Futures with Top Recruiters and Record-Breaking Packages</p>
+        <div className="hero-stats">
           <div>🎯 95% Placement Rate</div>
           <div>💼 120+ Companies</div>
           <div>🏆 ₹45 LPA Highest</div>
@@ -42,45 +43,45 @@ const Placement = () => {
       </section>
 
       {/* Recruiters Grid */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold text-center mb-6">Top Recruiters</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-center">
+      <section className="recruiters-section">
+        <h2 className="section-title">Top Recruiters</h2>
+        <div className="recruiters-grid">
           {recruiters.map((logo, index) => (
-            <div key={index} className="bg-gray-800 p-4 rounded shadow hover:scale-105 transition">
-              <img src={logo} alt="Recruiter Logo" className="w-full h-16 object-contain" />
+            <div key={index} className="recruiter-card">
+              <img src={logo} alt="Recruiter Logo" className="recruiter-logo" />
             </div>
           ))}
         </div>
       </section>
 
       {/* Placement Stats Table */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold text-center mb-6">Year-wise Placement Stats</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-center border border-gray-700">
-            <thead className="bg-blue-600 text-white">
+      <section className="stats-section">
+        <h2 className="section-title">Year-wise Placement Stats</h2>
+        <div className="stats-table-wrapper">
+          <table className="stats-table">
+            <thead>
               <tr>
-                <th className="p-3 border">Year</th>
-                <th className="p-3 border">Companies</th>
-                <th className="p-3 border">Placed</th>
-                <th className="p-3 border">Highest CTC</th>
-                <th className="p-3 border">Avg CTC</th>
+                <th className="stats-th">Year</th>
+                <th className="stats-th">Companies</th>
+                <th className="stats-th">Placed</th>
+                <th className="stats-th">Highest CTC</th>
+                <th className="stats-th">Avg CTC</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border border-gray-700">
-                <td className="p-3">2024</td>
-                <td className="p-3">120+</td>
-                <td className="p-3">450+</td>
-                <td className="p-3">₹45 LPA</td>
-                <td className="p-3">₹7.8 LPA</td>
+              <tr>
+                <td className="stats-td">2024</td>
+                <td className="stats-td">120+</td>
+                <td className="stats-td">450+</td>
+                <td className="stats-td">₹45 LPA</td>
+                <td className="stats-td">₹7.8 LPA</td>
               </tr>
-              <tr className="border border-gray-700">
-                <td className="p-3">2023</td>
-                <td className="p-3">110</td>
-                <td className="p-3">420</td>
-                <td className="p-3">₹38 LPA</td>
-                <td className="p-3">₹6.5 LPA</td>
+              <tr>
+                <td className="stats-td">2023</td>
+                <td className="stats-td">110</td>
+                <td className="stats-td">420</td>
+                <td className="stats-td">₹38 LPA</td>
+                <td className="stats-td">₹6.5 LPA</td>
               </tr>
             </tbody>
           </table>
@@ -88,20 +89,20 @@ const Placement = () => {
       </section>
 
       {/* Branch Wise Accordion */}
-      <section>
-        <h2 className="text-2xl font-bold text-center mb-6">Branch-wise Placement</h2>
-        <div className="max-w-2xl mx-auto">
+      <section className="branch-section">
+        <h2 className="section-title">Branch-wise Placement</h2>
+        <div className="branch-accordion">
           {branchData.map((item, index) => (
-            <div key={index} className="mb-4">
+            <div key={index} className="accordion-item">
               <button
                 onClick={() => toggleBranch(index)}
-                className="w-full bg-gray-800 p-4 rounded flex justify-between items-center focus:outline-none"
+                className="accordion-toggle"
               >
-                <span className="font-semibold">{item.branch}</span>
-                <span>{openBranch === index ? '▲' : '▼'}</span>
+                <span className="accordion-title">{item.branch}</span>
+                <span className="accordion-icon">{openBranch === index ? '▲' : '▼'}</span>
               </button>
               {openBranch === index && (
-                <div className="bg-gray-700 p-4 rounded-b text-sm text-gray-300">
+                <div className="accordion-content">
                   <p>Highest Package: <strong>{item.highest}</strong></p>
                   <p>Average Package: <strong>{item.average}</strong></p>
                 </div>

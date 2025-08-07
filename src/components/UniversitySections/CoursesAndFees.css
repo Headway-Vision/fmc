@@ -1,0 +1,111 @@
+/* Container */
+.courses-container {
+  margin-top: 2rem;
+  padding: 0.5rem;
+}
+
+/* Title */
+.courses-title {
+  font-size: 1rem; /* Reduced from 2rem (2xl) */
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Table Wrapper */
+.courses-table-wrapper {
+  overflow-x: auto; /* Horizontal scroll for small screens */
+  max-width: 100%;
+}
+
+/* Table */
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--background-color);
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.courses-header {
+  background-color: #1D4ED8; /* Blue-700 */
+  color: #FFFFFF;
+}
+
+.courses-th {
+  padding: 0.5rem; /* Reduced from 0.75rem (3px) */
+  font-size: 0.75rem; /* Reduced from 0.875rem (sm) */
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Rows */
+.courses-row {
+  border-bottom: 1px solid #E5E7EB; /* Gray-200 */
+}
+
+.dark .courses-row {
+  border-bottom: 1px solid #4B5563; /* Gray-600 */
+}
+
+.courses-row.highlight {
+  background-color: #DBEAFE; /* Blue-100 */
+}
+
+.dark .courses-row.highlight {
+  background-color: #1E3A8A; /* Blue-900 */
+}
+
+.courses-row:hover {
+  background-color: #EFF6FF; /* Blue-50 */
+}
+
+.dark .courses-row:hover {
+  background-color: #1E2937; /* Gray-800 */
+}
+
+/* Cells */
+.courses-td {
+  padding: 0.5rem; /* Reduced from 0.75rem (3px) */
+  font-size: 0.75rem; /* Reduced from 0.875rem (sm) */
+  color: var(--text-color);
+}
+
+/* Apply Button */
+.apply-button {
+  background-color: #FBBF24; /* Yellow-400 */
+  color: #1E3A8A; /* Blue-900 */
+  padding: 0.25rem 0.5rem; /* Reduced padding */
+  border-radius: 0.25rem;
+  font-size: 0.625rem; /* Reduced from 0.75rem (sm) */
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.apply-button:hover {
+  background-color: #F59E0B; /* Yellow-500 */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .courses-table {
+    min-width: 600px; /* Ensure table fits content on small screens */
+  }
+
+  .courses-th,
+  .courses-td {
+    padding: 0.25rem; /* Further reduce padding on small screens */
+    font-size: 0.625rem; /* Further reduce font size on small screens */
+  }
+
+  .apply-button {
+    padding: 0.2rem 0.4rem; /* Even smaller padding on small screens */
+    font-size: 0.5rem; /* Even smaller font size on small screens */
+  }
+}

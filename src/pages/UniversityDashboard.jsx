@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,
@@ -12,13 +12,14 @@ import {
   faChevronLeft,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
-
+import { applyTheme } from '../utils/themeUtils';
 import Info from '../components/UniversitySections/Info';
 import CoursesAndFees from '../components/UniversitySections/CoursesAndFees';
 import Cutoff from '../components/UniversitySections/Cutoff';
 import Placement from '../components/UniversitySections/Placements';
 import Facilities from '../components/UniversitySections/Facilities';
 import Admission from '../components/UniversitySections/Admission';
+import Footer from '../components/Footer';
 import './universityDashboard.css';
 
 function UniversityDashboard() {
@@ -26,107 +27,98 @@ function UniversityDashboard() {
   const [user, setUser] = useState(null);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [activeSection, setActiveSection] = useState('Info');
-
   const dropdownRef = useRef(null);
   const scrollRef = useRef(null);
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
-  };
+  const toggleTheme = () => setDarkMode(!darkMode);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowUserDropdown(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) setDarkMode(savedTheme === 'dark');
   }, []);
 
+  useEffect(() => {
+    applyTheme(darkMode);
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
+
   const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -150, behavior: 'smooth' });
-    }
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: -100, behavior: 'smooth' });
   };
 
   const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 150, behavior: 'smooth' });
-    }
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: 100, behavior: 'smooth' });
   };
 
-  const handleButtonClick = (section) => {
-    setActiveSection(section);
-  };
+  const handleButtonClick = (section) => setActiveSection(section);
 
   return (
-    <div className={`${darkMode ? 'dark' : ''} bg-gray-100 dark:bg-gray-900 w-screen max-w-full`}>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
       {/* Navbar */}
-      <nav className="bg-gradient-to-r from-blue-900 to-blue-700 text-white p-4 flex items-center justify-between w-full">
+      <nav>
         <div className="flex items-center">
           <img
             src="https://marketplace.canva.com/EAGSIcoid00/1/0/1600w/canva-blue-white-modern-school-logo-ZBxBTP6Lc-E.jpg"
             alt="Logo"
-            className="h-12 mr-4"
+            className="h-8 mr-2"
           />
-          <span className="text-2xl font-bold">Uni Hub</span>
+          <span className={`font-bold ${!darkMode ? 'text-black' : ''}`}>Uni Hub</span>
         </div>
 
-        <div className="flex-1 mx-4">
+        <div className="flex-1 mx-10">
           <input
             type="text"
             placeholder="Search..."
-            className="w-full p-2 rounded-lg border-2 border-white dark:border-gray-300 text-black focus:outline-none focus:border-yellow-400 transition-all duration-300"
+            className="w-full"
           />
         </div>
 
-        <div className="flex items-center space-x-3 relative">
-          <button className="bg-yellow-400 text-blue-900 px-3 py-1 rounded-lg hover:bg-yellow-500 text-sm">
+        <div className="flex items-center space-x-2 relative">
+          <button className="bg-[var(--button-accent)] text-[var(--text-color)] hover:bg-[var(--button-hover)]">
             Write a Review
           </button>
-          <button className="flex items-center bg-blue-500 px-3 py-1 rounded-lg hover:bg-blue-600 text-sm">
-            <FontAwesomeIcon icon={faCompass} className="mr-1" />
+          <button className="flex items-center bg-[var(--button-primary)] text-white hover:bg-[var(--button-hover)]">
+            <FontAwesomeIcon icon={faCompass} className="fa-compass mr-1 text-white" />
             Explore
           </button>
-          <button className="bg-blue-500 p-2 rounded-full hover:bg-blue-600">
-            <FontAwesomeIcon icon={faBell} />
+          <button className="bg-[var(--button-primary)] rounded-full hover:bg-[var(--button-hover)]">
+            <FontAwesomeIcon icon={faBell} className="fa-bell text-white" />
           </button>
-          <button className="bg-blue-500 p-2 rounded-full hover:bg-blue-600" onClick={toggleTheme}>
-            <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
+          <button className="bg-[var(--button-primary)] rounded-full hover:bg-[var(--button-hover)]" onClick={toggleTheme}>
+            <FontAwesomeIcon icon={darkMode ? faSun : faMoon} className={`${darkMode ? 'fa-sun' : 'fa-moon'} text-white`} />
           </button>
 
           {/* User dropdown */}
-          <div className="relative" ref={dropdownRef}>
+          <div className="dropdown" ref={dropdownRef}>
             <button
-              className="bg-blue-500 p-2 rounded-full hover:bg-blue-600"
+              className="bg-[var(--button-primary)] rounded-full hover:bg-[var(--button-hover)]"
               onClick={() => setShowUserDropdown(!showUserDropdown)}
             >
-              <FontAwesomeIcon icon={faUser} />
+              <FontAwesomeIcon icon={faUser} className="fa-user text-white" />
             </button>
 
+
             {showUserDropdown && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 text-black dark:text-white rounded shadow-md p-3 z-50">
+              <div className="dropdown-menu">
                 {user ? (
                   <>
-                    <p className="text-sm mb-2">Signed in as <br /><strong>{user.name}</strong></p>
+                    <p className="text-[var(--dropdown-text)]">Signed in as <br /><strong>{user.name}</strong></p>
                     <button
-                      className="flex items-center w-full text-left text-sm hover:text-red-500"
+                      className="flex items-center w-full text-left text-[var(--dropdown-text)] hover:text-[var(--button-hover)]"
                       onClick={() => setUser(null)}
                     >
-                      <FontAwesomeIcon icon={faArrowRightFromBracket} className="mr-2" />
+                      <FontAwesomeIcon icon={faArrowRightFromBracket} className="fa-arrow-right-from-bracket mr-1" />
                       Logout
                     </button>
                   </>
                 ) : (
                   <>
-                    <button className="flex items-center w-full text-left mb-2 text-sm hover:text-blue-600">
-                      <FontAwesomeIcon icon={faRightToBracket} className="mr-2" />
+                    <button className="flex items-center w-full text-left text-[var(--dropdown-text)] mb-1 hover:text-[var(--button-hover)]">
+                      <FontAwesomeIcon icon={faRightToBracket} className="fa-right-to-bracket mr-1" />
                       Login
                     </button>
-                    <button className="flex items-center w-full text-left text-sm hover:text-blue-600">
-                      <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
+                    <button className="flex items-center w-full text-left text-[var(--dropdown-text)] hover:text-[var(--button-hover)]">
+                      <FontAwesomeIcon icon={faUserPlus} className="fa-user-plus mr-1" />
                       Sign Up
                     </button>
                   </>
@@ -135,7 +127,7 @@ function UniversityDashboard() {
             )}
           </div>
 
-          <select className="bg-blue-800 p-2 rounded-lg text-white hover:bg-blue-900 text-sm">
+          <select className="bg-[var(--button-primary)] text-[var(--text-color)] hover:bg-[var(--button-hover)]">
             <option>All Courses</option>
             <option>B.Tech</option>
             <option>MBA</option>
@@ -149,56 +141,54 @@ function UniversityDashboard() {
 
       {/* University Details Banner */}
       <div
-        className="bg-cover bg-center h-78 w-full flex flex-col justify-center"
+        className="university-banner"
         style={{
           backgroundImage:
             "url('https://sustainability.umd.edu/sites/default/files/styles/optimized/public/2024-08/HornbakePlaza_10242017_9203-7%20%281%29.jpg?itok=k2UhA8Xt')",
         }}
       >
-        <div className="container mx-auto p-2 text-white">
-          <div className="lower-blur bg-white/10 rounded-lg p-8 shadow-md flex items-center justify-center space-x-4">
+        <div className="banner-content">
+          <div className="lower-blur">
             <img
               src="https://marketplace.canva.com/EAGSIcoid00/1/0/1600w/canva-blue-white-modern-school-logo-ZBxBTP6Lc-E.jpg"
               alt="University Logo"
-              className="h-16 rounded-md"
             />
             <div className="text-center">
-              <h1 className="text-xl font-bold text-white">Your University Name</h1>
-              <p className="text-sm text-white/80">© City, Country | Est 1952</p>
+              <h1>Your University Name</h1>
+              <p>© City, Country | Est 1952</p>
             </div>
           </div>
 
-          <div className="flex justify-between items-center mt-2">
-            <div className="flex space-x-2">
-              <span className="bg-blue-500 px-2 py-1 rounded text-xs text-white">AICTE</span>
-              <span className="bg-blue-500 px-2 py-1 rounded text-xs text-white">NAAC Grade A</span>
-              <span className="bg-blue-500 px-2 py-1 rounded text-xs text-white">NIRF</span>
-              <span className="bg-blue-500 px-2 py-1 rounded text-xs text-white">NBA</span>
-              <span className="bg-blue-500 px-2 py-1 rounded text-xs text-white">Government</span>
+          <div className="banner-tags">
+            <div className="flex space-x-1">
+              <span>AICTE</span>
+              <span>NAAC Grade A</span>
+              <span>NIRF</span>
+              <span>NBA</span>
+              <span>Government</span>
             </div>
-            <div className="flex space-x-2">
-              <span className="bg-yellow-400 px-2 py-1 rounded text-xs">8 / 10 reviews</span>
-              <span className="bg-yellow-400 px-2 py-1 rounded text-xs">1 reviews</span>
+            <div className="flex space-x-1">
+              <span className="review">8 / 10 reviews</span>
+              <span className="review">1 reviews</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Tab Navigation */}
-      <div className="container mx-auto p-4">
-        <div className="relative flex items-center">
+      <div className="tab-navigation">
+        <div className="tab-container">
           <button
-            className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 mr-2"
+            className="tab-scroll-button"
             onClick={scrollLeft}
             title="Scroll Left"
           >
-            <FontAwesomeIcon icon={faChevronLeft} />
+            <FontAwesomeIcon icon={faChevronLeft} className="fa-chevron-left text-xs" />
           </button>
 
           <div
             ref={scrollRef}
-            className="flex flex-nowrap overflow-x-auto gap-2 scrollbar-hide"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="tab-scroll"
           >
             {[
               'Info',
@@ -216,11 +206,7 @@ function UniversityDashboard() {
             ].map((section, index) => (
               <button
                 key={index}
-                className={`flex-shrink-0 w-[150px] h-[40px] rounded-lg shadow-md text-[14px] font-semibold flex items-center justify-center transition-all duration-200 ${
-                  activeSection === section
-                    ? 'bg-blue-700 text-white'
-                    : 'bg-blue-500 text-white hover:bg-blue-600'
-                }`}
+                className={`tab-button ${activeSection === section ? 'active' : ''}`}
                 onClick={() => handleButtonClick(section)}
               >
                 {section}
@@ -229,28 +215,22 @@ function UniversityDashboard() {
           </div>
 
           <button
-            className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 ml-2"
+            className="tab-scroll-button"
             onClick={scrollRight}
             title="Scroll Right"
           >
-            <FontAwesomeIcon icon={faChevronRight} />
+            <FontAwesomeIcon icon={faChevronRight} className="fa-chevron-right" />
           </button>
         </div>
 
-        <div className="mt-4 flex justify-end space-x-2">
-          <button className="bg-yellow-400 text-blue-900 px-2 py-1 rounded hover:bg-yellow-500 text-xs">
-            Apply For Admission
-          </button>
-          <button className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-xs">
-            Download Brochure
-          </button>
-          <button className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-xs">
-            More Nearby Colleges
-          </button>
+        <div className="action-buttons">
+          <button>Apply For Admission</button>
+          <button className="primary">Download Brochure</button>
+          <button className="primary">More Nearby Colleges</button>
         </div>
 
         {/* Render dynamic section based on selection */}
-        <div className="mt-6">
+        <div className="content-section">
           {activeSection === 'Info' && <Info />}
           {activeSection === 'Courses & Fees' && <CoursesAndFees />}
           {activeSection === 'Cutoff' && <Cutoff />}
@@ -259,6 +239,8 @@ function UniversityDashboard() {
           {activeSection === 'Admission' && <Admission />}
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

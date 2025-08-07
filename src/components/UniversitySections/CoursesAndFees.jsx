@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import './CoursesAndFees.css';
 
 const CoursesAndFees = () => {
   const courses = [
@@ -39,39 +40,39 @@ const CoursesAndFees = () => {
   ];
 
   return (
-    <div className="mt-8">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Courses & Fees</h2>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <div className="courses-container">
+      <h2 className="courses-title">Courses & Fees</h2>
+      <div className="courses-table-wrapper">
+        <table className="courses-table">
           <thead>
-            <tr className="bg-blue-500 text-white">
-              <th className="p-3 text-sm font-semibold">Course Name</th>
-              <th className="p-3 text-sm font-semibold">Total Fees</th>
-              <th className="p-3 text-sm font-semibold">Yearly Fees</th>
-              <th className="p-3 text-sm font-semibold">Duration</th>
-              <th className="p-3 text-sm font-semibold">Intake</th>
-              <th className="p-3 text-sm font-semibold">Action</th>
+            <tr className="courses-header">
+              <th className="courses-th">Course Name</th>
+              <th className="courses-th">Total Fees</th>
+              <th className="courses-th">Yearly Fees</th>
+              <th className="courses-th">Duration</th>
+              <th className="courses-th">Intake</th>
+              <th className="courses-th">Action</th>
             </tr>
           </thead>
           <tbody>
             {courses.map((course, index) => (
               <tr
                 key={index}
-                className={`${
+                className={`courses-row ${
                   index === 0
-                    ? 'bg-blue-100 dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800'
-                    : 'hover:bg-blue-50 dark:hover:bg-gray-700'
-                } border-b dark:border-gray-700`}
+                    ? 'highlight-row'
+                    : ''
+                }`}
               >
-                <td className="p-3 text-gray-800 dark:text-gray-300">{course.name}</td>
-                <td className="p-3 text-gray-800 dark:text-gray-300">{course.totalFees}</td>
-                <td className="p-3 text-gray-800 dark:text-gray-300">{course.yearlyFees}</td>
-                <td className="p-3 text-gray-800 dark:text-gray-300">{course.duration}</td>
-                <td className="p-3 text-gray-800 dark:text-gray-300">{course.intake}</td>
-                <td className="p-3">
+                <td className="courses-td">{course.name}</td>
+                <td className="courses-td">{course.totalFees}</td>
+                <td className="courses-td">{course.yearlyFees}</td>
+                <td className="courses-td">{course.duration}</td>
+                <td className="courses-td">{course.intake}</td>
+                <td className="courses-td">
                   <a
                     href={course.applyLink}
-                    className="bg-yellow-400 text-blue-900 px-3 py-1 rounded hover:bg-yellow-500 text-sm font-semibold flex items-center space-x-1 inline-flex"
+                    className="apply-button"
                     aria-label={`Apply for ${course.name}`}
                   >
                     <span>Apply</span>

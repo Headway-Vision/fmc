@@ -1,1 +1,36 @@
 @import "tailwindcss";
+
+
+:root {
+  --background-color: #F9FAFB;
+  --text-color: #1E293B;
+  --button-primary: #1D4ED8;
+  --button-accent: #FBBF24;
+  --button-hover: #2563EB;
+}
+
+.dark {
+  --background-color: #1E293B;
+  --text-color: #FFFFFF;
+  --button-primary: #1D4ED8;
+  --button-accent: #FBBF24;
+  --button-hover: #60A5FA;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+nav {
+  transition: background 0.3s ease;
+}
+
+input {
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+button {
+  transition: background 0.3s ease, color 0.3s ease;
+}

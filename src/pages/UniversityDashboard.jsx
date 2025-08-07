@@ -21,6 +21,7 @@ import Facilities from '../components/UniversitySections/Facilities';
 import Admission from '../components/UniversitySections/Admission';
 import Footer from '../components/Footer';
 import './universityDashboard.css';
+import QA from '../components/UniversitySections/QA';
 
 function UniversityDashboard() {
   const [darkMode, setDarkMode] = useState(false);
@@ -237,6 +238,7 @@ function UniversityDashboard() {
           {activeSection === 'Placements' && <Placement />}
           {activeSection === 'Facilities' && <Facilities />}
           {activeSection === 'Admission' && <Admission />}
+          {activeSection === 'Q&A' && <QA />}
         </div>
       </div>
 

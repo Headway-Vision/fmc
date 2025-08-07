@@ -192,6 +192,7 @@ nav select:hover {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center; /* Added to center the navigation */
 }
 
 .tab-scroll-button {

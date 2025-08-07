@@ -114,158 +114,164 @@ const SearchBarWithFilters = ({ onSearch }) => {
             <FontAwesomeIcon icon={faFilter} className="text-white text-base" />
             Filters
           </button>
-          {isFilterOpen && (
-            <div
-              ref={filterRef}
-              className="absolute top-full left-[60%] transform -translate-x-[40%] mt-4 w-full md:w-[720px] bg-white border border-blue-200 rounded-lg shadow-xl p-4 z-10 transition-all duration-300 ease-in-out transform scale-95 opacity-0 animate-[fadeIn_0.3s_ease-in-out_forwards]"
-            >
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-[10px] font-medium text-gray-700 mb-1">Department</label>
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
-                    />
-                    <select
-                      value={department}
-                      onChange={(e) => setDepartment(e.target.value)}
-                      className="w-36 pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
-                    >
-                      <option value="">All Departments</option>
-                      <option value="cs">Computer Science</option>
-                      <option value="bba">Business Administration</option>
-                      <option value="eco">Economics</option>
-                      <option value="eng">English</option>
-                      <option value="bio">Biology</option>
-                      <option value="phy">Physics</option>
-                      <option value="math">Mathematics</option>
-                    </select>
+          <AnimatePresence>
+            {isFilterOpen && (
+              <motion.div
+                ref={filterRef}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="absolute top-full left-0 mt-2 w-full md:w-[720px] bg-white border border-blue-200 rounded-lg shadow-xl p-4 z-20"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-medium text-gray-700 mb-1">Department</label>
+                    <div className="relative">
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
+                      />
+                      <select
+                        value={department}
+                        onChange={(e) => setDepartment(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
+                      >
+                        <option value="">All Departments</option>
+                        <option value="cs">Computer Science</option>
+                        <option value="bba">Business Administration</option>
+                        <option value="eco">Economics</option>
+                        <option value="eng">English</option>
+                        <option value="bio">Biology</option>
+                        <option value="phy">Physics</option>
+                        <option value="math">Mathematics</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium text-gray-700 mb-1">Level</label>
+                    <div className="relative">
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
+                      />
+                      <select
+                        value={level}
+                        onChange={(e) => setLevel(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
+                      >
+                        <option value="">All Levels</option>
+                        <option value="ug">Undergraduate</option>
+                        <option value="pg">Postgraduate</option>
+                        <option value="phd">PhD</option>
+                        <option value="diploma">Diploma</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium text-gray-700 mb-1">Location</label>
+                    <div className="relative">
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
+                      />
+                      <select
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
+                      >
+                        <option value="">All Locations</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="noida">Noida</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="chennai">Chennai</option>
+                        <option value="kolkata">Kolkata</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium text-gray-700 mb-1">Course Type</label>
+                    <div className="relative">
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
+                      />
+                      <select
+                        value={courseType}
+                        onChange={(e) => setCourseType(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
+                      >
+                        <option value="">All Course Types</option>
+                        <option value="full-time">Full-Time</option>
+                        <option value="online">Online</option>
+                        <option value="hybrid">Hybrid</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium text-gray-700 mb-1">Tuition Range (INR)</label>
+                    <div className="relative">
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
+                      />
+                      <select
+                        value={tuitionRange}
+                        onChange={(e) => setTuitionRange(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
+                      >
+                        <option value="">All Ranges</option>
+                        <option value="0-50000">0 - 50,000</option>
+                        <option value="50001-100000">50,001 - 100,000</option>
+                        <option value="100001-200000">100,001 - 200,000</option>
+                        <option value="200001+">200,001+</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium text-gray-700 mb-1">Admission Status</label>
+                    <div className="relative">
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
+                      />
+                      <select
+                        value={admissionStatus}
+                        onChange={(e) => setAdmissionStatus(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
+                      >
+                        <option value="">All Statuses</option>
+                        <option value="open">Open</option>
+                        <option value="closed">Closed</option>
+                        <option value="rolling">Rolling</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium text-gray-700 mb-1">Campus Facilities</label>
+                    <div className="relative">
+                      <FontAwesomeIcon
+                        icon={faFilter}
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
+                      />
+                      <select
+                        value={campusFacilities}
+                        onChange={(e) => setCampusFacilities(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
+                      >
+                        <option value="">All Facilities</option>
+                        <option value="hostel">Hostel Available</option>
+                        <option value="library">Library</option>
+                        <option value="sports">Sports Facilities</option>
+                        <option value="labs">Advanced Labs</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
-                <div>
-                 <label className="block text-[10px] font-medium text-gray-700 mb-1">Level</label>
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
-                    />
-                    <select
-                      value={level}
-                      onChange={(e) => setLevel(e.target.value)}
-                      className="w-36 pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
-                    >
-                      <option value="">All Levels</option>
-                      <option value="ug">Undergraduate</option>
-                      <option value="pg">Postgraduate</option>
-                      <option value="phd">PhD</option>
-                      <option value="diploma">Diploma</option>
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-medium text-gray-700 mb-1">Location</label>
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
-                    />
-                    <select
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                      className="w-36 pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
-                    >
-                      <option value="">All Locations</option>
-                      <option value="delhi">Delhi</option>
-                      <option value="noida">Noida</option>
-                      <option value="mumbai">Mumbai</option>
-                      <option value="bangalore">Bangalore</option>
-                      <option value="chennai">Chennai</option>
-                      <option value="kolkata">Kolkata</option>
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-medium text-gray-700 mb-1">Course Type</label>
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
-                    />
-                    <select
-                      value={courseType}
-                      onChange={(e) => setCourseType(e.target.value)}
-                      className="w-36 pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
-                    >
-                      <option value="">All Course Types</option>
-                      <option value="full-time">Full-Time</option>
-                      <option value="online">Online</option>
-                      <option value="hybrid">Hybrid</option>
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-medium text-gray-700 mb-1">Tuition Range (INR)</label>
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
-                    />
-                    <select
-                      value={tuitionRange}
-                      onChange={(e) => setTuitionRange(e.target.value)}
-                      className="w-36 pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
-                    >
-                      <option value="">All Ranges</option>
-                      <option value="0-50000">0 - 50,000</option>
-                      <option value="50001-100000">50,001 - 100,000</option>
-                      <option value="100001-200000">100,001 - 200,000</option>
-                      <option value="200001+">200,001+</option>
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-medium text-gray-700 mb-1">Admission Status</label>
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
-                    />
-                    <select
-                      value={admissionStatus}
-                      onChange={(e) => setAdmissionStatus(e.target.value)}
-                      className="w-36 pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
-                    >
-                      <option value="">All Statuses</option>
-                      <option value="open">Open</option>
-                      <option value="closed">Closed</option>
-                      <option value="rolling">Rolling</option>
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-medium text-gray-700 mb-1">Campus Facilities</label>
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faFilter}
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 text-sm"
-                    />
-                    <select
-                      value={campusFacilities}
-                      onChange={(e) => setCampusFacilities(e.target.value)}
-                      className="w-36 pl-8 pr-3 py-1 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-blue-50 text-gray-800 transition duration-300 text-xs"
-                    >
-                      <option value="">All Facilities</option>
-                      <option value="hostel">Hostel Available</option>
-                      <option value="library">Library</option>
-                      <option value="sports">Sports Facilities</option>
-                      <option value="labs">Advanced Labs</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
         <button
           onClick={handleSearch}

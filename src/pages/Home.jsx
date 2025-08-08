@@ -119,10 +119,10 @@ const SearchBarWithFilters = ({ onSearch }) => {
               <motion.div
                 ref={filterRef}
                 initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, y: 0 }} 
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="absolute top-full left-0 mt-2 w-full md:w-[720px] bg-white border border-blue-200 rounded-lg shadow-xl p-4 z-20"
+                className="absolute top-full -left-20 md:-left-20 mt-2 w-full md:w-[720px] bg-white border border-blue-200 rounded-lg shadow-xl p-4 z-20"
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   <div>

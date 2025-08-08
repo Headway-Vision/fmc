@@ -22,6 +22,10 @@ import Admission from '../components/UniversitySections/Admission';
 import Footer from '../components/Footer';
 import './universityDashboard.css';
 import QA from '../components/UniversitySections/QA';
+import Gallery from '../components/UniversitySections/Gallery';
+import Rankings from '../components/UniversitySections/Rankings';
+import Reviews from '../components/UniversitySections/Reviews';
+import NewsArticles from '../components/UniversitySections/NewsArticles';
 
 function UniversityDashboard() {
   const [darkMode, setDarkMode] = useState(false);
@@ -239,6 +243,10 @@ function UniversityDashboard() {
           {activeSection === 'Facilities' && <Facilities />}
           {activeSection === 'Admission' && <Admission />}
           {activeSection === 'Q&A' && <QA />}
+          {activeSection === 'Gallery' && <Gallery />}
+          {activeSection === 'Rankings' && <Rankings />}
+          {activeSection === 'Reviews' && <Reviews />}
+          {activeSection === 'News & Articles' && <NewsArticles />}
         </div>
       </div>
 

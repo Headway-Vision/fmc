@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo2.png';
-
 
 const Footer = () => {
   return (
@@ -59,12 +59,12 @@ const Footer = () => {
           <div className="p-6">
             <h3 className="text-[#fdc700] text-lg font-bold mb-4">Other Links</h3>
             <ul className="space-y-2 text-sm">
-              <li>About</li>
-              <li>Contact Us</li>
-              <li>Advertising</li>
-              <li>Career</li>
-              <li>Privacy Policy</li>
-              <li>Terms & Conditions</li>
+              <li><Link to="/about" className="hover:text-[#fdc700]">About</Link></li>
+              <li><Link to="/contact" className="hover:text-[#fdc700]">Contact Us</Link></li>
+              <li><Link to="/advertising" className="hover:text-[#fdc700]">Advertising</Link></li>
+              <li><Link to="/career" className="hover:text-[#fdc700]">Career</Link></li>
+              <li><Link to="/privacy-policy" className="hover:text-[#fdc700]">Privacy Policy</Link></li>
+              <li><Link to="/terms-and-conditions" className="hover:text-[#fdc700]">Terms & Conditions</Link></li>
             </ul>
           </div>
         </div>

@@ -27,7 +27,7 @@ nav input {
   width: 100%;
   padding: 0.25rem;
   border-radius: 0.25rem;
-  border: 1px solid var(--input-border);
+  border: 1px solid gray;
   font-size: 0.75rem;
   color: var(--text-color);
   outline: none;
@@ -183,6 +183,7 @@ nav select:hover {
 }
 
 /* Tab Navigation Styles */
+/* Tab Navigation Styles */
 .tab-navigation {
   margin: 0 auto;
   padding: 1rem;
@@ -192,7 +193,7 @@ nav select:hover {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center; /* Added to center the navigation */
+  justify-content: center; /* Added to center the navigation */
 }
 
 .tab-scroll-button {

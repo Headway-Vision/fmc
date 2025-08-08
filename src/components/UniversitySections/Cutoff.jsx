@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import './Cutoff.css';
+import { applyTheme } from '../../utils/themeUtils';
 
 const cutoffData = [
   {
@@ -44,43 +46,49 @@ const cutoffData = [
 ];
 
 const Cutoff = () => {
-      return (
-        <div className="max-w-4xl mx-auto p-4 bg-gray-900 rounded-lg shadow-md">
-          <h2 className="text-center text-lg font-semibold text-white mb-4">
-            Cutoff for Year 2024
-          </h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-700 text-white text-sm">
-              <thead className="bg-blue-600">
-                <tr>
-                  <th className="px-3 py-2 text-left font-medium">Course</th>
-                  <th className="px-3 py-2 font-medium">Open</th>
-                  <th className="px-3 py-2 font-medium">General</th>
-                  <th className="px-3 py-2 font-medium">EWS</th>
-                  <th className="px-3 py-2 font-medium">OBC</th>
-                  <th className="px-3 py-2 font-medium">SC</th>
-                  <th className="px-3 py-2 font-medium">ST</th>
-                  <th className="px-3 py-2 font-medium">PWD</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-700">
-                {cutoffData.map(({ course, open, general, ews, obc, sc, st, pwd }) => (
-                  <tr key={course} className="hover:bg-gray-800">
-                    <td className="px-3 py-2 font-medium text-left">{course}</td>
-                    <td className="px-3 py-2">{open}</td>
-                    <td className="px-3 py-2">{general}</td>
-                    <td className="px-3 py-2">{ews}</td>
-                    <td className="px-3 py-2">{obc}</td>
-                    <td className="px-3 py-2">{sc}</td>
-                    <td className="px-3 py-2">{st === '-' ? '-' : st}</td>
-                    <td className="px-3 py-2">{pwd === '-' ? '-' : pwd}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      );
-    };
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    applyTheme(darkMode);
+  }, [darkMode]);
+
+  const toggleTheme = () => setDarkMode(prev => !prev);
+
+  return (
+    <div className={`cutoff-container ${darkMode ? 'dark' : ''}`}>
+      <h2>Cutoff for Year 2024</h2>
+      <div className="table-wrapper">
+        <table className="cutoff-table">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Open</th>
+              <th>General</th>
+              <th>EWS</th>
+              <th>OBC</th>
+              <th>SC</th>
+              <th>ST</th>
+              <th>PWD</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cutoffData.map(({ course, open, general, ews, obc, sc, st, pwd }) => (
+              <tr key={course}>
+                <td>{course}</td>
+                <td>{open}</td>
+                <td>{general}</td>
+                <td>{ews}</td>
+                <td>{obc}</td>
+                <td>{sc}</td>
+                <td>{st}</td>
+                <td>{pwd}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
 export default Cutoff;

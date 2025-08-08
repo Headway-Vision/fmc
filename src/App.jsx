@@ -7,16 +7,12 @@ import Footer from './components/Footer';
 
 import Home from './pages/Home';
 import Colleges from './pages/Colleges';
-import Exams from './pages/Exams';
-import Scholarships from './pages/Scholarships';
-import QAPage from './pages/QAPage';
-import CourseRecommender from './pages/CourseRecommender';
 import CollegePage from './pages/CollegePage';
 import StudentRegister from './pages/StudentRegister';
 import UniversityRegister from './pages/UniversityRegister';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import UniversityDashboard from './pages/UniversityDashboard';
+import UniversityPage from './pages/UniversityPage';
 
 const App = () => {
   return (
@@ -26,16 +22,12 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/colleges" element={<Colleges />} />
-          <Route path="/exams" element={<Exams />} />
-          <Route path="/scholarships" element={<Scholarships />} />
-          <Route path="/qa" element={<QAPage />} />
-          <Route path="/recommend" element={<CourseRecommender />} />
           <Route path="/college/:id" element={<CollegePage />} />
           <Route path="/student-register" element={<StudentRegister />} />
           <Route path="/university-register" element={<UniversityRegister />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/university-dashboard" element={<UniversityDashboard />} />
+          <Route path="/university-page" element={<UniversityPage />} />
 
           {/* Optional: 404 Page */}
           <Route path="*" element={<div className="p-6 text-center text-red-600">Page Not Found</div>} />

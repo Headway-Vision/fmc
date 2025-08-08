@@ -13,25 +13,27 @@ import {
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import { applyTheme } from '../utils/themeUtils';
+import AboutUs from '../components/UniversitySections/Aboutus';
 import Info from '../components/UniversitySections/Info';
 import CoursesAndFees from '../components/UniversitySections/CoursesAndFees';
 import Cutoff from '../components/UniversitySections/Cutoff';
 import Placement from '../components/UniversitySections/Placements';
 import Facilities from '../components/UniversitySections/Facilities';
 import Admission from '../components/UniversitySections/Admission';
-import Footer from '../components/Footer';
-import './universityDashboard.css';
 import QA from '../components/UniversitySections/QA';
 import Gallery from '../components/UniversitySections/Gallery';
+import Footer from '../components/Footer';
+import './UniversityPage.css';
 import Rankings from '../components/UniversitySections/Rankings';
-import Reviews from '../components/UniversitySections/Reviews';
 import NewsArticles from '../components/UniversitySections/NewsArticles';
+import Reviews from '../components/UniversitySections/Reviews';
 
-function UniversityDashboard() {
+
+function UniversityPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState(null);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
-  const [activeSection, setActiveSection] = useState('Info');
+  const [activeSection, setActiveSection] = useState('About');
   const dropdownRef = useRef(null);
   const scrollRef = useRef(null);
 
@@ -196,6 +198,7 @@ function UniversityDashboard() {
             className="tab-scroll"
           >
             {[
+              'About',
               'Info',
               'Courses & Fees',
               'Cutoff',
@@ -236,6 +239,7 @@ function UniversityDashboard() {
 
         {/* Render dynamic section based on selection */}
         <div className="content-section">
+          {activeSection === 'About' && <AboutUs />}
           {activeSection === 'Info' && <Info />}
           {activeSection === 'Courses & Fees' && <CoursesAndFees />}
           {activeSection === 'Cutoff' && <Cutoff />}
@@ -244,9 +248,10 @@ function UniversityDashboard() {
           {activeSection === 'Admission' && <Admission />}
           {activeSection === 'Q&A' && <QA />}
           {activeSection === 'Gallery' && <Gallery />}
-          {activeSection === 'Rankings' && <Rankings />}
           {activeSection === 'Reviews' && <Reviews />}
           {activeSection === 'News & Articles' && <NewsArticles />}
+          {activeSection === 'Rankings' && <Rankings />}
+
         </div>
       </div>
 
@@ -255,4 +260,4 @@ function UniversityDashboard() {
   );
 }
 
-export default UniversityDashboard;
+export default UniversityPage;

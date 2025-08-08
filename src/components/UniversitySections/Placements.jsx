@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from 'react';
 import './Placement.css';
+import { applyTheme } from '../../utils/themeUtils';
 
 const recruiters = [
   'https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png',
@@ -21,16 +20,20 @@ const branchData = [
   { branch: 'ME', highest: '₹18 LPA', average: '₹6.2 LPA' },
 ];
 
-const Placement = () => {
+const Placement = ({ darkMode }) => {
   const [openBranch, setOpenBranch] = useState(null);
+
+  useEffect(() => {
+    applyTheme(darkMode);
+  }, [darkMode]);
 
   const toggleBranch = (index) => {
     setOpenBranch(openBranch === index ? null : index);
   };
 
   return (
-    <div className="placement-container">
-      {/* Hero */}
+    <div className={`placement-container ${darkMode ? 'dark' : ''}`}>
+      {/* Placement Content Starts */}
       <section className="hero-section">
         <h1 className="hero-title">Placement Highlights 2024</h1>
         <p className="hero-subtitle">Empowering Futures with Top Recruiters and Record-Breaking Packages</p>
@@ -42,7 +45,6 @@ const Placement = () => {
         </div>
       </section>
 
-      {/* Recruiters Grid */}
       <section className="recruiters-section">
         <h2 className="section-title">Top Recruiters</h2>
         <div className="recruiters-grid">
@@ -54,7 +56,6 @@ const Placement = () => {
         </div>
       </section>
 
-      {/* Placement Stats Table */}
       <section className="stats-section">
         <h2 className="section-title">Year-wise Placement Stats</h2>
         <div className="stats-table-wrapper">
@@ -88,16 +89,12 @@ const Placement = () => {
         </div>
       </section>
 
-      {/* Branch Wise Accordion */}
       <section className="branch-section">
         <h2 className="section-title">Branch-wise Placement</h2>
         <div className="branch-accordion">
           {branchData.map((item, index) => (
             <div key={index} className="accordion-item">
-              <button
-                onClick={() => toggleBranch(index)}
-                className="accordion-toggle"
-              >
+              <button onClick={() => toggleBranch(index)} className="accordion-toggle">
                 <span className="accordion-title">{item.branch}</span>
                 <span className="accordion-icon">{openBranch === index ? '▲' : '▼'}</span>
               </button>

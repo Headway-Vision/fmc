@@ -1,139 +1,77 @@
-
-/* Info Container */
-.info-container {
-  margin-top: 1.5rem;
-  padding: 0.5rem;
+.info-two-col-container {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
 }
 
-/* Title */
 .info-title {
-  font-size: 0.875rem; /* Reduced from 1rem (lg) */
-  font-weight: bold;
-  color: var(--text-color);
-  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--text-color, #222);
+  margin-bottom: 2rem;
+}
+
+.theme-toggle-btn {
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: var(--button-bg, #007bff);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.info-block {
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+  width: 100%;
+  gap: 1rem;
+  text-align: left;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  color: var(--text-color, #222);
+  min-width: 30px;
   text-align: center;
 }
 
-/* Grid Layout */
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Fixed 5 columns per row */
-  gap: 1rem; /* Reduced gap between cards */
-  justify-content: center; /* Center the grid */
-  max-width: 80%;
-  margin: 0 auto;
+.info-text h4 {
+  margin: 0 0 0.25rem 0;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-color, #222);
 }
 
-/* Responsive Adjustments */
-@media (max-width: 1023px) { /* lg breakpoint and below */
-  .info-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 columns for tablets and small desktops */
-  }
+.info-text p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-color-secondary, #555);
+  white-space: normal;
 }
 
-@media (max-width: 639px) { /* sm breakpoint and below */
-  .info-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile */
-  }
-}
-
-@media (max-width: 479px) { /* Extra small screens */
-  .info-grid {
-    grid-template-columns: repeat(1, 1fr); /* 1 column for very small screens */
-  }
-}
-
-/* Detail Card */
-.info-card {
-  background-color: #1E3A8A; /* Dark blue (blue-900) for default cards */
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  box-shadow: 0 2px 6px rgba(29, 78, 216, 0.1);
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  max-width: 180px; /* Slightly narrower cards */
-  width: 100%;
-}
-
-.dark .info-card {
-  background-color: #172554; /* Darker blue (blue-950) for dark mode */
-}
-
-/* Highlighted Card */
-.info-card.highlight {
-  background-color: #7eb1f3; /* Light blue (blue-100) for highlighted cards */
-}
-
-.dark .info-card.highlight {
-  background-color: #93C5FD; /* Lighter blue (blue-300) for highlighted cards in dark mode */
-}
-
-/* Icon */
-.info-icon {
-  font-size: 0.75rem; /* Reduced icon size */
-  color: #FFFFFF; /* White icons for contrast on dark blue */
-}
-
-/* Card Title */
-.info-card-title {
-  font-size: 0.75rem; /* Reduced from 0.875rem (sm) */
-  font-weight: 600;
-  color: #FFFFFF; /* White text for contrast on dark blue */
-}
-
-/* Card Value */
-.info-card-value {
-  font-size: 0.75rem; /* Reduced from 0.875rem (sm) */
-  color: #E0E7FF;
-  margin-top: 0.5rem; /* Light blue (blue-200) for contrast */
-}
-
-.dark .info-card-value {
-  color: #BFDBFE; /* Lighter blue (blue-300) for dark mode */
-}
-
-/* Highlighted Text */
-.info-card-value.highlight-text {
-  font-size: 0.875rem; /* Slightly larger for emphasis, reduced from 1rem */
-  font-weight: bold;
-  color: #1D4ED8; /* Blue-600 for highlighted text */
-}
-
-.dark .info-card-value.highlight-text {
-  color: #60A5FA; /* Blue-400 for highlighted text in dark mode */
-}
-
-/* Call-to-Action Buttons */
-.info-cta {
-  margin-top: 3rem;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.cta-button {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.625rem; /* Reduced from 0.75rem (xs) */
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
-
-.cta-button.primary {
-  background-color: var(--button-primary);
-  color: #FFFFFF;
-}
-
-.cta-button.primary:hover {
-  background-color: var(--button-hover);
-}
-
-.cta-button.accent {
-  background-color: var(--button-accent);
-  color: #1E3A8A; /* Blue-900 */
-}
-
-.cta-button.accent:hover {
-  background-color: #F59E0B; /* Yellow-500 */
+.info-divider {
+  width: 1px;
+  background-color: var(--divider-color, #ccc);
+  height: 40px;
+  align-self: center;
 }

@@ -13,14 +13,15 @@
 }
 
 .hero-title {
-  font-size: 1.5rem; /* Reduced from 4rem */
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: var(--text-color);
 }
 
 .hero-subtitle {
-  font-size: 0.875rem; /* Reduced from 1.125rem */
-  color: #9CA3AF; /* Gray-400 */
+  font-size: 0.875rem;
+  color: var(--border-color); /* Using border-color as a subtle gray */
   margin-bottom: 0.75rem;
 }
 
@@ -28,7 +29,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
-  font-size: 0.75rem; /* Reduced from 1.125rem */
+  font-size: 0.75rem;
 }
 
 @media (min-width: 768px) {
@@ -43,10 +44,11 @@
 }
 
 .section-title {
-  font-size: 1.25rem; /* Reduced from 2rem */
+  font-size: 1.25rem;
   font-weight: bold;
   text-align: center;
   margin-bottom: 0.75rem;
+  color: var(--text-color);
 }
 
 .recruiters-grid {
@@ -57,7 +59,7 @@
 }
 
 .recruiter-card {
-  background-color: #1E3A8A; /* Dark blue (blue-900) for light theme */
+  background-color: var(--button-primary); /* Using button-primary for light theme */
   padding: 0.5rem;
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -65,7 +67,7 @@
 }
 
 .dark .recruiter-card {
-  background-color: #374151; /* Gray-700 for dark theme */
+  background-color: var(--dropdown-bg); /* Using dropdown-bg for dark theme */
 }
 
 .recruiter-card:hover {
@@ -73,8 +75,8 @@
 }
 
 .recruiter-logo {
-  width: 60px; /* Reduced from 64px (h-16) */
-  height: 40px; /* Reduced from 64px */
+  width: 60px;
+  height: 40px;
   object-fit: contain;
 }
 
@@ -107,25 +109,23 @@
 
 .stats-th,
 .stats-td {
-  padding: 0.5rem; /* Reduced from 0.75rem */
-  border: 1px solid #D1D5DB; /* Gray-300 */
-  font-size: 0.75rem; /* Reduced from 0.875rem */
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  font-size: 0.75rem;
   text-align: center;
 }
 
 .dark .stats-th,
 .dark .stats-td {
-  border-color: #4B5563; /* Gray-600 */
+  border-color: var(--border-color); /* Using border-color for dark theme */
 }
 
 .stats-th {
-  background-color: #1D4ED8; /* Blue-700 */
+  background-color: var(--button-primary);
   color: #FFFFFF;
 }
 
 /* Branch Section */
-.branch-section {}
-
 .branch-accordion {
   max-width: 20rem;
   margin: 0 auto;
@@ -137,19 +137,19 @@
 
 .accordion-toggle {
   width: 100%;
-  background-color: #1E3A8A; /* Dark blue (blue-900) for light theme */
+  background-color: var(--button-primary); /* Using button-primary for light theme */
   padding: 0.5rem;
   border-radius: 0.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.875rem; /* Reduced from 1rem */
+  font-size: 0.875rem;
   color: #FFFFFF; /* White text for contrast */
 }
 
 .dark .accordion-toggle {
-  background-color: #374151; /* Gray-700 for dark theme */
-  color: #D1D5DB; /* Gray-300 for dark theme text */
+  background-color: var(--dropdown-bg); /* Using dropdown-bg for dark theme */
+  color: var(--dropdown-text); /* Using dropdown-text for dark theme */
 }
 
 .accordion-title {
@@ -161,15 +161,15 @@
 }
 
 .accordion-content {
-  background-color: #DBEAFE; /* Light blue (blue-100) for light theme */
+  background-color: var(--button-accent); /* Using button-accent for light theme */
   padding: 0.5rem;
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
-  font-size: 0.75rem; /* Reduced from 0.875rem */
-  color: #1E3A8A; /* Dark blue (blue-900) for text */
+  font-size: 0.75rem;
+  color: var(--text-color); /* Using text-color for contrast */
 }
 
 .dark .accordion-content {
-  background-color: #4B5563; /* Gray-600 for dark theme */
-  color: #E5E7EB; /* Gray-200 for dark theme text */
+  background-color: var(--dropdown-bg); /* Using dropdown-bg for dark theme */
+  color: var(--dropdown-text); /* Using dropdown-text for dark theme */
 }

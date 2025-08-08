@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import './CoursesAndFees.css';
 
 const CoursesAndFees = () => {
+  const [darkMode, setDarkMode] = useState(() => {
+    // Initialize darkMode based on the current class on documentElement
+    return document.documentElement.classList.contains('dark');
+  });
+
+  useEffect(() => {
+    // Sync with global theme if changed externally (e.g., via Navbar toggle)
+    const handleThemeChange = () => {
+      setDarkMode(document.documentElement.classList.contains('dark'));
+    };
+    window.addEventListener('themeChange', handleThemeChange);
+    return () => window.removeEventListener('themeChange', handleThemeChange);
+  }, []);
+
   const courses = [
     {
       name: 'B.Tech - Computer Science and Engineering (CSE)',
@@ -40,7 +54,7 @@ const CoursesAndFees = () => {
   ];
 
   return (
-    <div className="courses-container">
+    <div className={`courses-container ${darkMode ? 'dark' : ''}`}>
       <h2 className="courses-title">Courses & Fees</h2>
       <div className="courses-table-wrapper">
         <table className="courses-table">
@@ -58,11 +72,7 @@ const CoursesAndFees = () => {
             {courses.map((course, index) => (
               <tr
                 key={index}
-                className={`courses-row ${
-                  index === 0
-                    ? 'highlight-row'
-                    : ''
-                }`}
+                className={`courses-row ${index === 0 ? 'highlight-row' : ''}`}
               >
                 <td className="courses-td">{course.name}</td>
                 <td className="courses-td">{course.totalFees}</td>

@@ -14,7 +14,6 @@
   flex: 1;
 }
 
-
 @media (max-width: 1024px) {
   .gallery-layout {
     flex-direction: column;
@@ -108,7 +107,7 @@
   justify-content: center;
   font-weight: 600;
   cursor: pointer;
-  background: var(--button-accent);
+  background: #0055b8; /* Blue color for normal state */
   color: white;
   font-size: 14px;
   border-radius: 8px;
@@ -117,7 +116,7 @@
 }
 
 .show-more-item:hover {
-  background: var(--button-hover);
+  background: #ffcc00; /* Yellow color for hover state */
 }
 
 /* =========================

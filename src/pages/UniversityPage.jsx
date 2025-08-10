@@ -28,7 +28,6 @@ import Rankings from '../components/UniversitySections/Rankings';
 import NewsArticles from '../components/UniversitySections/NewsArticles';
 import Reviews from '../components/UniversitySections/Reviews';
 
-
 function UniversityPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState(null);
@@ -103,7 +102,6 @@ function UniversityPage() {
             >
               <FontAwesomeIcon icon={faUser} className="fa-user text-white" />
             </button>
-
 
             {showUserDropdown && (
               <div className="dropdown-menu">
@@ -230,6 +228,7 @@ function UniversityPage() {
             <FontAwesomeIcon icon={faChevronRight} className="fa-chevron-right" />
           </button>
         </div>
+        <hr style={{ width: '100%', border: '1px solid var(--text-color)', margin: '10px 0' }} />
 
         <div className="action-buttons">
           <button>Apply For Admission</button>
@@ -251,7 +250,6 @@ function UniversityPage() {
           {activeSection === 'Reviews' && <Reviews />}
           {activeSection === 'News & Articles' && <NewsArticles />}
           {activeSection === 'Rankings' && <Rankings />}
-
         </div>
       </div>
 

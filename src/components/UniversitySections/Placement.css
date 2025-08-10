@@ -26,16 +26,28 @@
 }
 
 .hero-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
   font-size: 0.75rem;
 }
 
-@media (min-width: 768px) {
-  .hero-stats {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.hero-stats div {
+  background-color: var(--button-primary); /* Match button-primary for consistency */
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  color: #FFFFFF; /* White text for contrast */
+  flex: 1;
+  min-width: 120px; /* Ensure each stat has a minimum width */
+  max-width: 150px; /* Limit max width for balance */
+  text-align: center;
+}
+
+.dark .hero-stats div {
+  background-color: var(--dropdown-bg); /* Match dropdown-bg for dark theme */
+  color: var(--dropdown-text); /* Match dropdown-text for dark theme */
 }
 
 /* Recruiters Section */
@@ -54,16 +66,20 @@
 .recruiters-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
+  gap: 0.75rem; /* Increased gap to prevent touching on hover */
   justify-content: center;
 }
 
 .recruiter-card {
   background-color: var(--button-primary); /* Using button-primary for light theme */
-  padding: 0.5rem;
+  padding: 0.4rem; /* Reduced padding to make cards smaller */
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px; /* Fixed height to control card size */
 }
 
 .dark .recruiter-card {
@@ -71,12 +87,12 @@
 }
 
 .recruiter-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03); /* Reduced scale to minimize overlap */
 }
 
 .recruiter-logo {
-  width: 60px;
-  height: 40px;
+  width: 50px; /* Reduced logo size */
+  height: 30px; /* Reduced logo height */
   object-fit: contain;
 }
 
@@ -126,13 +142,24 @@
 }
 
 /* Branch Section */
+.branch-section {
+  margin-bottom: 1rem;
+}
+
 .branch-accordion {
-  max-width: 20rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+  max-width: 100%; /* Allow full width for horizontal layout */
   margin: 0 auto;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .accordion-item {
-  margin-bottom: 0.5rem;
+  flex: 1;
+  min-width: 120px; /* Ensure each item has a minimum width */
+  max-width: 150px; /* Limit max width for balance */
 }
 
 .accordion-toggle {

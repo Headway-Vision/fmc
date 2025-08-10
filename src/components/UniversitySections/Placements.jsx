@@ -33,7 +33,6 @@ const Placement = ({ darkMode }) => {
 
   return (
     <div className={`placement-container ${darkMode ? 'dark' : ''}`}>
-      {/* Placement Content Starts */}
       <section className="hero-section">
         <h1 className="hero-title">Placement Highlights 2024</h1>
         <p className="hero-subtitle">Empowering Futures with Top Recruiters and Record-Breaking Packages</p>

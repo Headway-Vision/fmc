@@ -83,7 +83,8 @@ const NewsArticles = () => {
           <h1 className="text-xl font-bold mb-1">Latest News</h1>
           <p className="text-xs">Stay updated with latest stories</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+
           {newsItems.map((item) => (
             <div 
               key={item.id} 

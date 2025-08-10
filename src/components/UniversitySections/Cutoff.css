@@ -59,7 +59,7 @@
 }
 
 .cutoff-table tbody tr:hover {
-  background-color: var(--hover-color, #f0f0f0);
+  background-color: #fbbf24;
 }
 
 .cutoff-table td {

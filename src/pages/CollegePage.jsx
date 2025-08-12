@@ -60,7 +60,7 @@ const CollegePage = () => {
           </div>
         </div>
 
-        {/* Rest of the content with increased spacing */}
+      
         <div className="space-y-8">
           {/* Basic Information */}
           <div className="bg-gray-100 p-4 rounded-lg">

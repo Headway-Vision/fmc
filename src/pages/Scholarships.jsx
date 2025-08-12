@@ -1,4 +1,4 @@
-// src/pages/Scholarships.jsx
+
 import React from 'react';
 import ScholarshipCard from '../components/ScholarshipCard';
 import { scholarships } from '../data/mockData';

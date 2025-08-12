@@ -36,7 +36,7 @@ const TermsAndConditions = () => {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
-      {/* Navbar (Unchanged from PrivacyPolicy.jsx) */}
+      
       <nav className="shadow-md">
         <div className="flex items-center">
           <img

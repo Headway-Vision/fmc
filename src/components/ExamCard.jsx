@@ -1,4 +1,4 @@
-// src/components/ExamCard.jsx
+
 import React from 'react';
 
 const ExamCard = ({ exam }) => {

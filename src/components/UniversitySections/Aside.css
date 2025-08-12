@@ -1,6 +1,4 @@
-/* =========================
-   SIDEBAR CONTAINER
-========================= */
+
 .aside-container {
   background-color: var(--dropdown-bg);
   border: 1px solid var(--border-color);
@@ -19,9 +17,7 @@
   }
 }
 
-/* =========================
-   TITLE
-========================= */
+/*  TITLE*/
 .aside-title {
   font-size: 1.1rem;
   font-weight: bold;
@@ -30,9 +26,7 @@
   text-align: center;
 }
 
-/* =========================
-   TABLE STYLES
-========================= */
+/* TABLE STYLES */
 .aside-table {
   width: 100%;
   border-collapse: collapse;

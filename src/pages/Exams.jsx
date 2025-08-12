@@ -1,4 +1,4 @@
-// src/pages/Exams.jsx
+
 import React from 'react';
 import ExamCard from '../components/ExamCard';
 import { exams } from '../data/mockData';

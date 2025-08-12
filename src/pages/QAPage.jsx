@@ -1,4 +1,4 @@
-// src/pages/QAPage.jsx
+
 import React from 'react';
 import QACard from '../components/QACard';
 import { questions } from '../data/mockData';

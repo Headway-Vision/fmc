@@ -55,7 +55,7 @@
 
 .image-carousel {
   position: relative;
-  width: 80%; /* Reduced width for better centering */
+  width: 80%; 
   height: 200px;
   overflow: hidden;
 }

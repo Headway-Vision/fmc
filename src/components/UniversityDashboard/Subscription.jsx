@@ -29,7 +29,7 @@ export default function Subscription() {
               Yearly Subscription
               <span className="plan-badge">Main</span>
             </div>
-            <div className="plan-price">$14,400.00 <span className="per">+ VAT</span></div>
+           <div className="plan-price">₹14,400.00 <span className="per">+ VAT</span></div>
           </div>
 
           <div className="meta">
@@ -65,7 +65,7 @@ export default function Subscription() {
             <h3>Additional License</h3>
           </div>
 
-          <div className="price-large">$85 <span className="per">/mo</span></div>
+          <div className="price-large">₹85 <span className="per">/mo</span></div>
 
           <ul className="features-list">
             <li>Unlimited accounts</li>
@@ -87,7 +87,7 @@ export default function Subscription() {
               <span className="card-num">**** **** **** 0009 • VISA</span>
             </div>
 
-            <div className="amount">$100.39</div>
+            <div className="amount">₹100.39</div>
           </div>
 
           <div className="next-payment">
@@ -96,7 +96,7 @@ export default function Subscription() {
               <div><strong>28 March 2020</strong></div>
             </div>
 
-            <div className="amount">$131.00</div>
+            <div className="amount">₹131.00</div>
           </div>
 
           <div className="payment-actions">

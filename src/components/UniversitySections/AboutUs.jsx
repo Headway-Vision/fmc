@@ -14,11 +14,11 @@ const AboutUs = () => {
     document.documentElement.classList.toggle('dark', isDark);
   };
 
-  // Image carousel state and data
+  // Image state and data
   const [currentSlide, setCurrentSlide] = useState(0);
   const images = [
     'https://i.pinimg.com/736x/93/85/5b/93855bc9e97f4ec0f5df5f12b48169b5.jpg',
-    'https://i.pinimg.com/736x/93/85/5b/93855bc9e97f4ec0f5df5f12b48169b5.jpg', // Duplicate for demo, replace with other images as needed
+    'https://i.pinimg.com/736x/93/85/5b/93855bc9e97f4ec0f5df5f12b48169b5.jpg', 
     'https://i.pinimg.com/736x/93/85/5b/93855bc9e97f4ec0f5df5f12b48169b5.jpg',
   ];
 

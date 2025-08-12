@@ -1,4 +1,3 @@
-// src/components/UniversityDashboard/StatsCards.jsx
 import React from "react";
 import "./StatsCards.css"; // Assuming you have a CSS file for styling
 export default function StatsCards() {

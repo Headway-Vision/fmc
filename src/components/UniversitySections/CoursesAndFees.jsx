@@ -5,14 +5,14 @@ import './CoursesAndFees.css';
 
 const CoursesAndFees = () => {
   const [darkMode, setDarkMode] = useState(() => {
-    // Initialize darkMode based on the current class on documentElement
+    // Initialize darkMode 
     return document.documentElement.classList.contains('dark');
   });
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   useEffect(() => {
-    // Sync with global theme if changed externally (e.g., via Navbar toggle)
+    
     const handleThemeChange = () => {
       setDarkMode(document.documentElement.classList.contains('dark'));
     };

@@ -9,6 +9,31 @@
   overflow-y: auto;
 }
 
+.ud-sidebar {
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--color-muted) transparent; /* Firefox */
+}
+
+/* For Chrome, Edge, Safari */
+.ud-sidebar::-webkit-scrollbar {
+  width: 6px; /* Scrollbar width */
+}
+
+.ud-sidebar::-webkit-scrollbar-track {
+  background: transparent; /* Track background */
+}
+
+.ud-sidebar::-webkit-scrollbar-thumb {
+  background-color: var(--color-muted); /* Thumb color */
+  border-radius: 3px;
+}
+
+.ud-sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary); /* Hover color */
+}
+
+
 .ud-sidebar.closed {
   transform: translateX(-260px);
 }

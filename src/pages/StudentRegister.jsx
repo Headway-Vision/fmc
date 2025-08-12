@@ -1,4 +1,4 @@
-// src/pages/StudentRegister.jsx
+
 import React, { useState } from 'react';
 import FormInput from '../components/FormInput';
 

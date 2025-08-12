@@ -21,7 +21,7 @@
 
 .hero-subtitle {
   font-size: 0.875rem;
-  color: var(--border-color); /* Using border-color as a subtle gray */
+  color: var(--border-color); 
   margin-bottom: 0.75rem;
 }
 
@@ -30,24 +30,24 @@
   flex-direction: row;
   gap: 0.75rem;
   justify-content: center;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  flex-wrap: wrap; 
   font-size: 0.75rem;
 }
 
 .hero-stats div {
-  background-color: var(--button-primary); /* Match button-primary for consistency */
+  background-color: var(--button-primary); 
   padding: 0.5rem;
   border-radius: 0.25rem;
-  color: #FFFFFF; /* White text for contrast */
+  color: #FFFFFF;
   flex: 1;
-  min-width: 120px; /* Ensure each stat has a minimum width */
-  max-width: 150px; /* Limit max width for balance */
+  min-width: 120px; 
+  max-width: 150px; 
   text-align: center;
 }
 
 .dark .hero-stats div {
-  background-color: var(--dropdown-bg); /* Match dropdown-bg for dark theme */
-  color: var(--dropdown-text); /* Match dropdown-text for dark theme */
+  background-color: var(--dropdown-bg); 
+  color: var(--dropdown-text); 
 }
 
 /* Recruiters Section */
@@ -66,33 +66,33 @@
 .recruiters-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem; /* Increased gap to prevent touching on hover */
+  gap: 0.75rem; 
   justify-content: center;
 }
 
 .recruiter-card {
-  background-color: var(--button-primary); /* Using button-primary for light theme */
-  padding: 0.4rem; /* Reduced padding to make cards smaller */
+  background-color: var(--button-primary); 
+  padding: 0.4rem; 
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px; /* Fixed height to control card size */
+  height: 50px; 
 }
 
 .dark .recruiter-card {
-  background-color: var(--dropdown-bg); /* Using dropdown-bg for dark theme */
+  background-color: var(--dropdown-bg); 
 }
 
 .recruiter-card:hover {
-  transform: scale(1.03); /* Reduced scale to minimize overlap */
+  transform: scale(1.03); 
 }
 
 .recruiter-logo {
-  width: 50px; /* Reduced logo size */
-  height: 30px; /* Reduced logo height */
+  width: 50px; 
+  height: 30px; 
   object-fit: contain;
 }
 
@@ -133,7 +133,7 @@
 
 .dark .stats-th,
 .dark .stats-td {
-  border-color: var(--border-color); /* Using border-color for dark theme */
+  border-color: var(--border-color);
 }
 
 .stats-th {
@@ -151,32 +151,32 @@
   flex-direction: row;
   gap: 0.5rem;
   justify-content: center;
-  max-width: 100%; /* Allow full width for horizontal layout */
+  max-width: 100%;
   margin: 0 auto;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  flex-wrap: wrap; 
 }
 
 .accordion-item {
   flex: 1;
-  min-width: 120px; /* Ensure each item has a minimum width */
-  max-width: 150px; /* Limit max width for balance */
+  min-width: 120px; 
+  max-width: 150px; 
 }
 
 .accordion-toggle {
   width: 100%;
-  background-color: var(--button-primary); /* Using button-primary for light theme */
+  background-color: var(--button-primary);
   padding: 0.5rem;
   border-radius: 0.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.875rem;
-  color: #FFFFFF; /* White text for contrast */
+  color: #FFFFFF;
 }
 
 .dark .accordion-toggle {
-  background-color: var(--dropdown-bg); /* Using dropdown-bg for dark theme */
-  color: var(--dropdown-text); /* Using dropdown-text for dark theme */
+  background-color: var(--dropdown-bg); 
+  color: var(--dropdown-text); 
 }
 
 .accordion-title {
@@ -188,15 +188,15 @@
 }
 
 .accordion-content {
-  background-color: var(--button-accent); /* Using button-accent for light theme */
+  background-color: var(--button-accent); 
   padding: 0.5rem;
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
   font-size: 0.75rem;
-  color: var(--text-color); /* Using text-color for contrast */
+  color: var(--text-color); 
 }
 
 .dark .accordion-content {
-  background-color: var(--dropdown-bg); /* Using dropdown-bg for dark theme */
-  color: var(--dropdown-text); /* Using dropdown-text for dark theme */
+  background-color: var(--dropdown-bg);
+  color: var(--dropdown-text); 
 }

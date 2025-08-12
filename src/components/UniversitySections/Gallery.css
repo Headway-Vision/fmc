@@ -119,9 +119,7 @@
   background: #ffcc00; /* Yellow color for hover state */
 }
 
-/* =========================
-   PREVIEW MODAL
-========================= */
+/*  PREVIEW MODAL*/
 .preview-modal {
   position: fixed;
   top: 0;

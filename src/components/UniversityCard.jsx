@@ -1,4 +1,4 @@
-// src/components/UniversityCard.jsx
+
 import React from 'react';
 
 const UniversityCard = ({ university }) => {

@@ -1,4 +1,4 @@
-// src/components/QACard.jsx
+
 import React from 'react';
 
 const QACard = ({ question }) => {

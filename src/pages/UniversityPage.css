@@ -183,7 +183,7 @@ nav select:hover {
 }
 
 /* Tab Navigation Styles */
-/* Tab Navigation Styles */
+
 .tab-navigation {
   margin: 0 auto;
   padding: 1rem;
@@ -193,7 +193,7 @@ nav select:hover {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center; /* Added to center the navigation */
+  justify-content: center; 
 }
 
 .tab-scroll-button {

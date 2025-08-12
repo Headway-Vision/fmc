@@ -1,4 +1,4 @@
-// src/components/FormInput.jsx
+
 import React from 'react';
 
 const FormInput = ({ label, type = "text", name, value, onChange, placeholder }) => {

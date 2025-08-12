@@ -15,7 +15,7 @@
   gap: 0.75rem;
   width: 90%;
   justify-content: center;
-  align-items: stretch; /* Makes all cards in a row the same height */
+  align-items: stretch; 
 }
 
 .facilities-title {
@@ -42,7 +42,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%; /* Makes them match tallest card in row */
+  height: 100%; 
 }
 
 .facility-header {
@@ -70,7 +70,7 @@
 }
 
 .reviews {
-  flex-grow: 1; /* Pushes button to bottom */
+  flex-grow: 1; 
 }
 
 .reviews ul {
@@ -82,7 +82,7 @@
   margin-bottom: 0.25rem;
 }
 .add-review {
-  margin-top: auto; /* Sticks button to bottom */
+  margin-top: auto; 
 }
 
 .review-button {
@@ -96,7 +96,7 @@
   font-size: 0.75rem;
   cursor: pointer;
   transition: background-color 0.3s;
-  width: 100%; /* Full width button */
+  width: 100%; 
 }
 
 .review-button:hover {

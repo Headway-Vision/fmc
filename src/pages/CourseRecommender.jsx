@@ -1,4 +1,4 @@
-// src/pages/CourseRecommender.jsx
+
 import React from 'react';
 
 const CourseRecommender = () => {

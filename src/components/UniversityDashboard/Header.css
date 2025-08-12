@@ -78,3 +78,6 @@
   user-select: none;
   cursor: default;
 }
+.ud-profile:hover {
+  background-color: var(--color-primary-dark);
+}

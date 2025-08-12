@@ -25,9 +25,11 @@ case "profile":
     </div>
   );
     case "courses":
-      return (
-            <Courses />
-      );
+  return (
+    <div className="ud-page">
+      <Courses />
+    </div>
+  );
     case "news":
       return (
         <div className="ud-page">

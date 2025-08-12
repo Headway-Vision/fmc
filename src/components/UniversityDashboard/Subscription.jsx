@@ -113,22 +113,22 @@ export default function Subscription() {
         <div className="billing-details">
           <div className="billing-item">
             <label>Corporate Name</label>
-            <p>Ikas Limited</p>
+            <p>XYZ</p>
           </div>
 
           <div className="billing-item">
             <label>Address</label>
-            <p>Koru Mahallesi, No:4, North Star I...</p>
+            <p>, No:4, I...</p>
           </div>
 
           <div className="billing-item">
             <label>Tax Department</label>
-            <p>Kavakli Dere</p>
+            <p>ABCD</p>
           </div>
 
           <div className="billing-item">
             <label>Tax ID</label>
-            <p>3294829123</p>
+            <p>32948291000</p>
           </div>
         </div>
 

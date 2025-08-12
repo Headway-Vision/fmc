@@ -6,27 +6,27 @@ import { BiPlus } from 'react-icons/bi';
 import './Facilities.css';
 
 const facilitiesData = [
-  { id: 1, name: 'Library', icon: <FaBook />, description: 'Well-stocked central library with academic and reference materials.', reviews: ['Quiet place to study.', 'Huge collection of books.'] },
-  { id: 2, name: 'Digital Library', icon: <MdLibraryBooks />, description: 'Access to e-books, journals, and research databases.', reviews: ['Easy to use and modern.', 'Great for last-minute references.'] },
-  { id: 3, name: 'Computer Lab', icon: <MdComputer />, description: 'High-speed systems with all major software installed.', reviews: ['Well maintained PCs.', 'Good internet speed.'] },
-  { id: 4, name: 'Mechanical Lab', icon: <FaFlask />, description: 'Equipped with tools and machines for practical mechanical learning.', reviews: [] },
-  { id: 5, name: 'Civil Lab', icon: <FaBuilding />, description: 'Advanced tools and models for structural and civil engineering studies.', reviews: [] },
-  { id: 6, name: 'Electrical Lab', icon: <FaBolt />, description: 'Practical exposure to circuits, power systems, and measurements.', reviews: [] },
-  { id: 7, name: 'Digital Classroom', icon: <FaChalkboardTeacher />, description: 'Smart boards, digital content, and interactive teaching setup.', reviews: [] },
-  { id: 8, name: 'AC Classroom', icon: <FaTemperatureHigh />, description: 'Air-conditioned classrooms for comfortable learning environment.', reviews: [] },
-  { id: 9, name: 'Auditorium', icon: <MdMeetingRoom />, description: 'Large auditorium for events, seminars, and presentations.', reviews: [] },
-  { id: 10, name: 'Transport', icon: <FaBus />, description: 'Safe and reliable transportation facility for students and staff.', reviews: [] },
-  { id: 11, name: 'Canteen', icon: <FaUtensils />, description: 'Affordable and hygienic food available on campus.', reviews: [] },
-  { id: 12, name: 'Gym', icon: <FaDumbbell />, description: 'Fully equipped gym for students’ fitness and health.', reviews: [] },
-  { id: 13, name: 'Clinic', icon: <FaClinicMedical />, description: 'Campus clinic with basic medical support and nurse.', reviews: [] },
-  { id: 14, name: 'Hospital', icon: <FaHospital />, description: 'Nearby hospital access for advanced treatments.', reviews: [] },
-  { id: 15, name: 'Emergency Medical', icon: <MdEmergency />, description: '24x7 emergency medical service available on campus.', reviews: [] },
-  { id: 16, name: 'Cricket Ground', icon: <GiCricketBat />, description: 'Well-maintained ground for regular matches and practice.', reviews: [] },
-  { id: 17, name: 'Football Ground', icon: <GiSoccerBall />, description: 'Full-size football field with proper turf.', reviews: [] },
-  { id: 18, name: 'R&D Cell', icon: <FaGraduationCap />, description: 'Support for student research, innovation, and project funding.', reviews: [] },
-  { id: 19, name: 'Cafeteria', icon: <FaUtensils />, description: 'Relaxed space for meals and group discussions.', reviews: [] },
-  { id: 20, name: 'Boys Hostel', icon: <FaUsers />, description: 'Comfortable accommodation with mess and security.', reviews: [] },
-  { id: 21, name: 'ATM', icon: <FaMoneyBillWave />, description: 'On-campus ATM for quick financial access.', reviews: [] },
+  { id: 1, name: 'Library', icon: <FaBook style={{ color: '#007bff' }} />, description: 'Well-stocked central library with academic and reference materials.', reviews: ['Quiet place to study.', 'Huge collection of books.'] },
+  { id: 2, name: 'Digital Library', icon: <MdLibraryBooks style={{ color: '#007bff' }} />, description: 'Access to e-books, journals, and research databases.', reviews: ['Easy to use and modern.', 'Great for last-minute references.'] },
+  { id: 3, name: 'Computer Lab', icon: <MdComputer style={{ color: '#007bff' }} />, description: 'High-speed systems with all major software installed.', reviews: ['Well maintained PCs.', 'Good internet speed.'] },
+  { id: 4, name: 'Mechanical Lab', icon: <FaFlask style={{ color: '#007bff' }} />, description: 'Equipped with tools and machines for practical mechanical learning.', reviews: [] },
+  { id: 5, name: 'Civil Lab', icon: <FaBuilding style={{ color: '#007bff' }} />, description: 'Advanced tools and models for structural and civil engineering studies.', reviews: [] },
+  { id: 6, name: 'Electrical Lab', icon: <FaBolt style={{ color: '#007bff' }} />, description: 'Practical exposure to circuits, power systems, and measurements.', reviews: [] },
+  { id: 7, name: 'Digital Classroom', icon: <FaChalkboardTeacher style={{ color: '#007bff' }} />, description: 'Smart boards, digital content, and interactive teaching setup.', reviews: [] },
+  { id: 8, name: 'AC Classroom', icon: <FaTemperatureHigh style={{ color: '#007bff' }} />, description: 'Air-conditioned classrooms for comfortable learning environment.', reviews: [] },
+  { id: 9, name: 'Auditorium', icon: <MdMeetingRoom style={{ color: '#007bff' }} />, description: 'Large auditorium for events, seminars, and presentations.', reviews: [] },
+  { id: 10, name: 'Transport', icon: <FaBus style={{ color: '#007bff' }} />, description: 'Safe and reliable transportation facility for students and staff.', reviews: [] },
+  { id: 11, name: 'Canteen', icon: <FaUtensils style={{ color: '#007bff' }} />, description: 'Affordable and hygienic food available on campus.', reviews: [] },
+  { id: 12, name: 'Gym', icon: <FaDumbbell style={{ color: '#007bff' }} />, description: 'Fully equipped gym for students’ fitness and health.', reviews: [] },
+  { id: 13, name: 'Clinic', icon: <FaClinicMedical style={{ color: '#007bff' }} />, description: 'Campus clinic with basic medical support and nurse.', reviews: [] },
+  { id: 14, name: 'Hospital', icon: <FaHospital style={{ color: '#007bff' }} />, description: 'Nearby hospital access for advanced treatments.', reviews: [] },
+  { id: 15, name: 'Emergency Medical', icon: <MdEmergency style={{ color: '#007bff' }} />, description: '24x7 emergency medical service available on campus.', reviews: [] },
+  { id: 16, name: 'Cricket Ground', icon: <GiCricketBat style={{ color: '#007bff' }} />, description: 'Well-maintained ground for regular matches and practice.', reviews: [] },
+  { id: 17, name: 'Football Ground', icon: <GiSoccerBall style={{ color: '#007bff' }} />, description: 'Full-size football field with proper turf.', reviews: [] },
+  { id: 18, name: 'R&D Cell', icon: <FaGraduationCap style={{ color: '#007bff' }} />, description: 'Support for student research, innovation, and project funding.', reviews: [] },
+  { id: 19, name: 'Cafeteria', icon: <FaUtensils style={{ color: '#007bff' }} />, description: 'Relaxed space for meals and group discussions.', reviews: [] },
+  { id: 20, name: 'Boys Hostel', icon: <FaUsers style={{ color: '#007bff' }} />, description: 'Comfortable accommodation with mess and security.', reviews: [] },
+  { id: 21, name: 'ATM', icon: <FaMoneyBillWave style={{ color: '#007bff' }} />, description: 'On-campus ATM for quick financial access.', reviews: [] },
 ];
 
 const Facilities = ({ darkMode }) => {
@@ -62,10 +62,15 @@ const Facilities = ({ darkMode }) => {
 
   return (
     <div className={`facilities-container ${darkMode ? 'dark' : ''}`}>
-      <h2 className="facilities-title">Campus Facilities</h2>
+      <h2 className="facilities-title" style={{ color: '#007bff' }}>Campus Facilities</h2>
       <div className="facilities-grid">
         {facilitiesData.map((facility) => (
-          <div key={facility.id} className="facility-card">
+          <div
+            key={facility.id}
+            className="facility-card"
+            onMouseEnter={(e) => { e.currentTarget.querySelector('.facility-icon').firstChild.style.color = '#ffcc00'; }}
+            onMouseLeave={(e) => { e.currentTarget.querySelector('.facility-icon').firstChild.style.color = '#007bff'; }}
+          >
             <div className="facility-header">
               <span className="facility-icon">{facility.icon}</span>
               <h3 className="facility-title">{facility.name}</h3>
@@ -85,6 +90,8 @@ const Facilities = ({ darkMode }) => {
             <button
               onClick={() => setSelectedFacility(facility)}
               className="review-button"
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#ffcc00'; e.currentTarget.style.color = '#000000'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'var(--button-primary)'; e.currentTarget.style.color = '#FFFFFF'; }}
             >
               <BiPlus className="mr-1" /> Review
             </button>

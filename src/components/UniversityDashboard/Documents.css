@@ -1,0 +1,48 @@
+.ud-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ud-page h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.ud-page p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.ud-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.ud-card h4 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.ud-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.ud-btn:hover {
+  background-color: #0056b3;
+}

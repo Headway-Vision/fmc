@@ -1,0 +1,74 @@
+.ud-app-board h3 {
+  margin-top: 0;
+}
+
+.ud-app-filters {
+  margin: 0.5rem 0 1rem 0;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ud-app-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ud-app-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease;
+}
+
+.ud-app-row:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.ud-app-sub {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* Status badges */
+.ud-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  user-select: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.ud-badge-new {
+  background-color: #10b981; /* emerald-500 */
+  color: white;
+}
+
+.ud-badge-review {
+  background-color: #3b82f6; /* blue-500 */
+  color: white;
+}
+
+.ud-badge-shortlisted {
+  background-color: #f59e0b; /* amber-500 */
+  color: white;
+}
+
+.ud-badge-accepted {
+  background-color: #2563eb; /* blue-600 */
+  color: white;
+}
+
+.ud-badge-rejected {
+  background-color: #ef4444; /* red-500 */
+  color: white;
+}

@@ -1,3 +1,4 @@
+
 :root {
   --background-color: #F9FAFB;
   --text-color: #1E293B;
@@ -63,10 +64,22 @@ button:hover:not(:disabled) {
   background-color: var(--button-hover);
   transform: translateY(-2px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+input {
+  border: 1px solid #D1D5DB;
+}
+
+button {
+  transition: background-color 0.3s;
 }
 
 button:disabled {
   cursor: not-allowed;
+
   opacity: 0.5;
   transform: none;
 }
@@ -154,4 +167,8 @@ img {
   input {
     padding: 0.75rem 1rem;
   }
+}
+
+.shadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }

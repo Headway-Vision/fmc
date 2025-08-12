@@ -488,7 +488,7 @@ export default function UniversityDashboard() {
 
       <div className="grid dashboard-grid">
         <div className="card large">
-          <div className="card-head"><h3>Student Growth</h3><span className="muted">Last 6 months</span></div>
+          <div className="card-head"><h3>Student increse</h3><span className="muted">Last 6 months</span></div>
           <LineChart data={monthlyGrowth} width={420} height={140} />
         </div>
 

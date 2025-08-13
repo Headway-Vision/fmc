@@ -1,0 +1,154 @@
+/* UniversityBannerSlider.css */
+:root {
+  --color-bg-light: #f9fafb;
+  --color-bg-dark: #1e293b;
+  --color-text-light: #111827;
+  --color-text-dark: #f3f4f6;
+  --color-primary: #3b82f6; /* Blue for buttons and active dots */
+  --color-primary-dark: #2563eb;
+  --color-accent: #fbbf24; /* Yellow for hover states */
+  --color-muted: #6b7280;
+  --color-card-bg-light: #ffffff;
+  --color-card-bg-dark: #334155;
+  --color-border-light: #e5e7eb;
+  --color-border-dark: #475569;
+}
+
+[data-theme="light"] {
+  --bg-color: var(--color-bg-light);
+  --text-color: var(--color-text-light);
+  --card-bg: var(--color-card-bg-light);
+  --border-color: var(--color-border-light);
+  --blur-bg: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] {
+  --bg-color: var(--color-bg-dark);
+  --text-color: var(--color-text-dark);
+  --card-bg: var(--color-card-bg-dark);
+  --border-color: var(--color-border-dark);
+  --blur-bg: rgba(51, 65, 85, 0.8); /* Darker blur for dark mode */
+}
+
+.university-banner-slider {
+  position: relative;
+  width: 100%;
+  height: 16rem;
+  overflow: hidden;
+}
+
+.banner-slides {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.university-banner {
+  flex: 0 0 100%;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-content {
+  margin: 0 auto;
+  padding: 0.5rem;
+  color: var(--text-color);
+}
+
+.lower-blur {
+  background-color: var(--blur-bg);
+  backdrop-filter: blur(8px);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.university-logo {
+  height: 3rem;
+  width: 3rem;
+  object-fit: contain;
+  border-radius: 0.25rem;
+}
+
+.lower-blur h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.banner-dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.banner-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.banner-dot.active {
+  background-color: var(--color-primary);
+}
+
+.banner-dot:hover {
+  background-color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .university-banner {
+    height: 14rem;
+  }
+
+  .lower-blur h1 {
+    font-size: 1.25rem;
+  }
+
+  .university-logo {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .university-banner {
+    height: 12rem;
+  }
+
+  .lower-blur {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .lower-blur h1 {
+    font-size: 1rem;
+  }
+
+  .university-logo {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .banner-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+}

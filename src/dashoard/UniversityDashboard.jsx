@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/UniversityDashboard/Header";
 import Sidebar from "../components/UniversityDashboard/Sidebar";
 import MainView from "../components/UniversityDashboard/MainView";
-import RightWidgets from "../components/UniversityDashboard/RightWidgets";
 import "../components/UniversityDashboard/variables.css"; // Assuming you have a CSS file for styling
 import "./universitydashboard.css";
 
@@ -51,7 +50,7 @@ export default function UniversityDashboard() {
             <div>© {new Date().getFullYear()} University Admin • Support • Help Docs • Contact</div>
           </footer>
         </main>
-        <RightWidgets />
+       
       </div>
     </div>
   );

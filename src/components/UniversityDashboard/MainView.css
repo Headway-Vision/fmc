@@ -84,11 +84,11 @@
   font-weight: 600;
   text-align: center;
   box-shadow: var(--shadow-sm);
-  min-height: 140px; /* Ensures uniform tall height */
-  font-size: 1rem; /* Slightly larger text */
+  min-height: 140px; 
+  font-size: 1rem; 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Vertically center text */
+  justify-content: center; 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 

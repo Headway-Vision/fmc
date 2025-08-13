@@ -1,4 +1,3 @@
-// src/components/UniversityDashboard/ApplicationBoard.jsx
 import React, { useState } from "react";
 import "./ApplicationBoard.css"; // Updated CSS file for styling
 

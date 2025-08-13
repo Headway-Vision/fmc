@@ -1,4 +1,3 @@
-// src/dashboard/UniversityDashboard.jsx
 import React, { useState, useEffect } from "react";
 import Header from "../components/UniversityDashboard/Header";
 import Sidebar from "../components/UniversityDashboard/Sidebar";

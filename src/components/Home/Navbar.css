@@ -1,18 +1,8 @@
-/* ==========================
-   Navbar + Modal — Updated
-   - Fixes modal button text visibility in dark theme
-   - Ensures colors rely on theme variables
-   - Improves focus states and accessibility
-   - Small responsive tweaks
-   ========================== */
-
-/* Theme Variables (change --accent-color here to remove the blue highlight) */
 :root {
   --bg-primary: #ffffff;
   --text-primary: #1a202c;
   --text-secondary: #4a5568;
 
-  /* Accent color (used for icons / primary actions). Change this if you want to remove the light-blue look) */
   --accent-color: #3182ce;
 
   /* Button colors */
@@ -22,7 +12,6 @@
   --btn-hover-bg: #e2e8f0;
   --hover-bg: #f7fafc;
 
-  /* When using an accent-colored button, this is the text color on top of the accent */
   --btn-on-accent: #ffffff;
 }
 
@@ -40,16 +29,14 @@
   --btn-on-accent: #1a202c;
 }
 
-/* --------------------------
-   General Navbar Styling
-   -------------------------- */
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   background-color: var(--bg-primary);
-  color: var(--text-primary); /* fallback text color for things that inherit */
+  color: var(--text-primary); 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
   transition: background-color 0.3s ease, color 0.3s ease;
   position: relative;
@@ -108,7 +95,7 @@
 .navbar-links a:focus,
 .navbar-links button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.12); /* subtle focus ring */
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.12); 
   border-radius: 0.25rem;
 }
 
@@ -158,9 +145,7 @@
   cursor: pointer;
 }
 
-/* --------------------------
-   Modal Styling
-   -------------------------- */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -189,7 +174,7 @@
 .modal h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: var(--text-primary); /* explicit — ensures visibility in both themes */
+  color: var(--text-primary);
 }
 
 .modal p {
@@ -237,9 +222,7 @@
   box-shadow: 0 0 0 4px rgba(99, 179, 237, 0.14);
 }
 
-/* --------------------------
-   Responsive Design
-   -------------------------- */
+
 @media (max-width: 768px) {
   .mobile-menu-btn {
     display: block;

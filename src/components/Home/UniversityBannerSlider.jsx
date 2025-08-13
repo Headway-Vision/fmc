@@ -1,7 +1,6 @@
-// UniversityBannerSlider.jsx
 import React, { useState, useEffect } from 'react';
 import './UniversityBannerSlider.css';
-import '../../components/UniversityDashboard/variables.css'; // Assuming this contains theme variables
+import '../../components/UniversityDashboard/variables.css'; 
 
 const UniversityBannerSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);

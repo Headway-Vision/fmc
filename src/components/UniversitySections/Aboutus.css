@@ -6,7 +6,7 @@
   flex-wrap: wrap;
   gap: 2rem;
   justify-content: center;
-  align-items: center; /* Center items vertically */
+  align-items: center; 
   min-height: 100vh;
 }
 
@@ -49,8 +49,8 @@
   max-width: 50%;
   flex: 1 1 300px;
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
+  justify-content: center; 
+  align-items: center; 
 }
 
 .image-carousel {
@@ -109,13 +109,13 @@
   }
 
   .about-us-image {
-    justify-content: center; /* Maintain centering on mobile */
+    justify-content: center; 
     align-items: center;
   }
 
   .image-carousel {
     height: 150px;
-    width: 90%; /* Adjust width for mobile */
+    width: 90%;
   }
 
   .carousel-image {

@@ -1,4 +1,3 @@
-// src/components/UniversityDashboard/Header.jsx
 import React from "react";
 import { FaBell, FaEnvelope, FaMoon, FaSun } from "react-icons/fa";
 import "./Header.css";

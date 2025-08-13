@@ -9,7 +9,7 @@ export default function AnalyticsDashboard() {
     { label: "Engagement Rate", value: "18.2%", change: "+112.71%", positive: true },
   ];
 
-  const followerGrowth = [6, 9, 4, 7, 10, 8, 5]; // fake data for bar chart
+  const followerGrowth = [6, 9, 4, 7, 10, 8, 5]; 
 
   return (
     <div className="analytics-container">

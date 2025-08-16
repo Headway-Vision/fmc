@@ -1,0 +1,74 @@
+
+
+.right-panel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--bg-color);
+}
+
+.right-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.right-panel::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+.right-panel::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.widget-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(145deg, var(--bg-color), var(--card-bg));
+}
+
+.widget-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.pie-chart .pie-segment {
+  animation: pie-grow 0.5s ease-in-out forwards;
+  transform-origin: 50% 50%;
+}
+
+@keyframes pie-grow {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1200px) {
+  .right-panel {
+    display: none;
+  }
+}
+
+/* Chart colors for pie chart */
+:root {
+  --chart-color1: #3b82f6; /* Blue */
+  --chart-color2: #10b981; /* Green */
+  --chart-color3: #f59e0b; /* Amber */
+  --chart-color4: #ef4444; /* Red */
+}

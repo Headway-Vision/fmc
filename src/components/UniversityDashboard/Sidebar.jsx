@@ -8,21 +8,19 @@ import {
   FaWallet,
   FaChartLine,
   FaBullhorn,
-  FaQuestionCircle,
   FaCog
 } from "react-icons/fa";
 import "./Sidebar.css";
 
 const MENU = [
   { id: "dashboard", label: "Dashboard", icon: FaTachometerAlt },
-  { id: "partner-institutes", label: "Partner Institutes", icon: FaUniversity },
-  { id: "students", label: "Students", icon: FaUserGraduate },
-  { id: "applications", label: "Applications", icon: FaInbox },
-  { id: "payments-receipts", label: "Payments & Receipts", icon: FaFileInvoiceDollar },
-  { id: "commission-wallet", label: "Commission Wallet", icon: FaWallet },
-  { id: "reports-analytics", label: "Reports & Analytics", icon: FaChartLine },
-  { id: "announcements", label: "Announcements", icon: FaBullhorn },
-  { id: "support", label: "Support", icon: FaQuestionCircle },
+  { id: "My Profile", label: "My Profile", icon: FaUniversity },
+  { id: "Courses & Fees", label: "Courses & Fees", icon: FaUserGraduate },
+  { id: "News", label: "News", icon: FaInbox },
+  { id: "Applications", label: "Applications", icon: FaFileInvoiceDollar },
+  { id: "Documents", label: "Documents", icon: FaWallet },
+  { id: "analytics", label: "Analytics", icon: FaChartLine }, // Updated id to match MainView
+  { id: "Subscription", label: "Subscription", icon: FaBullhorn },
   { id: "settings", label: "Settings", icon: FaCog }
 ];
 
@@ -35,7 +33,7 @@ export default function Sidebar({ sidebarOpen, setRoute, currentRoute }) {
         style={{ cursor: "pointer" }}
       >
         <div className="ud-logo">
-          <strong>Agent Dashboard</strong>
+          <strong>University Dashboard</strong>
         </div>
       </div>
 

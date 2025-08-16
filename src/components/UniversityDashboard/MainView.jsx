@@ -4,14 +4,14 @@ import Courses from "./Courses";
 import LatestNews from "./LatestNews";
 import ApplicationBoard from "./ApplicationBoard";
 import Documents from "./Documents";
-import AnalyticsDashboard from "./AnalyticsDashboard";
+import AnalyticsDashboard from "./AnalyticsDashboard"; // Updated import to use AnalyticsDashboard
 import Subscription from "./Subscription";
 import Settings from "./Settings";
 import "./MainView.css";
 
 export default function MainView({ route }) {
   switch (route) {
-    case "profile":
+    case "My Profile":
       return (
         <div className="ud-page">
           <h2>My Profile</h2>
@@ -20,10 +20,10 @@ export default function MainView({ route }) {
         </div>
       );
 
-    case "courses":
+    case "Courses & Fees":
       return <Courses />;
 
-    case "news":
+    case "News":
       return (
         <div className="ud-page">
           <h2>News & Updates</h2>
@@ -32,20 +32,16 @@ export default function MainView({ route }) {
         </div>
       );
 
-    case "applications":
+    case "Applications":
       return (
         <div className="ud-page">
-          <h2>Applications</h2>
-          <p>View and manage student applications with status filters.</p>
           <ApplicationBoard />
         </div>
       );
 
-    case "documents":
+    case "Documents":
       return (
         <div className="ud-page">
-          <h2>Documents</h2>
-          <p>Upload and manage accreditations (UGC, AICTE, NAAC, etc.).</p>
           <Documents />
         </div>
       );
@@ -53,14 +49,16 @@ export default function MainView({ route }) {
     case "analytics":
       return (
         <div className="ud-page">
-          <h2>Analytics Dashboard</h2>
-          <p>Track profile performance, leads, and rankings.</p>
           <AnalyticsDashboard />
         </div>
       );
 
-    case "subscription":
-      return <Subscription />;
+    case "Subscription":
+      return (
+        <div className="ud-page">
+          <Subscription />
+        </div>
+      );
 
     case "settings":
       return (

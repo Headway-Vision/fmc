@@ -1,24 +1,20 @@
 import React from "react";
-import StatsCards from "./StatsCards";
-import RecentApplications from "./RecentApplications";
-import RecentReceipts from "./RecentReceipts";
 import "./MainView.css";
+import DashboardAgent from "./DashboardAgent"; // Import DashboardAgent component
 
 export default function MainView({ route }) {
   switch (route) {
     case "dashboard":
+      return (
+        <div className="main-view">
+          <DashboardAgent />
+        </div>
+      );
     default:
       return (
-        <div className="ad-page">
-          <StatsCards />
-          <div className="ad-actions">
-            <button className="ad-btn">+ Add New Student</button>
-            <button className="ad-btn">+ New Application</button>
-          </div>
-          <div className="ad-tables">
-            <RecentApplications />
-            <RecentReceipts />
-          </div>
+        <div className="main-view">
+          <h2>Welcome to DashboardAgent</h2>
+          <p>Please select a valid route.</p>
         </div>
       );
   }

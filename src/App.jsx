@@ -16,6 +16,7 @@ import UniversityPage from './pages/UniversityPage';
 import UniversityDashboard from './dashoard/UniversityDashboard';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
+import AgentDashboard from './AgentDashboard/Agent';
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/university-dashboard" element={<UniversityDashboard />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsConditions />} />
+          <Route path="/agent-dashboard" element={<AgentDashboard />} />
 
           {/* Optional: 404 Page */}
           <Route path="*" element={<div className="p-6 text-center text-red-600">Page Not Found</div>} />

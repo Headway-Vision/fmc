@@ -1,0 +1,56 @@
+.applications-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.applications-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.applications-table th,
+.applications-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.applications-table th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: #374151;
+}
+
+.applications-table tr:hover {
+  background-color: #f9fafb;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.approve-btn {
+  background-color: #10b981;
+  color: white;
+}
+
+.approve-btn:hover {
+  background-color: #059669;
+}
+
+.reject-btn {
+  background-color: #ef4444;
+  color: white;
+}
+
+.reject-btn:hover {
+  background-color: #dc2626;
+}

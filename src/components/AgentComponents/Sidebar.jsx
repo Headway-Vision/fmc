@@ -15,10 +15,10 @@ import "./Sidebar.css";
 
 const MENU = [
   { id: "dashboard", label: "Dashboard", icon: FaHome },
-  { id: "partner-institutes", label: "Partner Institutes", icon: FaUniversity },
+  { id: "PartnerInstitutes", label: "Partner Institutes", icon: FaUniversity },
   { id: "students", label: "Students", icon: FaUserGraduate },
-  { id: "applications", label: "Applications", icon: FaInbox },
-  { id: "payments", label: "Payments & Receipts", icon: FaReceipt },
+  { id: "Applications", label: "Applications", icon: FaInbox },
+  { id: "Payments", label: "Payments & Receipts", icon: FaReceipt },
   { id: "commission-wallet", label: "Commission Wallet", icon: FaWallet },
   { id: "reports", label: "Reports & Analytics", icon: FaChartBar },
   { id: "announcements", label: "Announcements", icon: FaBullhorn },

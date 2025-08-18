@@ -82,16 +82,6 @@ const Home = () => {
       { name: 'King George’s Medical University', location: 'Lucknow', image: 'https://th.bing.com/th/id/OIP.wUj-xWSn0XaygcntiAvuoAHaEK?w=307&h=180', link: '/colleges/kgmu-lucknow' },
       { name: 'Grant Medical College', location: 'Mumbai', image: 'https://th.bing.com/th/id/OIP.eZMwNPQYF5NnZxcrwAA1dwHaEK?w=274&h=180', link: '/colleges/gmc-mumbai' },
     ],
-    BSc: [
-      { name: 'St. Stephen’s College', location: 'Delhi', image: 'https://th.bing.com/th/id/OIP.-XdCQ812TNwBrQ01MwhFOAHaE7?w=229&h=180', link: '/colleges/st-stephens-delhi' },
-      { name: 'Hindu College', location: 'Delhi', image: 'https://th.bing.com/th/id/OIP.WyKxGs6k3b7USZMUdQT63wHaEK?w=232&h=180', link: '/colleges/hindu-college' },
-      { name: 'Miranda House', location: 'Delhi', image: 'https://th.bing.com/th/id/OIP.UGeOBQ4Tu63GqhEopROwyQHaFS?w=174&h=180', link: '/colleges/miranda-house' },
-      { name: 'Loyola College', location: 'Chennai', image: 'https://th.bing.com/th/id/OIP.l1zc_zdqjLU-OSzAVxgyhgHaE5?w=192&h=180', link: '/colleges/loyola-chennai' },
-      { name: 'Christ University', location: 'Bangalore', image: 'https://th.bing.com/th/id/OIP.v6Qz5Xu_R5PWTDb1cgGuywHaFj?w=268&h=200', link: '/colleges/christ-university' },
-      { name: 'Presidency College', location: 'Chennai', image: 'https://th.bing.com/th/id/OIP.3icm7xxxn40VdfPK9d036wHaEu?w=334&h=180', link: '/colleges/presidency-chennai' },
-      { name: 'Madras Christian College', location: 'Chennai', image: 'https://th.bing.com/th/id/OIP.wUj-xWSn0XaygcntiAvuoAHaEK?w=307&h=180', link: '/colleges/mcc-chennai' },
-      { name: 'Fergusson College', location: 'Pune', image: 'https://th.bing.com/th/id/OIP.eZMwNPQYF5NnZxcrwAA1dwHaEK?w=274&h=180', link: '/colleges/fergusson-pune' },
-    ],
   };
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -168,7 +158,6 @@ const Home = () => {
         <CourseSection courseName="MBA" universities={courseData.MBA} />
         <CourseSection courseName="B.Tech" universities={courseData.BTech} />
         <CourseSection courseName="MBBS" universities={courseData.MBBS} />
-        <CourseSection courseName="BSc" universities={courseData.BSc} />
       </div>
       <Footer />
     </>

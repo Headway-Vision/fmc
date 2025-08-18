@@ -21,9 +21,9 @@ const MENU = [
   { id: "Payments", label: "Payments & Receipts", icon: FaReceipt },
   { id: "commission-wallet", label: "Commission Wallet", icon: FaWallet },
   { id: "reports", label: "Reports & Analytics", icon: FaChartBar },
-  { id: "announcements", label: "Announcements", icon: FaBullhorn },
-  { id: "support", label: "Support", icon: FaLifeRing },
-  { id: "settings", label: "Settings", icon: FaCog },
+  { id: "Announcements", label: "Announcements", icon: FaBullhorn },
+  { id: "Support", label: "Support", icon: FaLifeRing },
+  { id: "Settings", label: "Settings", icon: FaCog },
 ];
 
 export default function Sidebar({ sidebarOpen, setRoute, currentRoute }) {

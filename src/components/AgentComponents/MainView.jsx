@@ -7,6 +7,9 @@ import Applications from "./Applications";
 import Payments from "./payments";
 import Wallet from "./wallet";
 import Reports from "./reports";
+import Announcements from "./Announcements";
+import Support from "./support";
+import Settings from "./settings";
 
 export default function MainView({ route }) {
   switch (route) {
@@ -50,6 +53,24 @@ export default function MainView({ route }) {
       return (
         <div className="main-view">
           <Reports />
+        </div>
+      );
+      case "Announcements": // Updated to lowercase
+      return (
+        <div className="main-view">
+          <Announcements />
+        </div>
+      );
+      case "Support": // Updated to lowercase
+      return (
+        <div className="main-view">
+          <Support />
+        </div>
+      );
+      case "Settings": // Updated to lowercase
+      return (
+        <div className="main-view">
+          <Settings />
         </div>
       );
     default:

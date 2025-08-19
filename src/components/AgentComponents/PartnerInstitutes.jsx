@@ -5,26 +5,26 @@ export default function PartnerInstitutes() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedInstitute, setSelectedInstitute] = useState(null);
 
-  // Add Institute modal
+  
   const [showAddModal, setShowAddModal] = useState(false);
   const [form, setForm] = useState({ name: "", location: "", courses: "", commission: "" });
   const [error, setError] = useState("");
 
-  // Sorting
+ 
   const [sort, setSort] = useState({ key: "name", dir: "asc" });
 
-  // Pagination
+ 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  // Data (stateful so we can add rows)
+  
   const [institutes, setInstitutes] = useState([
     { id: 1, name: "ABC University", location: "New York, NY", courses: "MBA, B.Tech", commission: "10%" },
     { id: 2, name: "XYZ College", location: "San Francisco, CA", courses: "BBA, MCA", commission: "8%" },
     { id: 3, name: "Global Institute", location: "London, UK", courses: "MS, PhD", commission: "12%" },
   ]);
 
-  // Helpers
+ 
   const toPercentNumber = (val) =>
     Math.max(0, Math.min(100, Number(String(val).replace(/[^\d.]/g, "")) || 0));
 
@@ -34,7 +34,7 @@ export default function PartnerInstitutes() {
       .map((s) => s.trim())
       .filter(Boolean);
 
-  // Filter
+ 
   const filtered = useMemo(() => {
     const q = searchTerm.trim().toLowerCase();
     if (!q) return institutes;
@@ -68,14 +68,13 @@ export default function PartnerInstitutes() {
     return list;
   }, [filtered, sort]);
 
-  // Pagination derived
   const total = sorted.length;
   const totalPages = Math.max(1, Math.ceil(total / rowsPerPage));
   const currentPage = Math.min(page, totalPages);
   const start = (currentPage - 1) * rowsPerPage;
   const pageRows = sorted.slice(start, start + rowsPerPage);
 
-  // Handlers
+  
   const handleRowClick = (institute) => setSelectedInstitute(institute);
   const closeDetailsModal = () => setSelectedInstitute(null);
 
@@ -154,7 +153,6 @@ export default function PartnerInstitutes() {
     return () => window.removeEventListener("keydown", onKey);
   }, [selectedInstitute, showAddModal]);
 
-  // Components
   const SortIcon = ({ active, dir }) => (
     <svg className="sort-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
       {active ? (

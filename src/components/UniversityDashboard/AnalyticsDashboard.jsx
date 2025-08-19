@@ -22,7 +22,7 @@ export default function AnalyticsDashboard() {
         </select>
       </div>
 
-      {/* Top Stats */}
+      
       <div className="stats-grid">
         {stats.map((stat, i) => (
           <div key={i} className="stats-card">
@@ -35,9 +35,9 @@ export default function AnalyticsDashboard() {
         ))}
       </div>
 
-      {/* Bottom Section */}
+      
       <div className="bottom-grid">
-        {/* Likes Progress Circle */}
+        
         <div className="progress-card">
           <h4>Get More Likes this Summer</h4>
           <div className="progress-circle">
@@ -61,7 +61,7 @@ export default function AnalyticsDashboard() {
           <p>You are at 77% of 36,000 likes</p>
         </div>
 
-        {/* Follower Growth Chart */}
+        
         <div className="chart-card">
           <h4>Follower Growth</h4>
           <div className="bar-chart">

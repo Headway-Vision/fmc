@@ -92,12 +92,11 @@ td {
   color: var(--color-muted);
 }
 
-/* Alternating row colors for better readability */
+
 tbody tr:nth-child(even) {
   background: var(--card-bg);
 }
 
-/* Individual stat card */
 .ad-stat-card {
   padding: 1.5rem;
   border-radius: 1rem;

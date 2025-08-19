@@ -14,7 +14,7 @@ export default function Courses() {
   const [isCoursesCollapsed, setIsCoursesCollapsed] = useState(false);
   const [isUploadingCourses, setIsUploadingCourses] = useState(false);
 
-  // Handle Excel upload for courses
+  // Excel upload for courses
   const handleCourseFileUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;

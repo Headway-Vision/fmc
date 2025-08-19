@@ -65,7 +65,7 @@
   color: var(--color-primary-dark);
 }
 
-/* Grid Layout */
+
 .subscription-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

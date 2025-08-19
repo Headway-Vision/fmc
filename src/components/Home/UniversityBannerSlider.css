@@ -3,9 +3,9 @@
   --color-bg-dark: #1e293b;
   --color-text-light: #111827;
   --color-text-dark: #f3f4f6;
-  --color-primary: #3b82f6; /* Blue for buttons and active dots */
+  --color-primary: #3b82f6; 
   --color-primary-dark: #2563eb;
-  --color-accent: #fbbf24; /* Yellow for hover states */
+  --color-accent: #fbbf24; 
   --color-muted: #6b7280;
   --color-card-bg-light: #ffffff;
   --color-card-bg-dark: #334155;
@@ -26,7 +26,7 @@
   --text-color: var(--color-text-dark);
   --card-bg: var(--color-card-bg-dark);
   --border-color: var(--color-border-dark);
-  --blur-bg: rgba(51, 65, 85, 0.8); /* Darker blur for dark mode */
+  --blur-bg: rgba(51, 65, 85, 0.8); 
 }
 
 .university-banner-slider {

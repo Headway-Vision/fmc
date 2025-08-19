@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './reports.css';
 
 const Reports = () => {
-  const [filter, setFilter] = useState('All'); // Filter state for report table
+  const [filter, setFilter] = useState('All'); 
   const metrics = [
     { label: 'Total Applications', value: 150 },
     { label: 'Admissions Confirmed', value: 85 },

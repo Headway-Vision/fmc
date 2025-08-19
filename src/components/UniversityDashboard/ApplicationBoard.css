@@ -1,4 +1,4 @@
-/* Updated ApplicationBoard.css */
+
 
 .ud-app-board h3 {
   margin-top: 0;
@@ -100,27 +100,27 @@
 }
 
 .ud-badge-new {
-  background-color: #10b981; /* emerald-500 */
+  background-color: #10b981; 
   color: white;
 }
 
 .ud-badge-review {
-  background-color: #3b82f6; /* blue-500 */
+  background-color: #3b82f6; 
   color: white;
 }
 
 .ud-badge-shortlisted {
-  background-color: #f59e0b; /* amber-500 */
+  background-color: #f59e0b; 
   color: white;
 }
 
 .ud-badge-accepted {
-  background-color: #2563eb; /* blue-600 */
+  background-color: #2563eb;
   color: white;
 }
 
 .ud-badge-rejected {
-  background-color: #ef4444; /* red-500 */
+  background-color: #ef4444; 
   color: white;
 }
 

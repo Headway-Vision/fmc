@@ -4,7 +4,7 @@ import Courses from "./Courses";
 import LatestNews from "./LatestNews";
 import ApplicationBoard from "./ApplicationBoard";
 import Documents from "./Documents";
-import AnalyticsDashboard from "./AnalyticsDashboard"; // Updated import to use AnalyticsDashboard
+import AnalyticsDashboard from "./AnalyticsDashboard"; 
 import Subscription from "./Subscription";
 import Settings from "./Settings";
 import "./MainView.css";

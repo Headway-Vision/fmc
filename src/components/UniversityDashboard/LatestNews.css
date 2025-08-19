@@ -29,7 +29,7 @@
   padding-bottom: 0.4rem;
 }
 
-/* Grid layout: 3 columns desktop, 2 tablet, 1 mobile */
+
 .ud-news-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -117,7 +117,7 @@
   flex: 1;
 }
 
-/* Footer: date + actions */
+
 .ud-news-footer {
   display: flex;
   align-items: center;
@@ -162,7 +162,7 @@
   border: 1px solid rgba(239,68,68,0.08);
 }
 
-/* small tweaks for keyboard focus */
+
 .ud-btn:focus {
   outline: 3px solid rgba(37,99,235,0.12);
   outline-offset: 2px;

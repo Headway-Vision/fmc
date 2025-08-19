@@ -12,7 +12,7 @@ import {
   faSun,
   faMoon
 } from '@fortawesome/free-solid-svg-icons';
-import './Navbar.css'; // import CSS file
+import './Navbar.css'; 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

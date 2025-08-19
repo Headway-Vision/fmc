@@ -1,9 +1,9 @@
-/* =========================
+/*
    GALLERY LAYOUT
-========================= */
+ */
 .gallery-layout {
   display: flex;
-  gap: 2rem; /* spacing between gallery and sidebar */
+  gap: 2rem; 
   align-items: flex-start;
   max-width: 800px;
   margin: auto;
@@ -20,9 +20,9 @@
   }
 }
 
-/* =========================
+/* 
    GALLERY SECTIONS
-========================= */
+*/
 .gallery-section {
   width: 100%;
   margin-bottom: 2.5rem;
@@ -36,9 +36,9 @@
   text-align: center;
 }
 
-/* =========================
+/* 
    IMAGE GRID
-========================= */
+*/
 .image-layout {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -77,9 +77,8 @@
   transform: scale(1.05);
 }
 
-/* =========================
-   PREVIEW BUTTON
-========================= */
+/*
+   PREVIEW BUTTON*/
 .preview-btn {
   position: absolute;
   bottom: 8px;
@@ -98,16 +97,14 @@
   opacity: 1;
 }
 
-/* =========================
-   SHOW MORE CARD
-========================= */
+/*SHOW MORE CARD */
 .show-more-item {
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
   cursor: pointer;
-  background: #0055b8; /* Blue color for normal state */
+  background: #0055b8; 
   color: white;
   font-size: 14px;
   border-radius: 8px;
@@ -116,7 +113,7 @@
 }
 
 .show-more-item:hover {
-  background: #ffcc00; /* Yellow color for hover state */
+  background: #ffcc00;
 }
 
 /*  PREVIEW MODAL*/

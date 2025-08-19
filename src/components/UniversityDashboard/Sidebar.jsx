@@ -19,7 +19,7 @@ const MENU = [
   { id: "News", label: "News", icon: FaInbox },
   { id: "Applications", label: "Applications", icon: FaFileInvoiceDollar },
   { id: "Documents", label: "Documents", icon: FaWallet },
-  { id: "analytics", label: "Analytics", icon: FaChartLine }, // Updated id to match MainView
+  { id: "analytics", label: "Analytics", icon: FaChartLine }, 
   { id: "Subscription", label: "Subscription", icon: FaBullhorn },
   { id: "settings", label: "Settings", icon: FaCog }
 ];

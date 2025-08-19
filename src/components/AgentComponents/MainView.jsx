@@ -49,25 +49,25 @@ export default function MainView({ route }) {
           <Wallet />
         </div>
       );
-    case "reports": // Updated to lowercase
+    case "reports": 
       return (
         <div className="main-view">
           <Reports />
         </div>
       );
-      case "Announcements": // Updated to lowercase
+      case "Announcements":
       return (
         <div className="main-view">
           <Announcements />
         </div>
       );
-      case "Support": // Updated to lowercase
+      case "Support": 
       return (
         <div className="main-view">
           <Support />
         </div>
       );
-      case "Settings": // Updated to lowercase
+      case "Settings": 
       return (
         <div className="main-view">
           <Settings />

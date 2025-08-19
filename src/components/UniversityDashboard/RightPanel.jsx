@@ -10,7 +10,7 @@ export default function RightPanel() {
     { region: "Other", percentage: 10, color: "var(--chart-color4)" },
   ];
 
-  // Calculate SVG pie chart coordinates
+  // Calculate pie chart coordinates
   const calculatePieChart = () => {
     let startAngle = 0;
     return locationData.map((data) => {

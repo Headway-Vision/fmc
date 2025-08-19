@@ -93,7 +93,7 @@ export default function LatestNews() {
     },
   ];
 
-  // Group news by category
+  
   const groupedNews = news.reduce((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = [];
@@ -102,7 +102,7 @@ export default function LatestNews() {
     return acc;
   }, {});
 
-  // Placeholder functions for Edit and Delete
+ 
   const handleEdit = (id) => {
     alert(`Edit news item with ID: ${id} (placeholder)`);
   };

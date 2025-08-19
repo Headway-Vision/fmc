@@ -14,7 +14,7 @@ export default function Header({
 
   return (
     <header className="ad-header">
-      {/* Left: Sidebar toggle + search */}
+      {}
       <div className="ad-header-left">
         <button
           className="ad-icon-btn ad-sidebar-toggle"

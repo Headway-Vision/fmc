@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './wallet.css';
 
 const Wallet = () => {
-  const [balance, setBalance] = useState(3200.50); // Example balance
+  const [balance, setBalance] = useState(3200.50); 
   const [transactions, setTransactions] = useState([
     { id: 'T001', date: '2025-08-10', student: 'John Doe', course: 'Computer Science', amount: 500, status: 'Credited' },
     { id: 'T002', date: '2025-08-12', student: 'Jane Smith', course: 'Mathematics', amount: 450, status: 'Credited' },
@@ -10,10 +10,10 @@ const Wallet = () => {
   ]);
 
   const handleWithdraw = () => {
-    // Simulate withdrawal action
+    
     alert('Withdrawal request submitted!');
-    // In a real app, this would trigger an API call to process the withdrawal
-    setBalance(balance - 100); // Example deduction
+    
+    setBalance(balance - 100); 
     setTransactions([...transactions, {
       id: `T00${transactions.length + 1}`,
       date: new Date().toISOString().split('T')[0],
@@ -28,7 +28,7 @@ const Wallet = () => {
     <div className="wallet-container">
       <h1 className="text-3xl font-bold mb-6">Agent Panel - Commission Wallet</h1>
       
-      {/* Balance Card */}
+      
       <div className="wallet-balance-card">
         <h2 className="text-xl font-semibold">Current Balance</h2>
         <p className="text-4xl font-bold text-green-600">${balance.toFixed(2)}</p>
@@ -40,7 +40,7 @@ const Wallet = () => {
         </button>
       </div>
 
-      {/* Transaction History Table */}
+     
       <div className="overflow-x-auto mt-8">
         <h2 className="text-xl font-semibold mb-4">Transaction History</h2>
         <table className="wallet-table">

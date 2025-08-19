@@ -30,7 +30,7 @@ const UniversityBannerSlider = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % universities.length);
-    }, 3000); // Slide changes every 3 seconds
+    }, 3000); 
     return () => clearInterval(interval);
   }, [universities.length]);
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ApplicationBoard.css"; // Updated CSS file for styling
+import "./ApplicationBoard.css"; 
 
 export default function ApplicationBoard() {
   const statuses = ["New", "Review", "Shortlisted", "Accepted", "Rejected"];
@@ -17,13 +17,12 @@ export default function ApplicationBoard() {
   const [activeFilter, setActiveFilter] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Compute counts for each status
+ 
   const statusCounts = statuses.reduce((acc, status) => {
     acc[status] = applications.filter(app => app.status === status).length;
     return acc;
   }, {});
 
-  // Filtered applications
   const filteredApps = applications.filter(app => {
     const matchesFilter = !activeFilter || app.status === activeFilter;
     const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -46,7 +45,7 @@ export default function ApplicationBoard() {
     <section className="ud-card ud-app-board">
       <h3>Application Status Board</h3>
       
-      {/* Search Bar */}
+      
       <input 
         type="text" 
         className="ud-search-input"
@@ -55,7 +54,7 @@ export default function ApplicationBoard() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       
-      {/* Filters with Counts */}
+      
       <div className="ud-app-filters">
         <button 
           className={`ud-chip ${!activeFilter ? 'ud-chip-active' : ''}`} 
@@ -74,7 +73,7 @@ export default function ApplicationBoard() {
         ))}
       </div>
 
-      {/* Application List */}
+      
       <div className="ud-app-list">
         {filteredApps.length === 0 ? (
           <p className="ud-no-results">No applications match your search or filter.</p>

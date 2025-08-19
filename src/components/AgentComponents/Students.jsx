@@ -10,7 +10,7 @@ const Students = () => {
 
   const [query, setQuery] = useState('');
   const [theme, setTheme] = useState(() => {
-    // Try localStorage -> system preference -> 'light'
+    
     const saved = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
     if (saved) return saved;
     if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
@@ -19,7 +19,7 @@ const Students = () => {
     return 'light';
   });
 
-  // Apply theme to <html>
+  
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
     try { localStorage.setItem('theme', theme); } catch (_) {}
@@ -37,7 +37,7 @@ const Students = () => {
   }, [query, students]);
 
   const handleEdit = (id) => {
-    // Replace with your modal/form logic
+    
     alert(`Edit student #${id}`);
   };
 
@@ -48,7 +48,7 @@ const Students = () => {
   };
 
   const addStudent = () => {
-    // Demo add; replace with your actual add flow (modal/form)
+    
     const nextId = (students.at(-1)?.id ?? 0) + 1;
     setStudents(prev => [
       ...prev,

@@ -45,9 +45,11 @@ export default function AgentDashboard() {
         <Sidebar sidebarOpen={sidebarOpen} setRoute={setRoute} currentRoute={route} />
         <main className="ad-main" id="main-content" tabIndex="-1">
           <MainView route={route} />
-          <footer className="ad-footer">
-            <div>© {new Date().getFullYear()} Agent Dashboard • Support • Help Docs • Contact</div>
-          </footer>
+          {/* Footer */}
+<footer className="wallet-footer">
+  © 2025 Agent Dashboard • <a href="#">Support</a> • <a href="#">Help Docs</a> • <a href="#">Contact</a>
+</footer>
+
         </main>
       </div>
     </div>

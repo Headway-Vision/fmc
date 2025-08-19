@@ -54,3 +54,58 @@
 .refund-btn:hover {
   background-color: #d97706;
 }
+
+
+.status-select {
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  appearance: none; 
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%23374151' d='M0 0h10L5 6z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 20px; 
+}
+
+
+.status-pending {
+  color: #f59e0b; 
+}
+
+.status-completed {
+  color: #10b981; 
+}
+
+.status-refunded {
+  color: #ef4444; 
+}
+
+
+select.status-pending {
+  color: #f59e0b;
+}
+
+select.status-completed {
+  color: #10b981;
+}
+
+select.status-refunded {
+  color: #ef4444;
+}
+
+
+option.status-pending {
+  color: #f59e0b;
+}
+
+option.status-completed {
+  color: #10b981;
+}
+
+option.status-refunded {
+  color: #ef4444;
+}

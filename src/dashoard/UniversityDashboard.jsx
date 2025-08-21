@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/UniversityDashboard/Header";
 import Sidebar from "../components/UniversityDashboard/Sidebar";
 import MainView from "../components/UniversityDashboard/MainView";
-import RightPanel from "../components/UniversityDashboard/RightPanel";
 import Subscription from "../components/UniversityDashboard/Subscription";
 import AnalyticsDashboard from "../components/UniversityDashboard/AnalyticsDashboard";
 import Documents from "../components/UniversityDashboard/Documents";
@@ -54,9 +53,7 @@ export default function UniversityDashboard() {
             <div>© {new Date().getFullYear()} University Admin • Support • Help Docs • Contact</div>
           </footer>
         </main>
-        <aside className="ud-right-widgets">
-          <RightPanel />
-        </aside>
+        
       </div>
     </div>
   );

@@ -146,7 +146,7 @@
   border: 1px solid var(--border-color, #e5e7eb);
 }
 
-/* ---------- Table ---------- */
+/*Table*/
 table {
   width: 100%;
   border-collapse: separate;

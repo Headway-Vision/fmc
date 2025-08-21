@@ -1,12 +1,19 @@
 import React from "react";
-import { FaUserCog, FaShieldAlt, FaBell, FaPlug, FaGlobe } from "react-icons/fa";
+import {
+  FaUserCog,
+  FaShieldAlt,
+  FaBell,
+  FaPlug,
+  FaGlobe,
+} from "react-icons/fa";
 import "./Settings.css";
 
 export default function Settings() {
   const settingsOptions = [
     {
       title: "Profile Settings",
-      description: "Update your profile info, change password, and manage account details.",
+      description:
+        "Update your profile info, change password, and manage account details.",
       icon: <FaUserCog />,
       action: () => alert("Profile settings clicked"),
     },
@@ -38,8 +45,12 @@ export default function Settings() {
 
   return (
     <div className="settings-page">
-      <h2>Settings</h2>
-      <p className="settings-subtext">Manage your account, preferences, and integrations.</p>
+      <header className="settings-header">
+        <h2>⚙️ Settings</h2>
+        <p className="settings-subtext">
+          Manage your account, preferences, and integrations easily.
+        </p>
+      </header>
 
       <div className="settings-grid">
         {settingsOptions.map((item, idx) => (

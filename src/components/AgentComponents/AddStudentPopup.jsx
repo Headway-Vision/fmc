@@ -24,6 +24,7 @@ const initialState = {
   specialization: '',
   mode: '',
   hostelRequired: 'No',
+  university: '',
   documents: {
     marksheet: null,
     tc: null,
@@ -38,33 +39,40 @@ const initialState = {
 };
 
 const DOCUMENT_FIELDS = [
-  { name: 'marksheet',  label: 'Marksheet',                  accept: 'image/jpeg,image/png,application/pdf', required: true },
-  { name: 'tc',         label: 'Transfer Certificate (TC)',  accept: 'image/jpeg,image/png,application/pdf', required: true },
-  { name: 'migration',  label: 'Migration',                  accept: 'image/jpeg,image/png,application/pdf', required: false },
-  { name: 'photo',      label: 'Passport Photo',             accept: 'image/jpeg,image/png',                  required: true },
-  { name: 'idProof',    label: 'ID Proof',                   accept: 'image/jpeg,image/png,application/pdf', required: true },
+  { name: 'marksheet', label: 'Marksheet', accept: 'image/jpeg,image/png,application/pdf', required: true },
+  { name: 'tc', label: 'Transfer Certificate (TC)', accept: 'image/jpeg,image/png,application/pdf', required: true },
+  { name: 'migration', label: 'Migration', accept: 'image/jpeg,image/png,application/pdf', required: false },
+  { name: 'photo', label: 'Passport Photo', accept: 'image/jpeg,image/png', required: true },
+  { name: 'idProof', label: 'ID Proof', accept: 'image/jpeg,image/png,application/pdf', required: true },
 ];
 
 const SUBJECTS_BY_STREAM = {
   Science: [
-    'Physics','Chemistry','Mathematics','Biology','Computer Science','English',
-    'Physical Education','Informatics Practices','Environmental Science'
+    'Physics', 'Chemistry', 'Mathematics', 'Biology', 'Computer Science', 'English',
+    'Physical Education', 'Informatics Practices', 'Environmental Science'
   ],
   Commerce: [
-    'Accountancy','Business Studies','Economics','Mathematics','English',
-    'Informatics Practices','Entrepreneurship','Statistics'
+    'Accountancy', 'Business Studies', 'Economics', 'Mathematics', 'English',
+    'Informatics Practices', 'Entrepreneurship', 'Statistics'
   ],
   Arts: [
-    'History','Political Science','Geography','Economics','Sociology',
-    'Psychology','English','Hindi','Philosophy','Home Science'
+    'History', 'Political Science', 'Geography', 'Economics', 'Sociology',
+    'Psychology', 'English', 'Hindi', 'Philosophy', 'Home Science'
   ],
   Vocational: [
-    'Information Technology','Tourism','Retail','Healthcare','Agriculture',
-    'Banking & Finance','Electronics','Automobile','Beauty & Wellness'
+    'Information Technology', 'Tourism', 'Retail', 'Healthcare', 'Agriculture',
+    'Banking & Finance', 'Electronics', 'Automobile', 'Beauty & Wellness'
   ],
 };
 
 const MAX_FILE_MB = 5;
+const UNIVERSITIES = [
+  'Indian Institute of Science (IISc), Bangalore',
+  'Jawaharlal Nehru University (JNU), Delhi',
+  'Banaras Hindu University (BHU), Varanasi',
+  'Indian Institute of Technology (IIT) Bombay',
+  'Indian Institute of Technology (IIT) Delhi',
+];
 
 /* ---------- Helpers ---------- */
 function formatBytes(bytes) {
@@ -106,6 +114,7 @@ const AddStudentPopup = ({
         ...details,
         subjects: Array.isArray(coercedSubjects) ? coercedSubjects : [],
         totalPercentage: details.totalPercentage || details.marks || '',
+        university: editingStudent.university || '',
       };
       setFormData(next);
     } else {
@@ -252,9 +261,14 @@ const AddStudentPopup = ({
 
   const validateStep3 = () => {
     const hasCourse = !!formData.course;
+    const hasUniversity = !!formData.university;
     const docsOk = requiredDocs.every(doc => formData.documents[doc]);
     if (!hasCourse) {
       alert('Please choose a course.');
+      return false;
+    }
+    if (!hasUniversity) {
+      alert('Please choose a university.');
       return false;
     }
     if (!docsOk) {
@@ -280,6 +294,7 @@ const AddStudentPopup = ({
         ...editingStudent,
         name: formData.fullName,
         email: formData.email,
+        university: formData.university,
         details: formData,
       };
       onUpdateStudent(editingStudent.id, updated);
@@ -288,6 +303,7 @@ const AddStudentPopup = ({
         id: Date.now(),
         name: formData.fullName,
         email: formData.email,
+        university: formData.university,
         status: 'Pending',
         details: formData,
       };
@@ -646,6 +662,16 @@ const AddStudentPopup = ({
                     </div>
                   </div>
 
+                  <div className="form-group-row">
+                    <div className="form-group-column">
+                      <label htmlFor="university">University *</label>
+                      <select id="university" name="university" value={formData.university} onChange={handleInputChange} className="input" required>
+                        <option value="">Select University</option>
+                        {UNIVERSITIES.map(university => <option key={university} value={university}>{university}</option>)}
+                      </select>
+                    </div>
+                  </div>
+
                   <div className="form-group">
                     <label className="form-subtitle">Documents <span className="muted">(Max {MAX_FILE_MB}MB each)</span></label>
                     <div className="document-grid">
@@ -689,9 +715,12 @@ const AddStudentPopup = ({
               )}
 
               {/* -------- Step 4 -------- */}
-              {step === 4 && (
+             {step === 4 && (
                 <div className="form-section">
-                  <h2 className="form-section-title">Review & Declaration</h2>
+                  <div className='univeristy-title'>{formData.university && <span>- {formData.university}</span>}</div>
+                  <h2 className="form-section-title">
+                    Review & Declaration 
+                  </h2>
 
                   <div className="review-section">
                     <h3>
@@ -725,6 +754,7 @@ const AddStudentPopup = ({
                     <p><strong>Specialization:</strong> {formData.specialization}</p>
                     <p><strong>Mode:</strong> {formData.mode}</p>
                     <p><strong>Hostel:</strong> {formData.hostelRequired}</p>
+                    <p><strong>University:</strong> {formData.university}</p>
 
                     <h3>Uploaded Documents</h3>
                     <ul className="review-files">
@@ -753,15 +783,25 @@ const AddStudentPopup = ({
 
                   <div className="form-group">
                     <div className="checkbox-row">
-                      <input type="checkbox" id="declaration" name="declaration"
-                        checked={formData.declaration} onChange={handleInputChange} required />
+                      <input
+                        type="checkbox"
+                        id="declaration"
+                        name="declaration"
+                        checked={formData.declaration}
+                        onChange={handleInputChange}
+                        required
+                      />
                       <label htmlFor="declaration">I declare all details are correct.</label>
                     </div>
                   </div>
 
                   <div className="form-actions">
-                    <button type="button" className="btn" onClick={prevStep}>Back</button>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="button" className="btn" onClick={prevStep}>
+                      Back
+                    </button>
+                    <button type="submit" className="btn btn-primary">
+                      Submit
+                    </button>
                   </div>
                 </div>
               )}

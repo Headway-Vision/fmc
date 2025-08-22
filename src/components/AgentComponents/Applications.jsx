@@ -9,11 +9,11 @@ const Applications = ({ students }) => {
     setApplications(
       students.map((student) => ({
         id: student.id,
-        name: student.name,
+        name: student.name || 'Unknown',
         course: student.details?.course || 'Not Assigned',
-        status: 'Pending',
+        status: student.status || 'Pending',
         submitted: new Date().toISOString().split('T')[0],
-        university: '',
+        university: student.university || '',
       }))
     );
   }, [students]);
@@ -29,23 +29,9 @@ const Applications = ({ students }) => {
     student: null,
   });
 
-  const universities = [
-    'Indian Institute of Science (IISc), Bangalore',
-    'Jawaharlal Nehru University (JNU), Delhi',
-    'Banaras Hindu University (BHU), Varanasi',
-    'Indian Institute of Technology (IIT) Bombay',
-    'Indian Institute of Technology (IIT) Delhi',
-  ];
-
   const handleStatusChange = (id, status) => {
     setApplications((prev) =>
       prev.map((app) => (app.id === id ? { ...app, status } : app))
-    );
-  };
-
-  const handleUniversityChange = (id, university) => {
-    setApplications((prev) =>
-      prev.map((app) => (app.id === id ? { ...app, university } : app))
     );
   };
 
@@ -115,21 +101,7 @@ const Applications = ({ students }) => {
                   <td>#{app.id}</td>
                   <td className="cell-strong">{app.name}</td>
                   <td>{app.course}</td>
-                  <td>
-                    <select
-                      value={app.university}
-                      onChange={(e) => handleUniversityChange(app.id, e.target.value)}
-                      className="university-select"
-                      disabled={app.status !== 'Pending'}
-                    >
-                      <option value="">Select University</option>
-                      {universities.map((uni) => (
-                        <option key={uni} value={uni}>
-                          {uni}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
+                  <td>{app.university || 'Not Assigned'}</td>
                   <td>
                     <select
                       value={app.status}
@@ -286,59 +258,77 @@ const Applications = ({ students }) => {
         </div>
       )}
 
-      {viewModal.open && viewModal.student && (
-        <div className="modal-overlay" onClick={closeViewModal} role="dialog" aria-modal="true">
-          <div className="modal view-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2 className="modal-title">Student Details</h2>
-              <button className="modal-close" onClick={closeViewModal} aria-label="Close">
-                ×
-              </button>
-            </div>
-            <div className="modal-body">
-              <div className="review-section">
-                <h3>Student Details</h3>
-                <p><strong>Name:</strong> {viewModal.student.details.fullName}</p>
-                <p><strong>DOB:</strong> {viewModal.student.details.dateOfBirth}</p>
-                <p><strong>Gender:</strong> {viewModal.student.details.gender}</p>
-                <p><strong>Contact:</strong> {viewModal.student.details.contactNumber}</p>
-                <p><strong>Email:</strong> {viewModal.student.details.email}</p>
-                <p><strong>Address:</strong> {viewModal.student.details.address}</p>
-                <p><strong>Parent:</strong> {viewModal.student.details.parentName} ({viewModal.student.details.parentContact})</p>
+{viewModal.open && viewModal.student && (
+  <div className="modal-overlay" onClick={closeViewModal} role="dialog" aria-modal="true">
+    <div className="modal view-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-university">
+        {viewModal.student.university ? (
+          <h3 className="university-title">{viewModal.student.university}</h3>
+        ) : (
+          <h3 className="university-title">No University Selected</h3>
+        )}
+      </div>
+      <div className="modal-body">
+        <div className="review-section">
+          <h3>Student Details</h3>
+          <p><strong>Name:</strong> {viewModal.student.details?.fullName || 'N/A'}</p>
+          <p><strong>DOB:</strong> {viewModal.student.details?.dateOfBirth || 'N/A'}</p>
+          <p><strong>Gender:</strong> {viewModal.student.details?.gender || 'N/A'}</p>
+          <p><strong>Contact:</strong> {viewModal.student.details?.contactNumber || 'N/A'}</p>
+          <p><strong>Email:</strong> {viewModal.student.details?.email || 'N/A'}</p>
+          <p><strong>Address:</strong> {viewModal.student.details?.address || 'N/A'}</p>
+          <p>
+            <strong>Parent:</strong>{' '}
+            {viewModal.student.details?.parentName
+              ? `${viewModal.student.details.parentName} (${viewModal.student.details.parentContact || 'N/A'})`
+              : 'N/A'}
+          </p>
 
-                <h3>Academic Details</h3>
-                <p><strong>Board:</strong> {viewModal.student.details.board}</p>
-                <p><strong>Stream:</strong> {viewModal.student.details.stream}</p>
-                <p><strong>School:</strong> {viewModal.student.details.schoolName}</p>
-                <p><strong>Year of Passing:</strong> {viewModal.student.details.yearOfPassing}</p>
-                <p><strong>Subjects:</strong> {viewModal.student.details.subjects}</p>
-                <p><strong>Marks:</strong> {viewModal.student.details.marks}</p>
-                <p><strong>Roll Number:</strong> {viewModal.student.details.rollNumber}</p>
+          <h3>Academic Details</h3>
+          <p><strong>Board:</strong> {viewModal.student.details?.board || 'N/A'}</p>
+          <p><strong>Stream:</strong> {viewModal.student.details?.stream || 'N/A'}</p>
+          <p><strong>School:</strong> {viewModal.student.details?.schoolName || 'N/A'}</p>
+          <p><strong>Year of Passing:</strong> {viewModal.student.details?.yearOfPassing || 'N/A'}</p>
+          <p>
+            <strong>Subjects:</strong>{' '}
+            {Array.isArray(viewModal.student.details?.subjects)
+              ? viewModal.student.details.subjects.join(', ')
+              : viewModal.student.details?.subjects || 'N/A'}
+          </p>
+          <p><strong>Marks:</strong> {viewModal.student.details?.totalPercentage ? `${viewModal.student.details.totalPercentage}%` : 'N/A'}</p>
+          <p><strong>Roll Number:</strong> {viewModal.student.details?.rollNumber || 'N/A'}</p>
 
-                <h3>Admission</h3>
-                <p><strong>Course:</strong> {viewModal.student.details.course}</p>
-                <p><strong>Specialization:</strong> {viewModal.student.details.specialization}</p>
-                <p><strong>Mode:</strong> {viewModal.student.details.mode}</p>
-                <p><strong>Hostel:</strong> {viewModal.student.details.hostelRequired}</p>
+          <h3>Admission</h3>
+          <p><strong>Course:</strong> {viewModal.student.details?.course || 'N/A'}</p>
+          <p><strong>Specialization:</strong> {viewModal.student.details?.specialization || 'N/A'}</p>
+          <p><strong>Mode:</strong> {viewModal.student.details?.mode || 'N/A'}</p>
+          <p><strong>Hostel:</strong> {viewModal.student.details?.hostelRequired || 'N/A'}</p>
+          <p><strong>University:</strong> {viewModal.student.university || 'N/A'}</p>
 
-                <h3>Documents</h3>
-                <ul>
-                  {Object.entries(viewModal.student.details.documents).map(([key, value]) => (
-                    <li key={key}>
-                      <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value ? 'Uploaded' : 'Not Uploaded'}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button className="btn-secondary" onClick={closeViewModal}>
-                Close
-              </button>
-            </div>
-          </div>
+          <h3>Documents</h3>
+          <ul>
+            {Object.entries(viewModal.student.details?.documents || {}).map(([key, value]) => (
+              <li key={key}>
+                <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{' '}
+                {value ? 'Uploaded' : 'Not Uploaded'}
+              </li>
+            ))}
+            {viewModal.student.details?.paymentReceipt && (
+              <li>
+                <strong>Payment Receipt:</strong> Uploaded
+              </li>
+            )}
+          </ul>
         </div>
-      )}
+      </div>
+      <div className="modal-footer">
+        <button className="btn-secondary" onClick={closeViewModal}>
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 };

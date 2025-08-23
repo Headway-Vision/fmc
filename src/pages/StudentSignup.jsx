@@ -1,0 +1,395 @@
+// src/pages/StudentSignup.jsx
+import React, { useState } from "react";
+import { auth, db, storage } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import FormInput from "../components/FormInput";
+
+const StudentSignup = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    password: "",
+    address: "",
+    pincode: "",
+    university: "",
+    course: "",
+    branch: "",
+    academicDetails: "",
+    documents: null,
+    counsellingBook: "",
+    scholarshipDoc: null,
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
+  const [info, setInfo] = useState("");
+
+  const universities = [
+    "Delhi University",
+    "Jawaharlal Nehru University",
+    "IIT Bombay",
+    "IIT Delhi",
+    "IIM Ahmedabad",
+    "Anna University",
+    "Amity University",
+  ];
+
+  const courses = ["B.Tech", "MBA", "B.Sc", "BBA", "M.Tech", "MCA", "Ph.D"];
+
+  const branches = [
+    "Computer Science",
+    "Electronics",
+    "Mechanical Engineering",
+    "Civil Engineering",
+    "Marketing",
+    "Finance",
+    "Human Resources",
+  ];
+
+  const handleChange = (e) => {
+    const { name, value, files, type } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "file" ? (files && files[0]) : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErr("");
+    setInfo("");
+    setLoading(true);
+
+    try {
+      // 1) Create user
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
+
+      // 2) Upload files if any
+      let documentUrl = "";
+      let scholarshipUrl = "";
+
+      if (formData.documents) {
+        const docRef = ref(storage, `students/${user.uid}/documents_${Date.now()}.pdf`);
+        await uploadBytes(docRef, formData.documents);
+        documentUrl = await getDownloadURL(docRef);
+      }
+
+      if (formData.scholarshipDoc) {
+        const schRef = ref(storage, `students/${user.uid}/scholarship_${Date.now()}.pdf`);
+        await uploadBytes(schRef, formData.scholarshipDoc);
+        scholarshipUrl = await getDownloadURL(schRef);
+      }
+
+      // 3) Save to Firestore
+      await setDoc(doc(db, "students", user.uid), {
+        uid: user.uid,
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        address: formData.address,
+        pincode: formData.pincode,
+        university: formData.university,
+        course: formData.course,
+        branch: formData.branch,
+        academicDetails: formData.academicDetails,
+        counsellingBook: formData.counsellingBook,
+        documents: documentUrl,
+        scholarshipDoc: scholarshipUrl,
+        createdAt: new Date(),
+      });
+
+      setInfo("Student signed up successfully!");
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        password: "",
+        address: "",
+        pincode: "",
+        university: "",
+        course: "",
+        branch: "",
+        academicDetails: "",
+        documents: null,
+        counsellingBook: "",
+        scholarshipDoc: null,
+      });
+    } catch (error) {
+      console.error("Signup Error:", error);
+      setErr(error?.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#1f2230] via-[#232736] to-[#1a1c27] flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left welcome panel */}
+        <div className="hidden lg:flex relative overflow-hidden rounded-2xl bg-[rgba(36,39,49,0.85)] border border-white/10 text-white">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-700/20 via-transparent to-transparent" />
+          <div className="relative p-10 flex flex-col justify-center">
+            <div className="h-14 w-14 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+              <svg className="h-7 w-7 text-purple-300" viewBox="0 0 24 24" fill="none">
+                <path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M12 14l6.16-3.422A12.083 12.083 0 0112 21.5 12.083 12.083 0 015.84 10.578L12 14z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <h1 className="text-3xl font-semibold">Create your student account</h1>
+            <p className="text-white/70 mt-2 leading-relaxed">
+              Sign up to manage your applications, upload documents, and access personalized counselling resources.
+            </p>
+            <ul className="mt-6 space-y-3 text-sm text-white/80">
+              <li className="flex items-center gap-2">
+                <CheckIcon />
+                Secure authentication and cloud storage
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckIcon />
+                Track academic details and preferences
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckIcon />
+                Fast support from our counselling team
+              </li>
+            </ul>
+            <div className="mt-8">
+              <div className="h-px bg-white/10" />
+              <p className="text-xs text-white/50 mt-3">
+                By creating an account, you agree to our Terms and Privacy Policy.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right form card */}
+        <div className="backdrop-blur-xl bg-[rgba(36,39,49,0.85)] border border-white/10 text-white rounded-2xl shadow-2xl p-6 sm:p-8">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold tracking-tight">Student Signup</h2>
+            <p className="text-sm text-white/70 mt-1">
+              Enter your details to get started. Fields marked with an asterisk (*) are required.
+            </p>
+          </div>
+
+          {err && (
+            <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 text-red-200 px-3 py-2 text-sm">
+              {err}
+            </div>
+          )}
+          {info && (
+            <div className="mb-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-200 px-3 py-2 text-sm">
+              {info}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name & Phone */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormInput
+                label="Full Name *"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your full name"
+                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+                required
+              />
+              <FormInput
+                label="Mobile No. *"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Your mobile number"
+                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+                required
+              />
+            </div>
+
+            {/* Email & Password */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormInput
+                label="Email ID *"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+                required
+              />
+              <FormInput
+                label="Password *"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter password"
+                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+                required
+              />
+              {/* Optional: password hint */}
+              {/* <p className="md:col-span-2 text-xs text-white/50 -mt-2">Use 8+ characters with a mix of letters and numbers.</p> */}
+            </div>
+
+            {/* Address & Pincode */}
+            <FormInput
+              label="Address *"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Your address"
+              className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+              required
+            />
+
+            <FormInput
+              label="Pincode *"
+              name="pincode"
+              value={formData.pincode}
+              onChange={handleChange}
+              placeholder="6-digit pincode"
+              className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+              required
+            />
+
+            {/* University & Course */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm text-white/80 mb-1">University *</label>
+                <select
+                  name="university"
+                  value={formData.university}
+                  onChange={handleChange}
+                  className="w-full bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400/40"
+                  required
+                >
+                  <option value="">Select University</option>
+                  {universities.map((uni, idx) => (
+                    <option key={idx} value={uni}>
+                      {uni}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm text-white/80 mb-1">Course *</label>
+                <select
+                  name="course"
+                  value={formData.course}
+                  onChange={handleChange}
+                  className="w-full bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400/40"
+                  required
+                >
+                  <option value="">Select Course</option>
+                  {courses.map((c, idx) => (
+                    <option key={idx} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Branch */}
+            <div>
+              <label className="block text-sm text-white/80 mb-1">Branch *</label>
+              <select
+                name="branch"
+                value={formData.branch}
+                onChange={handleChange}
+                className="w-full bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400/40"
+                required
+              >
+                <option value="">Select Branch</option>
+                {branches.map((branch, idx) => (
+                  <option key={idx} value={branch}>
+                    {branch}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Academic Details */}
+            <div>
+              <label className="block text-sm text-white/80 mb-1">Academic Details</label>
+              <textarea
+                name="academicDetails"
+                value={formData.academicDetails}
+                onChange={handleChange}
+                placeholder="Previous academic records, grades, etc."
+                rows="3"
+                className="w-full bg-[#2b2f3a] text-white placeholder-white/40 border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400/40"
+              ></textarea>
+            </div>
+
+            {/* Uploads */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm text-white/80 mb-1">Documents (PDF)</label>
+                <input
+                  type="file"
+                  name="documents"
+                  accept="application/pdf"
+                  onChange={handleChange}
+                  className="block w-full text-sm bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-white file:text-gray-800 hover:file:bg-gray-100"
+                />
+                <p className="mt-1 text-xs text-white/50">Max 10MB. Combine multiple pages into one PDF if possible.</p>
+              </div>
+
+              <FormInput
+                label="Counselling Book"
+                name="counsellingBook"
+                value={formData.counsellingBook}
+                onChange={handleChange}
+                placeholder="Enter counselling book details"
+                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm text-white/80 mb-1">Scholarship Document (PDF)</label>
+              <input
+                type="file"
+                name="scholarshipDoc"
+                accept="application/pdf"
+                onChange={handleChange}
+                className="block w-full text-sm bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-white file:text-gray-800 hover:file:bg-gray-100"
+              />
+              <p className="mt-1 text-xs text-white/50">Optional. Upload only if applicable.</p>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg shadow-lg shadow-purple-900/30 transition"
+            >
+              {loading ? "Submitting..." : "Create Account"}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default StudentSignup;
+
+/* Icons */
+function CheckIcon() {
+  return (
+    <svg className="h-5 w-5 text-emerald-300" viewBox="0 0 24 24" fill="none">
+      <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}

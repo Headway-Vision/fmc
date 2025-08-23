@@ -4,17 +4,29 @@
 :root {
   --background-color: #F9FAFB;
   --text-color: #1E293B;
+  --border-color: #9CA3AF;
+  --navbar-bg: linear-gradient(to right, #F9FAFB, #1D4ED8);
   --button-primary: #1D4ED8;
   --button-accent: #FBBF24;
-  --button-hover: #2563EB;
+  --button-hover: #2563EB; /* Lighter blue for hover in light mode */
+  --input-border: #9CA3AF;
+  --input-text: #1E293B;
+  --dropdown-bg: #FFFFFF;
+  --dropdown-text: #1E293B;
 }
 
 .dark {
   --background-color: #1E293B;
   --text-color: #FFFFFF;
+  --border-color: #D1D5DB;
+  --navbar-bg: linear-gradient(to right, #1E293B, #1D4ED8);
   --button-primary: #1D4ED8;
   --button-accent: #FBBF24;
-  --button-hover: #60A5FA;
+  --button-hover: #60A5FA; /* Lighter blue for hover in dark mode */
+  --input-border: #D1D5DB;
+  --input-text: #000000;
+  --dropdown-bg: #2D3748;
+  --dropdown-text: #FFFFFF;
 }
 
 body {

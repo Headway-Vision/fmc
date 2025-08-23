@@ -1,38 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import emailjs from "emailjs-com";
 import "./Payments.css";
 
-const Payments = () => {
-  const [payments, setPayments] = useState([
-    {
-      id: 1,
-      studentName: "John Doe",
-      course: "Computer Science",
-      amount: 5000,
-      status: "Pending",
-      date: "2025-08-10",
-      email: "virendarrawat884@gmail.com",
-    },
-    {
-      id: 2,
-      studentName: "Jane Smith",
-      course: "Mathematics",
-      amount: 4500,
-      status: "Pending",
-      date: "2025-08-12",
-      email: "kunalk2005k@gmail.com",
-    },
-    {
-      id: 3,
-      studentName: "Alice Johnson",
-      course: "Physics",
-      amount: 4800,
-      status: "Pending",
-      date: "2025-08-09",
-      email: "kunalk2005k@gmail.com",
-    },
-  ]);
-
+const Payments = ({ payments, addPayment, updatePayment }) => {
   // 🔹 Send Email via EmailJS
   const sendEmail = (payment, newStatus) => {
     const templateParams = {
@@ -60,12 +30,7 @@ const Payments = () => {
 
   // 🔹 Handle status change from dropdown
   const handleStatusChange = (id, newStatus) => {
-    setPayments(
-      payments.map((payment) =>
-        payment.id === id ? { ...payment, status: newStatus } : payment
-      )
-    );
-
+    updatePayment(id, { status: newStatus });
     const payment = payments.find((p) => p.id === id);
     sendEmail(payment, newStatus);
   };
@@ -84,6 +49,31 @@ const Payments = () => {
     }
   };
 
+  // 🔹 Handle receipt download
+  const handleDownloadReceipt = (payment) => {
+    const receiptContent = `
+Payment Receipt
+---------------
+ID: ${payment.id}
+Student: ${payment.studentName}
+Course: ${payment.course}
+Email: ${payment.email}
+Amount: $${payment.amount}
+Status: ${payment.status}
+Date: ${payment.date}
+---------------`;
+
+    const blob = new Blob([receiptContent], { type: "text/plain" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `receipt_${payment.id}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="payments-container">
       <h1 className="text-3xl font-bold mb-6">Agent Panel - Payment Management</h1>
@@ -98,6 +88,7 @@ const Payments = () => {
               <th>Amount ($)</th>
               <th>Status</th>
               <th>Date</th>
+              <th>Receipt</th>
             </tr>
           </thead>
           <tbody>
@@ -120,6 +111,29 @@ const Payments = () => {
                   </select>
                 </td>
                 <td>{payment.date}</td>
+                <td>
+                  <button
+                    className="download-btn"
+                    onClick={() => handleDownloadReceipt(payment)}
+                    title="Download Receipt"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

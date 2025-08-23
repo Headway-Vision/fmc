@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import './Applications.css';
+import React, { useState, useEffect } from "react";
+import "./Applications.css";
 
-const Applications = ({ students }) => {
+const Applications = ({ students, addPayment }) => {
   const [applications, setApplications] = useState([]);
 
   useEffect(() => {
@@ -9,11 +9,12 @@ const Applications = ({ students }) => {
     setApplications(
       students.map((student) => ({
         id: student.id,
-        name: student.name || 'Unknown',
-        course: student.details?.course || 'Not Assigned',
-        status: student.status || 'Pending',
-        submitted: new Date().toISOString().split('T')[0],
-        university: student.university || '',
+        name: student.name || "Unknown",
+        course: student.details?.course || "Not Assigned",
+        status: student.status || "Pending",
+        submitted: new Date().toISOString().split("T")[0],
+        university: student.university || "",
+        email: student.email || "N/A",
       }))
     );
   }, [students]);
@@ -37,12 +38,12 @@ const Applications = ({ students }) => {
 
   const openPaymentModal = (appId) => {
     setPaymentModal({ open: true, appId, selectedMethod: null });
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   };
 
   const closePaymentModal = () => {
     setPaymentModal({ open: false, appId: null, selectedMethod: null });
-    document.body.style.overflow = '';
+    document.body.style.overflow = "";
   };
 
   const selectMethod = (method) => {
@@ -53,12 +54,25 @@ const Applications = ({ students }) => {
     const { appId, selectedMethod } = paymentModal;
     if (!selectedMethod) return;
 
+    const app = applications.find((a) => a.id === appId);
+    if (!app) return;
+
     const labelMap = {
-      upi: 'UPI',
-      bank: 'Bank Transfer',
-      paypal: 'PayPal',
-      netbanking: 'Internet Banking',
+      upi: "UPI",
+      bank: "Bank Transfer",
+      paypal: "PayPal",
+      netbanking: "Internet Banking",
     };
+
+    // Add payment entry
+    addPayment({
+      studentName: app.name,
+      course: app.course,
+      amount: 5000, // Default amount, adjust as needed
+      status: "Pending",
+      email: app.email,
+    });
+
     alert(`Initiating ${labelMap[selectedMethod]} for Application ID: ${appId}`);
     closePaymentModal();
   };
@@ -66,12 +80,12 @@ const Applications = ({ students }) => {
   const openViewModal = (id) => {
     const student = students.find((s) => s.id === id);
     setViewModal({ open: true, student });
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   };
 
   const closeViewModal = () => {
     setViewModal({ open: false, student: null });
-    document.body.style.overflow = '';
+    document.body.style.overflow = "";
   };
 
   return (
@@ -101,7 +115,7 @@ const Applications = ({ students }) => {
                   <td>#{app.id}</td>
                   <td className="cell-strong">{app.name}</td>
                   <td>{app.course}</td>
-                  <td>{app.university || 'Not Assigned'}</td>
+                  <td>{app.university || "Not Assigned"}</td>
                   <td>
                     <select
                       value={app.status}
@@ -153,9 +167,9 @@ const Applications = ({ students }) => {
               <div className="method-grid">
                 <button
                   className={
-                    'method-card' + (paymentModal.selectedMethod === 'bank' ? ' method-card--active' : '')
+                    "method-card" + (paymentModal.selectedMethod === "bank" ? " method-card--active" : "")
                   }
-                  onClick={() => selectMethod('bank')}
+                  onClick={() => selectMethod("bank")}
                 >
                   <div className="method-name">Bank Transfer</div>
                   <div className="method-desc">NEFT / IMPS / RTGS</div>
@@ -163,9 +177,9 @@ const Applications = ({ students }) => {
 
                 <button
                   className={
-                    'method-card' + (paymentModal.selectedMethod === 'upi' ? ' method-card--active' : '')
+                    "method-card" + (paymentModal.selectedMethod === "upi" ? " method-card--active" : "")
                   }
-                  onClick={() => selectMethod('upi')}
+                  onClick={() => selectMethod("upi")}
                 >
                   <div className="method-name">UPI</div>
                   <div className="method-desc">GPay / PhonePe / Paytm</div>
@@ -173,9 +187,9 @@ const Applications = ({ students }) => {
 
                 <button
                   className={
-                    'method-card' + (paymentModal.selectedMethod === 'paypal' ? ' method-card--active' : '')
+                    "method-card" + (paymentModal.selectedMethod === "paypal" ? " method-card--active" : "")
                   }
-                  onClick={() => selectMethod('paypal')}
+                  onClick={() => selectMethod("paypal")}
                 >
                   <div className="method-name">PayPal</div>
                   <div className="method-desc">Pay with PayPal</div>
@@ -183,9 +197,9 @@ const Applications = ({ students }) => {
 
                 <button
                   className={
-                    'method-card' + (paymentModal.selectedMethod === 'netbanking' ? ' method-card--active' : '')
+                    "method-card" + (paymentModal.selectedMethod === "netbanking" ? " method-card--active" : "")
                   }
-                  onClick={() => selectMethod('netbanking')}
+                  onClick={() => selectMethod("netbanking")}
                 >
                   <div className="method-name">Internet Banking</div>
                   <div className="method-desc">All major banks</div>
@@ -194,7 +208,7 @@ const Applications = ({ students }) => {
 
               {paymentModal.selectedMethod && (
                 <div className="method-details">
-                  {paymentModal.selectedMethod === 'upi' && (
+                  {paymentModal.selectedMethod === "upi" && (
                     <>
                       <label className="field">
                         <span className="field-label">Enter UPI ID</span>
@@ -204,7 +218,7 @@ const Applications = ({ students }) => {
                     </>
                   )}
 
-                  {paymentModal.selectedMethod === 'bank' && (
+                  {paymentModal.selectedMethod === "bank" && (
                     <>
                       <div className="details-grid">
                         <div>
@@ -228,13 +242,13 @@ const Applications = ({ students }) => {
                     </>
                   )}
 
-                  {paymentModal.selectedMethod === 'paypal' && (
+                  {paymentModal.selectedMethod === "paypal" && (
                     <p className="method-note">
                       You’ll be redirected to PayPal to securely complete the payment.
                     </p>
                   )}
 
-                  {paymentModal.selectedMethod === 'netbanking' && (
+                  {paymentModal.selectedMethod === "netbanking" && (
                     <p className="method-note">Select your bank on the next screen and authorize the payment.</p>
                   )}
                 </div>
@@ -249,7 +263,7 @@ const Applications = ({ students }) => {
                 className="btn-primary"
                 onClick={proceedPayment}
                 disabled={!paymentModal.selectedMethod}
-                title={!paymentModal.selectedMethod ? 'Select a method to continue' : 'Proceed to payment'}
+                title={!paymentModal.selectedMethod ? "Select a method to continue" : "Proceed to payment"}
               >
                 Proceed to Pay
               </button>
@@ -258,77 +272,33 @@ const Applications = ({ students }) => {
         </div>
       )}
 
-{viewModal.open && viewModal.student && (
-  <div className="modal-overlay" onClick={closeViewModal} role="dialog" aria-modal="true">
-    <div className="modal view-modal" onClick={(e) => e.stopPropagation()}>
-      <div className="modal-university">
-        {viewModal.student.university ? (
-          <h3 className="university-title">{viewModal.student.university}</h3>
-        ) : (
-          <h3 className="university-title">No University Selected</h3>
-        )}
-      </div>
-      <div className="modal-body">
-        <div className="review-section">
-          <h3>Student Details</h3>
-          <p><strong>Name:</strong> {viewModal.student.details?.fullName || 'N/A'}</p>
-          <p><strong>DOB:</strong> {viewModal.student.details?.dateOfBirth || 'N/A'}</p>
-          <p><strong>Gender:</strong> {viewModal.student.details?.gender || 'N/A'}</p>
-          <p><strong>Contact:</strong> {viewModal.student.details?.contactNumber || 'N/A'}</p>
-          <p><strong>Email:</strong> {viewModal.student.details?.email || 'N/A'}</p>
-          <p><strong>Address:</strong> {viewModal.student.details?.address || 'N/A'}</p>
-          <p>
-            <strong>Parent:</strong>{' '}
-            {viewModal.student.details?.parentName
-              ? `${viewModal.student.details.parentName} (${viewModal.student.details.parentContact || 'N/A'})`
-              : 'N/A'}
-          </p>
-
-          <h3>Academic Details</h3>
-          <p><strong>Board:</strong> {viewModal.student.details?.board || 'N/A'}</p>
-          <p><strong>Stream:</strong> {viewModal.student.details?.stream || 'N/A'}</p>
-          <p><strong>School:</strong> {viewModal.student.details?.schoolName || 'N/A'}</p>
-          <p><strong>Year of Passing:</strong> {viewModal.student.details?.yearOfPassing || 'N/A'}</p>
-          <p>
-            <strong>Subjects:</strong>{' '}
-            {Array.isArray(viewModal.student.details?.subjects)
-              ? viewModal.student.details.subjects.join(', ')
-              : viewModal.student.details?.subjects || 'N/A'}
-          </p>
-          <p><strong>Marks:</strong> {viewModal.student.details?.totalPercentage ? `${viewModal.student.details.totalPercentage}%` : 'N/A'}</p>
-          <p><strong>Roll Number:</strong> {viewModal.student.details?.rollNumber || 'N/A'}</p>
-
-          <h3>Admission</h3>
-          <p><strong>Course:</strong> {viewModal.student.details?.course || 'N/A'}</p>
-          <p><strong>Specialization:</strong> {viewModal.student.details?.specialization || 'N/A'}</p>
-          <p><strong>Mode:</strong> {viewModal.student.details?.mode || 'N/A'}</p>
-          <p><strong>Hostel:</strong> {viewModal.student.details?.hostelRequired || 'N/A'}</p>
-          <p><strong>University:</strong> {viewModal.student.university || 'N/A'}</p>
-
-          <h3>Documents</h3>
-          <ul>
-            {Object.entries(viewModal.student.details?.documents || {}).map(([key, value]) => (
-              <li key={key}>
-                <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{' '}
-                {value ? 'Uploaded' : 'Not Uploaded'}
-              </li>
-            ))}
-            {viewModal.student.details?.paymentReceipt && (
-              <li>
-                <strong>Payment Receipt:</strong> Uploaded
-              </li>
-            )}
-          </ul>
+      {viewModal.open && viewModal.student && (
+        <div className="modal-overlay" onClick={closeViewModal} role="dialog" aria-modal="true">
+          <div className="modal view-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-university">
+              {viewModal.student.university ? (
+                <h3 className="university-title">{viewModal.student.university}</h3>
+              ) : (
+                <h3 className="university-title">No University Selected</h3>
+              )}
+            </div>
+            <div className="modal-body">
+              <div className="review-section">
+                <h3>Student Details</h3>
+                <p><strong>Name:</strong> {viewModal.student.name || "N/A"}</p>
+                <p><strong>Email:</strong> {viewModal.student.email || "N/A"}</p>
+                <p><strong>Course:</strong> {viewModal.student.details?.course || "N/A"}</p>
+                <p><strong>University:</strong> {viewModal.student.university || "N/A"}</p>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn-secondary" onClick={closeViewModal}>
+                Close
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="modal-footer">
-        <button className="btn-secondary" onClick={closeViewModal}>
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+      )}
     </div>
   );
 };

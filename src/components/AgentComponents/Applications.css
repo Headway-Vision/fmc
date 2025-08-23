@@ -470,17 +470,3 @@
 .hover-box strong {
   color: #222;
 }
-
-.university-title {
-  font-weight: bold;
-  margin: auto;
-}
-
-.modal-university {
-  padding: 16px;
-  background: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

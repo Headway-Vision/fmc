@@ -13,23 +13,123 @@ import Settings from "./settings";
 
 export default function MainView({ route }) {
   const [students, setStudents] = useState([
-    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'Active' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'Inactive' },
-    { id: 3, name: 'Alice Johnson', email: 'alice@example.com', status: 'Active' },
+    {
+      id: 1,
+      name: "John Doe",
+      email: "virendarrawat884@gmail.com",
+      status: "Active",
+      details: { course: "Computer Science" },
+      university: "MIT",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "kunalk2005k@gmail.com",
+      status: "Inactive",
+      details: { course: "Mathematics" },
+      university: "Stanford",
+    },
+    {
+      id: 3,
+      name: "Alice Johnson",
+      email: "kunalk2005k@gmail.com",
+      status: "Active",
+      details: { course: "Physics" },
+      university: "Harvard",
+    },
+  ]);
+
+  const [payments, setPayments] = useState([
+    {
+      id: 1,
+      studentName: "John Doe",
+      course: "Computer Science",
+      amount: 5000,
+      status: "Pending",
+      date: "2025-08-10",
+      email: "virendarrawat884@gmail.com",
+    },
+    {
+      id: 2,
+      studentName: "Jane Smith",
+      course: "Mathematics",
+      amount: 4500,
+      status: "Pending",
+      date: "2025-08-12",
+      email: "kunalk2005k@gmail.com",
+    },
+    {
+      id: 3,
+      studentName: "Alice Johnson",
+      course: "Physics",
+      amount: 4800,
+      status: "Pending",
+      date: "2025-08-09",
+      email: "kunalk2005k@gmail.com",
+    },
   ]);
 
   const addStudent = (newStudent) => {
-    setStudents((prev) => [...prev, newStudent]);
+    const studentWithId = {
+      ...newStudent,
+      id: students.length ? Math.max(...students.map(s => s.id)) + 1 : 1,
+    };
+    setStudents((prev) => [...prev, studentWithId]);
+    // Add payment entry for the new student
+    setPayments((prev) => [
+      ...prev,
+      {
+        id: prev.length ? Math.max(...prev.map(p => p.id)) + 1 : 1,
+        studentName: newStudent.name,
+        course: newStudent.details?.course || "Not Assigned",
+        amount: 5000, // Default amount, adjust as needed
+        status: "Pending",
+        date: new Date().toISOString().split("T")[0],
+        email: newStudent.email || "N/A",
+      },
+    ]);
   };
 
   const updateStudent = (id, updatedStudent) => {
     setStudents((prev) =>
       prev.map((student) => (student.id === id ? { ...student, ...updatedStudent } : student))
     );
+    // Update payment entry for the student
+    setPayments((prev) =>
+      prev.map((payment) =>
+        payment.id === id
+          ? {
+              ...payment,
+              studentName: updatedStudent.name,
+              course: updatedStudent.details?.course || "Not Assigned",
+              email: updatedStudent.email || "N/A",
+            }
+          : payment
+      )
+    );
   };
 
   const deleteStudent = (id) => {
     setStudents((prev) => prev.filter((student) => student.id !== id));
+    // Optionally, remove payment entry for the student
+    setPayments((prev) => prev.filter((payment) => payment.id !== id));
+  };
+
+  const addPayment = (payment) => {
+    setPayments((prev) => [
+      ...prev,
+      {
+        ...payment,
+        id: prev.length ? Math.max(...prev.map(p => p.id)) + 1 : 1,
+        date: new Date().toISOString().split("T")[0],
+      },
+    ]);
+  };
+
+  const updatePayment = (id, updated) => {
+    setPayments((prev) =>
+      prev.map((payment) => (payment.id === id ? { ...payment, ...updated } : payment))
+    );
   };
 
   switch (route) {
@@ -59,13 +159,13 @@ export default function MainView({ route }) {
     case "Applications":
       return (
         <div className="main-view">
-          <Applications students={students} />
+          <Applications students={students} addPayment={addPayment} />
         </div>
       );
     case "Payments":
       return (
         <div className="main-view">
-          <Payments />
+          <Payments payments={payments} addPayment={addPayment} updatePayment={updatePayment} />
         </div>
       );
     case "commission-wallet":

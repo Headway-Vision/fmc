@@ -20,7 +20,7 @@ export default function StudentLogin({ onLogin = () => {} }) {
 
   const navigate = useNavigate();
 
-  // UI helper (was commented out)
+  // UI helper
   const withUiState = async (fn) => {
     setErr("");
     setInfo("");
@@ -43,14 +43,13 @@ export default function StudentLogin({ onLogin = () => {} }) {
     // Derive providerId safely
     let providerId = "custom";
     if (Array.isArray(providerData) && providerData.length > 0) {
-      // Prefer the first non-password provider; otherwise take first
       const nonPassword = providerData.find(
         (p) => p.providerId && p.providerId !== "password"
       );
       providerId =
         nonPassword?.providerId || providerData[0].providerId || "custom";
     } else if (user.providerId) {
-      providerId = user.providerId; // sometimes "firebase" for email/password
+      providerId = user.providerId;
     } else if (userEmail) {
       providerId = "password";
     }
@@ -87,7 +86,7 @@ export default function StudentLogin({ onLogin = () => {} }) {
       photoURL: photoURL || "",
       createdAt: serverTimestamp(),
       lastLoginAt: serverTimestamp(),
-      authProvider: providerId, // guaranteed string
+      authProvider: providerId,
     };
 
     await setDoc(docRef, newProfile, { merge: true });
@@ -255,30 +254,30 @@ export default function StudentLogin({ onLogin = () => {} }) {
             </div>
 
             {/* Social Buttons */}
-            <div className="grid grid-cols-1 gap-3">
+            <div className="grid grid-cols-3 gap-3">
               <button
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full group bg-white text-gray-800 py-2.5 rounded-lg hover:bg-gray-100 transition border border-white/20 flex items-center justify-center gap-2 font-medium"
+                title="Continue with Google"
+                className="w-full group bg-white text-gray-800 py-3 rounded-lg hover:bg-gray-100 transition border border-white/20 flex items-center justify-center"
               >
-                <GoogleIcon />
-                Continue with Google
+                <GoogleIcon className="h-6 w-6" />
               </button>
               <button
                 onClick={handleFacebookLogin}
                 disabled={loading}
-                className="w-full group bg-[#1877F2] text-white py-2.5 rounded-lg hover:bg-[#1569d6] transition border border-white/10 flex items-center justify-center gap-2 font-medium"
+                title="Continue with Facebook"
+                className="w-full group bg-[#1877F2] text-white py-3 rounded-lg hover:bg-[#1569d6] transition border border-white/10 flex items-center justify-center"
               >
-                <FacebookIcon />
-                Continue with Facebook
+                <FacebookIcon className="h-6 w-6" />
               </button>
               <button
                 onClick={handleLinkedInClick}
                 disabled={loading}
-                className="w-full group bg-[#0A66C2] text-white py-2.5 rounded-lg hover:bg-[#0957a6] transition border border-white/10 flex items-center justify-center gap-2 font-medium"
+                title="Continue with LinkedIn"
+                className="w-full group bg-[#0A66C2] text-white py-3 rounded-lg hover:bg-[#0957a6] transition border border-white/10 flex items-center justify-center"
               >
-                <LinkedInIcon />
-                Continue with LinkedIn
+                <LinkedInIcon className="h-6 w-6" />
               </button>
             </div>
           </div>
@@ -319,9 +318,9 @@ function EyeOffIcon() {
     </svg>
   );
 }
-function GoogleIcon() {
+function GoogleIcon({ className }) {
   return (
-    <svg className="h-5 w-5" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg">
+    <svg className={className} viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg">
       <path
         fill="#EA4335"
         d="M533.5 278.4c0-18.6-1.7-36.5-4.9-53.9H272.1v102h146.9c-6.3 34-25 62.8-53.5 82.1v68h86.5c50.6-46.6 81.5-115.4 81.5-198.2z"
@@ -341,9 +340,9 @@ function GoogleIcon() {
     </svg>
   );
 }
-function FacebookIcon() {
+function FacebookIcon({ className }) {
   return (
-    <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
       <path
         fill="currentColor"
         d="M22 12.06C22 6.477 17.523 2 11.94 2 6.357 2 1.88 6.477 1.88 12.06c0 4.992 3.657 9.132 8.44 9.94v-7.03H7.9v-2.91h2.42V9.847c0-2.39 1.424-3.709 3.604-3.709 1.044 0 2.137.187 2.137.187v2.35h-1.204c-1.188 0-1.557.738-1.557 1.495v1.797h2.651l-.424 2.91h-2.227V22c4.783-.808 8.44-4.948 8.44-9.94z"
@@ -351,9 +350,9 @@ function FacebookIcon() {
     </svg>
   );
 }
-function LinkedInIcon() {
+function LinkedInIcon({ className }) {
   return (
-    <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
       <path
         fill="currentColor"
         d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7.5 0h3.8v2.2h.1c.5-.9 1.8-2.2 3.8-2.2 4 0 4.7 2.6 4.7 6V24h-4v-7.1c0-1.7 0-3.8-2.3-3.8-2.3 0-2.7 1.8-2.7 3.7V24h-4V8z"

@@ -8,11 +8,73 @@ import { Input } from "../components/ui/input";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-//import CourseSection from '../components/Home/CourseSection';
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function HomePage() {
 
+const CourseSection = ({ courseName, universities }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => prev + 1);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getVisibleCards = () => {
+    const cards = [];
+    for (let i = 0; i < universities.length; i++) {
+      cards.push(universities[(currentIndex + i) % universities.length]);
+    }
+    return cards;
+  };
+
+  return (
+    <div className="mb-12">
+      <h3 className="text-2xl font-semibold text-blue-700 mb-4 text-center">{courseName}</h3>
+      <div className="w-full max-w-6xl overflow-hidden">
+        <motion.div
+          className="flex"
+          animate={{
+            x: `-${(currentIndex % universities.length) * (100 / 3)}%`,
+          }}
+          transition={{
+            duration: 0.5,
+            ease: "easeInOut",
+          }}
+        >
+          {getVisibleCards().map((uni, index) => (
+            <motion.div
+              key={`${uni.name}-${index}`}
+              className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-2"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Link
+                to={uni.link}
+                className="bg-white border border-blue-200 shadow-sm rounded-xl overflow-hidden hover:shadow-md transition group block"
+              >
+                <img
+                  src={uni.image}
+                  alt={uni.name}
+                  className="w-full h-32 object-cover group-hover:scale-105 transition duration-300"
+                />
+                <div className="p-4">
+                  <h4 className="text-md font-semibold text-blue-700 mb-1">{uni.name}</h4>
+                  <p className="text-sm text-gray-600">{uni.location}</p>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+export default function HomePage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [newsTab, setNewsTab] = useState("news");
   const [search, setSearch] = useState("");
@@ -78,7 +140,7 @@ export default function HomePage() {
       link: '/colleges/nit-trichy'
     }
   ];
-{/*
+
   const courseData = {
     MBA: [
       { name: 'IIM Ahmedabad', location: 'Ahmedabad', image: 'https://th.bing.com/th/id/OIP.-XdCQ812TNwBrQ01MwhFOAHaE7?w=229&h=180', link: '/colleges/iim-ahmedabad' },
@@ -111,7 +173,6 @@ export default function HomePage() {
       { name: 'Grant Medical College', location: 'Mumbai', image: 'https://th.bing.com/th/id/OIP.eZMwNPQYF5NnZxcrwAA1dwHaEK?w=274&h=180', link: '/colleges/gmc-mumbai' },
     ],
   };
-  */}
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -162,24 +223,24 @@ export default function HomePage() {
 
   return (
     <>
-     {/* Hero Section */}
-    <HeroSection />
+      {/* Hero Section */}
+      <HeroSection />
 
       {/* Search bar */}
       <div className="flex flex-col items-center justify-center mx-36 mt-4 mb-4 text-center">
-  <h2 className="text-2xl font-semibold mb-6">
-    Search Colleges & Universities
-  </h2>
-  <Input
-    type="text"
-    placeholder="Search by college name..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    className="mb-8 w-full md:w-1/2"
-  />
-</div>
+        <h2 className="text-2xl font-semibold mb-6">
+          Search Colleges & Universities
+        </h2>
+        <Input
+          type="text"
+          placeholder="Search by college name..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="mb-8 w-full md:w-1/2"
+        />
+      </div>
 
-     {/*Top places for study */}
+      {/* Top Places for Study */}
       <div className="bg-gradient-to-br from-blue-50 via-white to-blue-100 px-6 py-12 text-center flex flex-col justify-center items-center">
         <h2 className="text-3xl md:text-4xl font-bold text-blue-700 mb-8 drop-shadow-sm">
           Top Places for Study
@@ -224,7 +285,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/*}
+      {/* Top Universities by Course */}
       <div className="bg-gradient-to-br from-blue-50 via-white to-blue-100 px-6 py-12 text-center flex flex-col justify-center items-center">
         <h2 className="text-3xl md:text-4xl font-bold text-blue-700 mb-8 drop-shadow-sm">
           Top Universities by Course
@@ -232,166 +293,155 @@ export default function HomePage() {
         <CourseSection courseName="MBA" universities={courseData.MBA} />
         <CourseSection courseName="B.Tech" universities={courseData.BTech} />
         <CourseSection courseName="MBBS" universities={courseData.MBBS} />
-        <CourseSection courseName="BSc" universities={courseData.BSc} />
       </div>
 
-            {/* Explore Our Services Cards */}
+      {/* Explore Our Services Cards */}
       <section className="bg-gradient-to-b from-purple-50 to-white py-16">
-  <div className="max-w-6xl mx-auto px-6">
-    <h2 className="text-4xl font-extrabold text-purple-700 text-center mb-12 leading-tight tracking-wide">
-      <span className="block">Bring Your</span>
-      <span className="block text-purple-500">Vision into Focus</span>
-    </h2>
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-4xl font-extrabold text-purple-700 text-center mb-12 leading-tight tracking-wide">
+            <span className="block">Bring Your</span>
+            <span className="block text-purple-500">Vision into Focus</span>
+          </h2>
 
-    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-      {/* Card 1 */}
-      <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-        {/* Image covers top half */}
-        <div className="h-40 w-full overflow-hidden">
-          <img
-            src="/pngegg (2).png"
-            alt="Study Icon"
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-          />
-        </div>
-
-        {/* Content covers bottom half */}
-        <div className="p-6 text-center">
-          <h3 className="text-xl font-semibold mb-3 text-purple-700">
-            Courses & University Search
-          </h3>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            Quickly find courses and universities that fit your interests and goals.
-          </p>
-        </div>
-         </div>
-                {/* Card 2 */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <img
-          src="/pngegg (3).png"
-          alt="Scholarships"
-          className="h-40 w-full object-cover"
-        />
-        <div className="p-6 text-center">
-          <h3 className="text-xl font-semibold mb-3 text-purple-700">
-            Scholarship Matcher
-          </h3>
-          <p className="text-gray-600 text-sm">
-            Discover scholarships tailored to your profile and maximize opportunities.
-          </p>
-        </div>
-      </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Card 1 */}
+            <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
+              <div className="h-40 w-full overflow-hidden">
+                <img
+                  src="/pngegg (2).png"
+                  alt="Study Icon"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-purple-700">
+                  Courses & University Search
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Quickly find courses and universities that fit your interests and goals.
+                </p>
+              </div>
+            </div>
+            {/* Card 2 */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
+              <img
+                src="/pngegg (3).png"
+                alt="Scholarships"
+                className="h-40 w-full object-cover"
+              />
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-purple-700">
+                  Scholarship Matcher
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Discover scholarships tailored to your profile and maximize opportunities.
+                </p>
+              </div>
+            </div>
             {/* Card 3 */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <img
-          src="/pngegg (4).png"
-          alt="Scholarships"
-          className="h-40 w-full object-cover"
-        />
-        <div className="p-6 text-center">
-          <h3 className="text-xl font-semibold mb-3 text-purple-700">
-          Career Pathways
-          </h3>
-          <p className="text-gray-600 text-sm">
-          Prepare effectively for exams and plan your career path with expert resources.
-          </p>
-        </div>
-      </div>
-
+              <img
+                src="/pngegg (4).png"
+                alt="Career Pathways"
+                className="h-40 w-full object-cover"
+              />
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-purple-700">
+                  Career Pathways
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Prepare effectively for exams and plan your career path with expert resources.
+                </p>
+              </div>
+            </div>
             {/* Card 4 */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <img
-          src="/pngegg (5).png"
-          alt="Scholarships"
-          className="h-40 w-full object-cover"
-        />
-        <div className="p-6 text-center">
-          <h3 className="text-xl font-semibold mb-3 text-purple-700">
-          Study Abroad / Foreign Student Support
-          </h3>
-          <p className="text-gray-600 text-sm">
-          Get guidance and assistance for studying abroad and international student life.
-          </p>
+              <img
+                src="/pngegg (5).png"
+                alt="Study Abroad"
+                className="h-40 w-full object-cover"
+              />
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-purple-700">
+                  Study Abroad / Foreign Student Support
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Get guidance and assistance for studying abroad and international student life.
+                </p>
+              </div>
+            </div>
+            {/* Card 5 - Exam Preparation */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
+              <img
+                src="/pngegg (6).png"
+                alt="Exam Preparation"
+                className="h-40 w-full object-cover"
+              />
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-purple-700">
+                  Exam Preparation
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Access study materials, mock tests, and tips to prepare confidently for your exams.
+                </p>
+              </div>
+            </div>
+            {/* Card 6 - Rank Prediction */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
+              <img
+                src="/pngegg (7).png"
+                alt="Rank Prediction"
+                className="h-40 w-full object-cover"
+              />
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-purple-700">
+                  Rank Prediction
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Estimate your rank based on performance analytics and previous trends.
+                </p>
+              </div>
+            </div>
+            {/* Card 7 - News */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
+              <img
+                src="/pngegg (8).png"
+                alt="News"
+                className="h-40 w-full object-cover"
+              />
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-purple-700">
+                  News
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Latest news of exams, universities, and results.
+                </p>
+              </div>
+            </div>
+            {/* Card 8 - Blogs */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
+              <img
+                src="/pngegg (7).png"
+                alt="Blogs"
+                className="h-40 w-full object-cover"
+              />
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-purple-700">
+                  Blogs
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Read insightful articles, tips, and guides written by experts and students.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-             {/* Card 5 - Exam Preparation */}
-             <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <img
-          src="/pngegg (6).png"
-          alt="Scholarships"
-          className="h-40 w-full object-cover"
-        />
-        <div className="p-6 text-center">
-          <h3 className="text-xl font-semibold mb-3 text-purple-700">
-          Exam Preparation
-          </h3>
-          <p className="text-gray-600 text-sm">
-          Access study materials, mock tests, and tips to prepare confidently for your exams.
-          </p>
-        </div>
-      </div>
-
-{/* Card 6 - Rank Prediction */}
-<div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <img
-          src="/pngegg (7).png"
-          alt="Scholarships"
-          className="h-40 w-full object-cover"
-        />
-        <div className="p-6 text-center">
-          <h3 className="text-xl font-semibold mb-3 text-purple-700">
-          Rank Prediction
-          </h3>
-          <p className="text-gray-600 text-sm">
-          Estimate your rank based on performance analytics and previous trends.
-          </p>
-        </div>
-      </div>
-
-{/* Card 7 - News */}
-<div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <img
-          src="/pngegg (8).png"
-          alt="Scholarships"
-          className="h-40 w-full object-cover"
-        />
-        <div className="p-6 text-center">
-          <h3 className="text-xl font-semibold mb-3 text-purple-700">
-         News
-          </h3>
-          <p className="text-gray-600 text-sm">
-         Latest news of exams, universities, and results.
-          </p>
-        </div>
-      </div>
-
-{/* Card 8 - Blogs */}
-<div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <img
-          src="/pngegg (7).png"
-          alt="Scholarships"
-          className="h-40 w-full object-cover"
-        />
-        <div className="p-6 text-center">
-          <h3 className="text-xl font-semibold mb-3 text-purple-700">
-          Blogs
-          </h3>
-          <p className="text-gray-600 text-sm">
-          Read insightful articles, tips, and guides written by experts and students.
-          </p>
-        </div>
-      </div>
-
-</div>
- </div>
- </section>
+      </section>
 
       {/* News, Alerts & Deadlines */}
       <section className="bg-[#483248] text-gray-200 py-16 px-4 font-sans">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10">
-          {/* Deadlines & Alerts */}
           <div className="bg-[#483248] rounded-3xl border border-[#2b2b2b] shadow-2xl p-8 flex-1 space-y-8">
-            {/* Deadlines */}
             <div>
               <h4 className="text-xl font-bold flex items-center gap-2 text-[#e5e7eb] mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -417,8 +467,6 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
-
-            {/* Alerts */}
             <div>
               <h4 className="text-xl font-bold flex items-center gap-2 text-[#e5e7eb] mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -440,7 +488,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* News / Alerts / Blogs Tabs */}
           <div className="w-full max-w-md flex flex-col flex-1">
             <div className="flex bg-[#a476a4] rounded-t-xl overflow-hidden shadow-md">
               {["news", "alerts", "blogs"].map((tab) => (
@@ -457,7 +504,6 @@ export default function HomePage() {
                 </button>
               ))}
             </div>
-
             <div
               ref={containerRef}
               className="bg-[#483248] border-t-2 border-purple-600 p-4 h-64 overflow-hidden relative rounded-b-xl"
@@ -489,8 +535,6 @@ export default function HomePage() {
                 </motion.div>
               </AnimatePresence>
             </div>
-
-            {/* View All Button with inline Chevron */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -504,84 +548,80 @@ export default function HomePage() {
           </div>
         </div>
       </section>
- 
-     
-{/* Testimonials & Success Stories */}
-<section className="bg-gradient-to-b from-purple-50 to-white py-16 relative">
-  <div className="max-w-6xl mx-auto px-6">
-    <h2 className="text-4xl font-bold text-center mb-12 text-purple-700">
-      Testimonials & Success Stories
-    </h2>
 
-    <Swiper
-      modules={[Navigation, Pagination, Autoplay]}
-      navigation={{
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      }}
-      pagination={{ clickable: true }}
-      autoplay={{
-        delay: 3500,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-      }}
-      loop={true}
-      spaceBetween={40}
-      breakpoints={{
-        320: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
-      }}
-      className="rounded-xl pb-12"
-    >
-      {[
-        {
-          name: "John Doe",
-          img: "/images.jpeg",
-          text: "This university changed my life! The professors were supportive and the programs prepared me for my career.",
-        },
-        {
-          name: "Jane Smith",
-          img: "/image 2.jpg",
-          text: "The scholarship I received made my dreams come true. I’m now working at a Fortune 500 company!",
-        },
-        {
-          name: "John Doe",
-          img: "/images.jpeg",
-          text: "This university changed my life! The professors were supportive and the programs prepared me for my career.",
-        },
-        {
-          name: "Jane Smith",
-          img: "/image 2.jpg",
-          text: "The scholarship I received made my dreams come true. I’m now working at a Fortune 500 company!",
-        },
-      ].map((testimonial, i) => (
-        <SwiperSlide key={i}>
-          <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2 border border-purple-100">
-            <img
-              src={testimonial.img}
-              alt={testimonial.name}
-              className="w-28 h-28 rounded-full mx-auto mb-6 object-cover border-4 border-purple-300 shadow-md"
-            />
-            <p className="text-gray-700 text-center mb-4 italic leading-relaxed">
-              "{testimonial.text}"
-            </p>
-            <p className="text-purple-600 font-semibold text-center">
-              – {testimonial.name}
-            </p>
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
-
-    {/* Custom Navigation Buttons with margin */}
-    <div className="swiper-button-prev !text-purple-700 !bg-white shadow-md !rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition-all duration-300 absolute top-1/2 -left-6 z-10"></div>
-    <div className="swiper-button-next !text-purple-700 !bg-white shadow-md !rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition-all duration-300 absolute top-1/2 -right-6 z-10"></div>
-  </div>
-</section>
+      {/* Testimonials & Success Stories */}
+      <section className="bg-gradient-to-b from-purple-50 to-white py-16 relative">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-4xl font-bold text-center mb-12 text-purple-700">
+            Testimonials & Success Stories
+          </h2>
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            }}
+            pagination={{ clickable: true }}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            loop={true}
+            spaceBetween={40}
+            breakpoints={{
+              320: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            className="rounded-xl pb-12"
+          >
+            {[
+              {
+                name: "John Doe",
+                img: "/images.jpeg",
+                text: "This university changed my life! The professors were supportive and the programs prepared me for my career.",
+              },
+              {
+                name: "Jane Smith",
+                img: "/image 2.jpg",
+                text: "The scholarship I received made my dreams come true. I’m now working at a Fortune 500 company!",
+              },
+              {
+                name: "John Doe",
+                img: "/images.jpeg",
+                text: "This university changed my life! The professors were supportive and the programs prepared me for my career.",
+              },
+              {
+                name: "Jane Smith",
+                img: "/image 2.jpg",
+                text: "The scholarship I received made my dreams come true. I’m now working at a Fortune 500 company!",
+              },
+            ].map((testimonial, i) => (
+              <SwiperSlide key={i}>
+                <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2 border border-purple-100">
+                  <img
+                    src={testimonial.img}
+                    alt={testimonial.name}
+                    className="w-28 h-28 rounded-full mx-auto mb-6 object-cover border-4 border-purple-300 shadow-md"
+                  />
+                  <p className="text-gray-700 text-center mb-4 italic leading-relaxed">
+                    "{testimonial.text}"
+                  </p>
+                  <p className="text-purple-600 font-semibold text-center">
+                    – {testimonial.name}
+                  </p>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <div className="swiper-button-prev !text-purple-700 !bg-white shadow-md !rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition-all duration-300 absolute top-1/2 -left-6 z-10"></div>
+          <div className="swiper-button-next !text-purple-700 !bg-white shadow-md !rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition-all duration-300 absolute top-1/2 -right-6 z-10"></div>
+        </div>
+      </section>
 
       {/* Footer */}
-      <Footer />
+      
 
       {/* Custom CSS for scroll animation */}
       <style>{`
@@ -598,4 +638,4 @@ export default function HomePage() {
       `}</style>
     </>
   );
-  }
+}

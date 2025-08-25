@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { GraduationCap, Banknote, BellRing, Landmark } from "lucide-react";
+import "./Scholarship.css";
 
 export default function ScholarshipsLoans() {
   const [loanAmount, setLoanAmount] = useState(0);
@@ -21,13 +22,13 @@ export default function ScholarshipsLoans() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+    <div className="scholarships-loans-container">
       {/* Page Heading */}
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-3xl md:text-4xl font-bold text-center text-indigo-700 mb-8"
+        className="page-title"
       >
         🎓 Scholarships & Loans
       </motion.h1>
@@ -37,73 +38,73 @@ export default function ScholarshipsLoans() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition"
+        className="unified-card"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b-4 border-gradient-to-r from-indigo-500 to-blue-600 inline-block pb-1">
+        <h2 className="section-title">
           Scholarships
         </h2>
 
         {/* Applied Scholarships Form */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <GraduationCap className="text-indigo-600 w-7 h-7" />
-            <h3 className="text-xl font-semibold text-gray-800">
+        <div className="scholarships-form-section">
+          <div className="section-header">
+            <GraduationCap className="section-icon" />
+            <h3 className="section-subtitle">
               Applied Scholarships
             </h3>
           </div>
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <form className="scholarships-form">
             <div>
-              <label className="block text-gray-700">Name</label>
-              <input type="text" className="w-full border rounded-lg p-2" placeholder="Enter scholarship name" />
+              <label className="form-label">Name</label>
+              <input type="text" className="form-input" placeholder="Enter scholarship name" />
             </div>
             <div>
-              <label className="block text-gray-700">Provider</label>
-              <input type="text" className="w-full border rounded-lg p-2" placeholder="Enter provider name" />
+              <label className="form-label">Provider</label>
+              <input type="text" className="form-input" placeholder="Enter provider name" />
             </div>
             <div>
-              <label className="block text-gray-700">Status</label>
-              <select className="w-full border rounded-lg p-2">
+              <label className="form-label">Status</label>
+              <select className="form-select">
                 <option>Pending</option>
                 <option>Approved</option>
                 <option>Rejected</option>
               </select>
             </div>
             <div>
-              <label className="block text-gray-700">Amount</label>
-              <input type="number" className="w-full border rounded-lg p-2" placeholder="Enter amount" />
+              <label className="form-label">Amount</label>
+              <input type="number" className="form-input" placeholder="Enter amount" />
             </div>
-            <div className="md:col-span-2">
-              <label className="block text-gray-700">Deadline</label>
-              <input type="date" className="w-full border rounded-lg p-2" />
+            <div className="full-width">
+              <label className="form-label">Deadline</label>
+              <input type="date" className="form-input" />
             </div>
           </form>
         </div>
 
         {/* Eligible Scholarships */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <BellRing className="text-green-600 w-7 h-7" />
-            <h3 className="text-xl font-semibold text-gray-800">
+        <div className="eligible-scholarships-section">
+          <div className="section-header">
+            <BellRing className="section-icon eligible" />
+            <h3 className="section-subtitle">
               Eligible Scholarships (AI Suggested)
             </h3>
           </div>
-          <p className="text-gray-600 mb-3">Based on your profile, you may qualify for:</p>
-          <ul className="list-disc list-inside text-gray-600 space-y-2">
+          <p className="section-text">Based on your profile, you may qualify for:</p>
+          <ul className="scholarships-list">
             <li>Women in Tech Fellowship – Deadline: Oct 15</li>
             <li>State Minority Scholarship – Deadline: Sep 30</li>
           </ul>
         </div>
 
         {/* Government Schemes */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <Landmark className="text-blue-600 w-7 h-7" />
-            <h3 className="text-xl font-semibold text-gray-800">Government Schemes</h3>
+        <div className="government-schemes-section">
+          <div className="section-header">
+            <Landmark className="section-icon government" />
+            <h3 className="section-subtitle">Government Schemes</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div className="schemes-form">
             <div>
-              <label className="block text-gray-700">Select State</label>
-              <select className="w-full border rounded-lg p-2">
+              <label className="form-label">Select State</label>
+              <select className="form-select">
                 <option>Maharashtra</option>
                 <option>Karnataka</option>
                 <option>Uttar Pradesh</option>
@@ -112,8 +113,8 @@ export default function ScholarshipsLoans() {
               </select>
             </div>
             <div>
-              <label className="block text-gray-700">Select Category</label>
-              <select className="w-full border rounded-lg p-2">
+              <label className="form-label">Select Category</label>
+              <select className="form-select">
                 <option>General</option>
                 <option>OBC</option>
                 <option>SC</option>
@@ -122,11 +123,11 @@ export default function ScholarshipsLoans() {
               </select>
             </div>
             <div>
-              <label className="block text-gray-700">Search</label>
-              <input type="text" className="w-full border rounded-lg p-2" placeholder="Search scheme" />
+              <label className="form-label">Search</label>
+              <input type="text" className="form-input" placeholder="Search scheme" />
             </div>
           </div>
-          <ul className="list-disc list-inside text-gray-600 space-y-2">
+          <ul className="schemes-list">
             <li>State Education Loan Subsidy Scheme</li>
             <li>Central OBC Scholarship – Income Bracket Eligible</li>
           </ul>
@@ -134,22 +135,22 @@ export default function ScholarshipsLoans() {
 
         {/* Loan Applications */}
         <div>
-          <div className="flex items-center gap-3 mb-4">
-            <Banknote className="text-pink-600 w-7 h-7" />
-            <h3 className="text-xl font-semibold text-gray-800">Loan Applications</h3>
+          <div className="section-header">
+            <Banknote className="section-icon loan" />
+            <h3 className="section-subtitle">Loan Applications</h3>
           </div>
-          <form className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <form className="loan-form">
             <div>
-              <label className="block text-gray-700">Loan Amount (₹)</label>
-              <input type="number" className="w-full border rounded-lg p-2" value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} />
+              <label className="form-label">Loan Amount (₹)</label>
+              <input type="number" className="form-input" value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} />
             </div>
             <div>
-              <label className="block text-gray-700">Interest Rate (%)</label>
-              <input type="number" className="w-full border rounded-lg p-2" value={interestRate} onChange={(e) => setInterestRate(e.target.value)} />
+              <label className="form-label">Interest Rate (%)</label>
+              <input type="number" className="form-input" value={interestRate} onChange={(e) => setInterestRate(e.target.value)} />
             </div>
             <div>
-              <label className="block text-gray-700">Tenure (months)</label>
-              <select className="w-full border rounded-lg p-2" value={tenure} onChange={(e) => setTenure(e.target.value)}>
+              <label className="form-label">Tenure (months)</label>
+              <select className="form-select" value={tenure} onChange={(e) => setTenure(e.target.value)}>
                 <option value="12">12</option>
                 <option value="24">24</option>
                 <option value="36">36</option>
@@ -158,10 +159,10 @@ export default function ScholarshipsLoans() {
               </select>
             </div>
           </form>
-          <button onClick={calculateEMI} className="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700 transition">
+          <button onClick={calculateEMI} className="calculate-button">
             Calculate EMI
           </button>
-          {emi && <p className="mt-3 text-gray-700">Estimated EMI: ₹{emi}/month</p>}
+          {emi && <p className="emi-result">Estimated EMI: ₹{emi}/month</p>}
         </div>
       </motion.div>
 
@@ -170,9 +171,9 @@ export default function ScholarshipsLoans() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="max-w-3xl mx-auto mt-10 bg-gradient-to-r from-indigo-500 to-blue-600 text-white p-6 rounded-2xl shadow-lg text-center"
+        className="opportunities-alert"
       >
-        <h2 className="text-2xl font-bold mb-2">🔔 New Opportunities Alert</h2>
+        <h2 className="alert-title">🔔 New Opportunities Alert</h2>
         <p>We’ll notify you when new funding opportunities match your profile.</p>
       </motion.div>
     </div>

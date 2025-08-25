@@ -1,14 +1,12 @@
 import React, { useEffect, useRef } from "react";
-
+import Footer from "../components/Footer";
 /* Subtle surfaces with tasteful color accents */
 const Stat = ({ label, value, highlight = false }) => (
   <div className="flex flex-col rounded-xl border border-white/30 bg-white/70 p-4 shadow-sm backdrop-blur-sm ring-1 ring-inset ring-indigo-100">
     <span className="text-sm text-slate-600">{label}</span>
     <span
       className={`mt-1 text-xl ${
-        highlight
-          ? "font-semibold text-indigo-700"
-          : "font-medium text-slate-900"
+        highlight ? "font-semibold text-indigo-700" : "font-medium text-slate-900"
       }`}
     >
       {value}
@@ -16,26 +14,35 @@ const Stat = ({ label, value, highlight = false }) => (
   </div>
 );
 
-const Card = ({ title, desc, icon }) => (
-  <div className="group rounded-2xl border border-white/30 bg-white/90 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md backdrop-blur-sm ring-1 ring-indigo-100">
-    <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 text-indigo-700 ring-1 ring-inset ring-indigo-100">
-      {icon ?? <span className="text-lg">★</span>}
+/* Generic Card with optional image */
+const Card = ({ title, desc, icon, imgSrc }) => (
+  <div className="group rounded-2xl border border-white/30 bg-indigo-100 p-0 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md backdrop-blur-sm ring-1 ring-indigo-100 overflow-hidden">
+    {imgSrc ? (
+      <div className="relative h-32 w-full overflow-hidden">
+        <img
+          src={imgSrc}
+          alt={title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+      </div>
+    ) : null}
+    <div className="p-5">
+      <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 text-indigo-700 ring-1 ring-inset ring-indigo-100">
+        {icon ?? <span className="text-lg">★</span>}
+      </div>
+      <h4 className="text-base font-semibold text-slate-900">{title}</h4>
+      {desc && <p className="mt-1 text-sm text-slate-600">{desc}</p>}
     </div>
-    <h4 className="text-base font-semibold text-slate-900">{title}</h4>
-    {desc && <p className="mt-1 text-sm text-slate-600">{desc}</p>}
   </div>
 );
 
 const Section = ({ title, subtitle, children, id }) => (
-  <section
-    id={id}
-    className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8"
-  >
+  <section id={id} className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
     <div className="mb-6 flex items-end justify-between gap-4">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-          {title}
-        </h2>
+        <h2 className="text-2xl font-bold tracking-tight text-slate-900">{title}</h2>
         {subtitle && <p className="mt-1 text-slate-600">{subtitle}</p>}
       </div>
       <div className="hidden gap-2 sm:flex">
@@ -73,24 +80,28 @@ const InstituteCard = ({ title, desc, img }) => (
 );
 
 export default function BBACoursePage() {
-  // Replace these image URLs with your own assets
+  // Replace these local image paths with your actual assets
   const INSTITUTE_IMAGES = {
-    iimi:
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200&auto=format&fit=crop",
-    sscbs:
-      "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1200&auto=format&fit=crop",
-    nmims:
-      "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1200&auto=format&fit=crop",
-    symbiosis:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop",
-    christ:
-      "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?q=80&w=1200&auto=format&fit=crop",
-    amity:
-      "https://images.unsplash.com/photo-1553701275-27c0a1a67bb9?q=80&w=1200&auto=format&fit=crop",
-    nmcollege:
-      "https://images.unsplash.com/photo-1559027615-5a1a1f2c4b59?q=80&w=1200&auto=format&fit=crop",
-    manipal:
-      "https://images.unsplash.com/photo-1496307042754-41f2d1f2103c?q=80&w=1200&auto=format&fit=crop",
+    iimi: "/Indore.jpeg",
+    sscbs: "/Delhi.jpeg",
+    nmims: "/Mumbai.jpeg",
+    symbiosis: "/Symbiosis.jpeg",
+    christ: "/Chris.jpeg",
+    amity: "/Amity.jpeg",
+    nmcollege: "/NM College.jpeg",
+    manipal: "/Manipal.jpeg",
+  };
+
+  // Specializations images (add your own asset paths)
+  const SPECIALIZATION_IMAGES = {
+    marketing: "/Marketing.jpeg",
+    finance: "/Finance.jpeg",
+    hr: "/HR.jpeg",
+    analytics: "/BA.jpeg",
+    operations: "/Operation.jpeg",
+    international: "/IB.jpeg",
+    entrepreneurship: "/Entrepreneure.jpeg",
+    retail: "/Retail.jpeg",
   };
 
   /* Auto-scroll for Top Institutes: 3 cards per stride, smooth loop */
@@ -137,7 +148,7 @@ export default function BBACoursePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-white to-fuchsia-50/40 text-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-400 via-purple to-fuchsia-50/40 text-slate-900">
       {/* Navbar */}
       <header className="sticky top-0 z-30 w-full border-b border-white/30 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-sm">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
@@ -184,7 +195,7 @@ export default function BBACoursePage() {
       {/* Hero */}
       <section
         id="overview"
-        className="relative mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:px-6 lg:px-8"
+        className="relative bg-indigo-300 mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:px-6 lg:px-8"
       >
         <div className="absolute inset-0 -z-10 pointer-events-none">
           <div className="mx-auto max-w-6xl">
@@ -202,9 +213,7 @@ export default function BBACoursePage() {
               BBA — Bachelor of Business Administration
             </h1>
             <p className="mt-3 text-slate-800">
-              A comprehensive undergraduate program focused on management,
-              finance, marketing, analytics, and entrepreneurship to build
-              versatile business leaders.
+              A comprehensive undergraduate program focused on management, finance, marketing, analytics, and entrepreneurship to build versatile business leaders.
             </p>
 
             <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -231,11 +240,9 @@ export default function BBACoursePage() {
           </div>
 
           <div className="md:col-span-2">
-            <div className="relative overflow-hidden rounded-2xl border border-white/30 bg-white/90 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+            <div className="relative overflow-hidden rounded-2xl border border-white/30 bg-white/50 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
               <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-indigo-100 blur-2xl" />
-              <h3 className="text-lg font-semibold text-slate-900">
-                Key Highlights
-              </h3>
+              <h3 className="text-lg font-semibold text-slate-900">Key Highlights</h3>
               <ul className="mt-3 space-y-2 text-sm text-slate-800">
                 - Case-based learning
                 - Industry internships
@@ -251,21 +258,21 @@ export default function BBACoursePage() {
         </div>
       </section>
 
-      {/* Specializations */}
+      {/* Specializations with images */}
       <Section
         id="specializations"
         title="Specializations"
         subtitle="Choose a focus area to align with career goals."
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card title="Marketing" desc="Branding, digital, consumer behavior" />
-          <Card title="Finance" desc="Corporate finance, markets, risk" />
-          <Card title="HR Management" desc="Talent, L&D, org behavior" />
-          <Card title="Business Analytics" desc="Data-driven decision making" />
-          <Card title="Operations" desc="Supply chain, quality, systems" />
-          <Card title="International Business" desc="Global strategy & trade" />
-          <Card title="Entrepreneurship" desc="Venture creation & growth" />
-          <Card title="Retail & E‑Commerce" desc="Merchandising & CX" />
+          <Card title="Marketing" desc="Branding, digital, consumer behavior" imgSrc={SPECIALIZATION_IMAGES.marketing} />
+          <Card title="Finance" desc="Corporate finance, markets, risk" imgSrc={SPECIALIZATION_IMAGES.finance} />
+          <Card title="HR Management" desc="Talent, L&D, org behavior" imgSrc={SPECIALIZATION_IMAGES.hr} />
+          <Card title="Business Analytics" desc="Data-driven decision making" imgSrc={SPECIALIZATION_IMAGES.analytics} />
+          <Card title="Operations" desc="Supply chain, quality, systems" imgSrc={SPECIALIZATION_IMAGES.operations} />
+          <Card title="International Business" desc="Global strategy & trade" imgSrc={SPECIALIZATION_IMAGES.international} />
+          <Card title="Entrepreneurship" desc="Venture creation & growth" imgSrc={SPECIALIZATION_IMAGES.entrepreneurship} />
+          <Card title="Retail & E‑Commerce" desc="Merchandising & CX" imgSrc={SPECIALIZATION_IMAGES.retail} />
         </div>
       </Section>
 
@@ -276,7 +283,7 @@ export default function BBACoursePage() {
         subtitle="Check requirements, exams, and application timelines."
       >
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-2xl border border-white/30 bg-white/90 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+          <div className="rounded-2xl border border-white/30 bg-white/40 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
             <h4 className="text-lg font-semibold text-slate-900">Eligibility</h4>
             <ul className="mt-3 space-y-2 text-slate-800 text-sm">
               - Completed 10+2 from a recognized board
@@ -285,10 +292,8 @@ export default function BBACoursePage() {
               - English proficiency as per institute norms
             </ul>
           </div>
-          <div className="rounded-2xl border border-white/30 bg-white/90 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
-            <h4 className="text-lg font-semibold text-slate-900">
-              Entrance & Admission
-            </h4>
+          <div className="rounded-2xl border border-white/30 bg-white/40 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+            <h4 className="text-lg font-semibold text-slate-900">Entrance & Admission</h4>
             <ul className="mt-3 space-y-2 text-slate-800 text-sm">
               - Common exams: CUET-UG, IPU CET, NPAT, SET, Christ Entrance (varies by college)
               - Selection: Entrance score and/or merit, interview, SOP
@@ -299,19 +304,19 @@ export default function BBACoursePage() {
         </div>
       </Section>
 
-      {/* Application Guide */}
+      {/* Application Guide in 3-column cards */}
       <Section
         id="application-guide"
         title="Application Guide"
         subtitle="Step-by-step overview of the process."
       >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card title="1. Register" desc="Create applicant profile" />
+        <div className="grid gap-4 md:grid-cols-3">
+          <Card title="1. Register" desc="Create applicant profile"  />
           <Card title="2. Apply" desc="Fill form, upload documents" />
-          <Card title="3. Exam/Shortlist" desc="Entrance/merit-based shortlist" />
-          <Card title="4. Interview" desc="PI/WAT/GD as applicable" />
+          <Card title="3. Exam/Shortlist" desc="Entrance/merit-based shortlist"  />
+          <Card title="4. Interview" desc="PI/WAT/GD as applicable"  />
           <Card title="5. Offer" desc="Provisional admission" />
-          <Card title="6. Enroll" desc="Fee payment & onboarding" />
+          <Card title="6. Enroll" desc="Fee payment & onboarding"/>
         </div>
       </Section>
 
@@ -322,7 +327,7 @@ export default function BBACoursePage() {
         subtitle="Foundations, core management, and specialization electives."
       >
         <div className="grid gap-6 lg:grid-cols-3">
-          <div className="rounded-2xl border border-white/30 bg-white/90 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+          <div className="rounded-2xl border border-white/30 bg-white/40 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
             <h4 className="text-lg font-semibold text-slate-900">Year 1</h4>
             <ul className="mt-3 space-y-2 text-sm text-slate-800">
               - Principles of Management
@@ -333,7 +338,7 @@ export default function BBACoursePage() {
               - IT for Managers
             </ul>
           </div>
-          <div className="rounded-2xl border border-white/30 bg-white/90 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+          <div className="rounded-2xl border border-white/30 bg-white/40  p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
             <h4 className="text-lg font-semibold text-slate-900">Year 2</h4>
             <ul className="mt-3 space-y-2 text-sm text-slate-800">
               - Marketing Management
@@ -344,7 +349,7 @@ export default function BBACoursePage() {
               - Research Methods
             </ul>
           </div>
-          <div className="rounded-2xl border border-white/30 bg-white/90 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+          <div className="rounded-2xl border border-white/30 bg-white/40 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
             <h4 className="text-lg font-semibold text-slate-900">Year 3</h4>
             <ul className="mt-3 space-y-2 text-sm text-slate-800">
               - Business Analytics
@@ -365,58 +370,23 @@ export default function BBACoursePage() {
         subtitle="Popular universities and colleges offering BBA."
       >
         <div className="relative">
-          <div className="pointer-events-none absolute inset-0 -z-10 rounded-3xl bg-gradient-to-r from-indigo-50 via-violet-50 to-fuchsia-50" />
-          <div className="rounded-3xl border border-white/30 bg-white/90 p-4 backdrop-blur-sm shadow-sm ring-1 ring-indigo-100">
+          <div className="pointer-events-none absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-indigo-100 via-violet-50 to-fuchsia-50" />
+          <div className="rounded-xl border border-white/30 bg-white/50 p-4 backdrop-blur-sm shadow-sm ring-1 ring-indigo-100">
             <div
               ref={scrollerRef}
               className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 pt-2 [scrollbar-width:thin]"
-              style={{
-                WebkitOverflowScrolling: "touch",
-                scrollBehavior: "smooth",
-              }}
+              style={{ WebkitOverflowScrolling: "touch", scrollBehavior: "smooth" }}
             >
               {/* Show 3 cards per view on large screens using responsive width overrides */}
               <div className="contents lg:[&>*]:w-[calc((100vw-2rem-2rem-2rem)/3)] xl:[&>*]:w-[calc((72rem-2rem-2rem-2rem)/3)]">
-                <InstituteCard
-                  title="IIM Indore (IPM)"
-                  desc="Integrated program"
-                  img={INSTITUTE_IMAGES.iimi}
-                />
-                <InstituteCard
-                  title="Shaheed Sukhdev College of Business Studies"
-                  desc="Delhi University"
-                  img={INSTITUTE_IMAGES.sscbs}
-                />
-                <InstituteCard
-                  title="NMIMS Mumbai"
-                  desc="BBA & allied programs"
-                  img={INSTITUTE_IMAGES.nmims}
-                />
-                <InstituteCard
-                  title="Symbiosis (SCMS)"
-                  desc="SET-based admissions"
-                  img={INSTITUTE_IMAGES.symbiosis}
-                />
-                <InstituteCard
-                  title="Christ University"
-                  desc="Multiple campuses"
-                  img={INSTITUTE_IMAGES.christ}
-                />
-                <InstituteCard
-                  title="Amity University"
-                  desc="Wide specializations"
-                  img={INSTITUTE_IMAGES.amity}
-                />
-                <InstituteCard
-                  title="NM College (Mithibai/UPG)"
-                  desc="Mumbai"
-                  img={INSTITUTE_IMAGES.nmcollege}
-                />
-                <InstituteCard
-                  title="Manipal University"
-                  desc="Industry exposure"
-                  img={INSTITUTE_IMAGES.manipal}
-                />
+                <InstituteCard title="IIM Indore (IPM)" desc="Integrated program" img={INSTITUTE_IMAGES.iimi} />
+                <InstituteCard title="Shaheed Sukhdev College of Business Studies" desc="Delhi University" img={INSTITUTE_IMAGES.sscbs} />
+                <InstituteCard title="NMIMS Mumbai" desc="BBA & allied programs" img={INSTITUTE_IMAGES.nmims} />
+                <InstituteCard title="Symbiosis (SCMS)" desc="SET-based admissions" img={INSTITUTE_IMAGES.symbiosis} />
+                <InstituteCard title="Christ University" desc="Multiple campuses" img={INSTITUTE_IMAGES.christ} />
+                <InstituteCard title="Amity University" desc="Wide specializations" img={INSTITUTE_IMAGES.amity} />
+                <InstituteCard title="NM College (Mithibai/UPG)" desc="Mumbai" img={INSTITUTE_IMAGES.nmcollege} />
+                <InstituteCard title="Manipal University" desc="Industry exposure" img={INSTITUTE_IMAGES.manipal} />
               </div>
             </div>
           </div>
@@ -430,7 +400,7 @@ export default function BBACoursePage() {
         subtitle="Roles across functions with strong growth potential."
       >
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-2xl border border-white/30 bg-white/90 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+          <div className="rounded-2xl border border-white/30 bg-indigo-100 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
             <h4 className="text-lg font-semibold text-slate-900">Popular Roles</h4>
             <ul className="mt-3 space-y-2 text-sm text-slate-800">
               - Marketing Executive, Brand Associate
@@ -441,10 +411,8 @@ export default function BBACoursePage() {
               - Entrepreneur / Startup roles
             </ul>
           </div>
-          <div className="rounded-2xl border border-white/30 bg-white/90 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
-            <h4 className="text-lg font-semibold text-slate-900">
-              Compensation & Pathways
-            </h4>
+          <div className="rounded-2xl border border-white/30 bg-indigo-100 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+            <h4 className="text-lg font-semibold text-slate-900">Compensation & Pathways</h4>
             <ul className="mt-3 space-y-2 text-sm text-slate-800">
               - Entry-level salaries vary by city and institute
               - Internships improve placement outcomes
@@ -462,7 +430,7 @@ export default function BBACoursePage() {
         subtitle="Merit-based aid, need-based support, and exchange programs."
       >
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-2xl border border-white/30 bg-white/90 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+          <div className="rounded-2xl border border-white/30 bg-white/50 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
             <h4 className="text-lg font-semibold text-slate-900">Scholarships</h4>
             <ul className="mt-3 space-y-2 text-sm text-slate-800">
               - Institute merit and need-based schemes
@@ -471,10 +439,8 @@ export default function BBACoursePage() {
               - Fee waivers for high performers
             </ul>
           </div>
-          <div className="rounded-2xl border border-white/30 bg-white/90 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
-            <h4 className="text-lg font-semibold text-slate-900">
-              Study Abroad & Exchange
-            </h4>
+          <div className="rounded-2xl border border-white/30 bg-white/50 p-6 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+            <h4 className="text-lg font-semibold text-slate-900">Study Abroad & Exchange</h4>
             <ul className="mt-3 space-y-2 text-sm text-slate-800">
               - Semester exchange with partner universities
               - Global immersion/short study tours
@@ -488,56 +454,33 @@ export default function BBACoursePage() {
       {/* FAQs */}
       <Section id="faqs" title="FAQs" subtitle="Quick answers to common queries.">
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-xl border border-white/30 bg-white/90 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
-            <h4 className="font-semibold text-slate-900">
-              What is the duration of BBA?
-            </h4>
-            <p className="mt-1 text-sm text-slate-800">
-              Typically 3 years (6 semesters), varying by university.
-            </p>
+          <div className="rounded-xl border border-white/30 bg-indigo-50 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+            <h4 className="font-semibold text-slate-900">What is the duration of BBA?</h4>
+            <p className="mt-1 text-sm text-slate-800">Typically 3 years (6 semesters), varying by university.</p>
           </div>
-          <div className="rounded-xl border border-white/30 bg-white/90 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
-            <h4 className="font-semibold text-slate-900">
-              Is BBA open to non-Commerce students?
-            </h4>
-            <p className="mt-1 text-sm text-slate-800">
-              Yes, students from any stream can apply unless specified otherwise.
-            </p>
+          <div className="rounded-xl border border-white/30 bg-indigo-50 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+            <h4 className="font-semibold text-slate-900">Is BBA open to non-Commerce students?</h4>
+            <p className="mt-1 text-sm text-slate-800">Yes, students from any stream can apply unless specified otherwise.</p>
           </div>
-          <div className="rounded-xl border border-white/30 bg-white/90 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
-            <h4 className="font-semibold text-slate-900">
-              Are internships mandatory?
-            </h4>
-            <p className="mt-1 text-sm text-slate-800">
-              Most programs include an internship or capstone in later semesters.
-            </p>
+          <div className="rounded-xl border border-white/30 bg-indigo-50 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+            <h4 className="font-semibold text-slate-900">Are internships mandatory?</h4>
+            <p className="mt-1 text-sm text-slate-800">Most programs include an internship or capstone in later semesters.</p>
           </div>
-          <div className="rounded-xl border border-white/30 bg-white/90 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
+          <div className="rounded-xl border border-white/30 bg-indigo-50 p-5 shadow-sm backdrop-blur-sm ring-1 ring-indigo-100">
             <h4 className="font-semibold text-slate-900">Is BBA valid abroad?</h4>
-            <p className="mt-1 text-sm text-slate-800">
-              Recognition depends on institution and country; many graduates
-              pursue master’s abroad.
-            </p>
+            <p className="mt-1 text-sm text-slate-800">Recognition depends on institution and country; many graduates pursue master’s abroad.</p>
           </div>
         </div>
       </Section>
 
       {/* CTA */}
-      <section
-        id="apply"
-        className="mx-auto w-full max-w-6xl px-4 pb-16 sm:px-6 lg:px-8"
-      >
+      <section id="apply" className="mx-auto w-full max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-3xl border border-white/30 bg-gradient-to-r from-indigo-600 to-violet-600 p-8 text-white shadow-sm">
           <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/15 blur-2xl"></div>
           <div className="grid gap-6 md:grid-cols-3">
             <div className="md:col-span-2">
-              <h3 className="text-2xl font-bold">
-                Ready to begin your BBA journey?
-              </h3>
-              <p className="mt-1 text-white/90">
-                Apply now or speak with a counselor to clarify admissions, fees,
-                and specialization choices.
-              </p>
+              <h3 className="text-2xl font-bold">Ready to begin your BBA journey?</h3>
+              <p className="mt-1 text-white/90">Apply now or speak with a counselor to clarify admissions, fees, and specialization choices.</p>
             </div>
             <div className="flex items-center gap-3 md:justify-end">
               <a
@@ -558,16 +501,13 @@ export default function BBACoursePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/30 bg-white/90 backdrop-blur">
+      <Footer />
+      <footer className="border-t border-white/30 bg-white/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-slate-700 sm:flex-row sm:px-6 lg:px-8">
           <p>© {new Date().getFullYear()} BBA Course Guide</p>
           <div className="flex items-center gap-4">
-            <a href="#brochure" className="hover:text-indigo-700">
-              Brochure
-            </a>
-            <a href="#counselor" className="hover:text-indigo-700">
-              Counselor
-            </a>
+            <a href="#brochure" className="hover:text-indigo-700">Brochure</a>
+            <a href="#counselor" className="hover:text-indigo-700">Counselor</a>
           </div>
         </div>
       </footer>

@@ -1,10 +1,10 @@
-// src/pages/StudentSignup.jsx
 import React, { useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import FormInput from "../components/FormInput";
+import "./StudentSignup.css";
 
 const StudentSignup = () => {
   const [formData, setFormData] = useState({
@@ -131,39 +131,39 @@ const StudentSignup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1f2230] via-[#232736] to-[#1a1c27] flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="student-signup-container">
+      <div className="signup-grid">
         {/* Left welcome panel */}
-        <div className="hidden lg:flex relative overflow-hidden rounded-2xl bg-[rgba(36,39,49,0.85)] border border-white/10 text-white">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-700/20 via-transparent to-transparent" />
-          <div className="relative p-10 flex flex-col justify-center">
-            <div className="h-14 w-14 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
-              <svg className="h-7 w-7 text-purple-300" viewBox="0 0 24 24" fill="none">
+        <div className="welcome-panel">
+          <div className="welcome-overlay"></div>
+          <div className="welcome-content">
+            <div className="welcome-icon-container">
+              <svg className="welcome-icon" viewBox="0 0 24 24" fill="none">
                 <path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M12 14l6.16-3.422A12.083 12.083 0 0112 21.5 12.083 12.083 0 015.84 10.578L12 14z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
-            <h1 className="text-3xl font-semibold">Create your student account</h1>
-            <p className="text-white/70 mt-2 leading-relaxed">
+            <h1 className="welcome-title">Create your student account</h1>
+            <p className="welcome-text">
               Sign up to manage your applications, upload documents, and access personalized counselling resources.
             </p>
-            <ul className="mt-6 space-y-3 text-sm text-white/80">
-              <li className="flex items-center gap-2">
+            <ul className="welcome-list">
+              <li className="welcome-list-item">
                 <CheckIcon />
                 Secure authentication and cloud storage
               </li>
-              <li className="flex items-center gap-2">
+              <li className="welcome-list-item">
                 <CheckIcon />
                 Track academic details and preferences
               </li>
-              <li className="flex items-center gap-2">
+              <li className="welcome-list-item">
                 <CheckIcon />
                 Fast support from our counselling team
               </li>
             </ul>
-            <div className="mt-8">
-              <div className="h-px bg-white/10" />
-              <p className="text-xs text-white/50 mt-3">
+            <div className="welcome-footer">
+              <div className="welcome-divider"></div>
+              <p className="welcome-footer-text">
                 By creating an account, you agree to our Terms and Privacy Policy.
               </p>
             </div>
@@ -171,35 +171,35 @@ const StudentSignup = () => {
         </div>
 
         {/* Right form card */}
-        <div className="backdrop-blur-xl bg-[rgba(36,39,49,0.85)] border border-white/10 text-white rounded-2xl shadow-2xl p-6 sm:p-8">
-          <div className="mb-6">
-            <h2 className="text-2xl font-semibold tracking-tight">Student Signup</h2>
-            <p className="text-sm text-white/70 mt-1">
+        <div className="form-card">
+          <div className="form-header">
+            <h2 className="form-title">Student Signup</h2>
+            <p className="form-subtitle">
               Enter your details to get started. Fields marked with an asterisk (*) are required.
             </p>
           </div>
 
           {err && (
-            <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 text-red-200 px-3 py-2 text-sm">
+            <div className="error-message">
               {err}
             </div>
           )}
           {info && (
-            <div className="mb-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-200 px-3 py-2 text-sm">
+            <div className="success-message">
               {info}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="form-content">
             {/* Name & Phone */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="form-grid">
               <FormInput
                 label="Full Name *"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Your full name"
-                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+                className="form-input"
                 required
               />
               <FormInput
@@ -209,13 +209,13 @@ const StudentSignup = () => {
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="Your mobile number"
-                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+                className="form-input"
                 required
               />
             </div>
 
             {/* Email & Password */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="form-grid">
               <FormInput
                 label="Email ID *"
                 name="email"
@@ -223,7 +223,7 @@ const StudentSignup = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
-                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+                className="form-input"
                 required
               />
               <FormInput
@@ -233,11 +233,9 @@ const StudentSignup = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter password"
-                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+                className="form-input"
                 required
               />
-              {/* Optional: password hint */}
-              {/* <p className="md:col-span-2 text-xs text-white/50 -mt-2">Use 8+ characters with a mix of letters and numbers.</p> */}
             </div>
 
             {/* Address & Pincode */}
@@ -247,7 +245,7 @@ const StudentSignup = () => {
               value={formData.address}
               onChange={handleChange}
               placeholder="Your address"
-              className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+              className="form-input"
               required
             />
 
@@ -257,19 +255,19 @@ const StudentSignup = () => {
               value={formData.pincode}
               onChange={handleChange}
               placeholder="6-digit pincode"
-              className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+              className="form-input"
               required
             />
 
             {/* University & Course */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="form-grid">
               <div>
-                <label className="block text-sm text-white/80 mb-1">University *</label>
+                <label className="form-label">University *</label>
                 <select
                   name="university"
                   value={formData.university}
                   onChange={handleChange}
-                  className="w-full bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400/40"
+                  className="form-select"
                   required
                 >
                   <option value="">Select University</option>
@@ -282,12 +280,12 @@ const StudentSignup = () => {
               </div>
 
               <div>
-                <label className="block text-sm text-white/80 mb-1">Course *</label>
+                <label className="form-label">Course *</label>
                 <select
                   name="course"
                   value={formData.course}
                   onChange={handleChange}
-                  className="w-full bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400/40"
+                  className="form-select"
                   required
                 >
                   <option value="">Select Course</option>
@@ -302,12 +300,12 @@ const StudentSignup = () => {
 
             {/* Branch */}
             <div>
-              <label className="block text-sm text-white/80 mb-1">Branch *</label>
+              <label className="form-label">Branch *</label>
               <select
                 name="branch"
                 value={formData.branch}
                 onChange={handleChange}
-                className="w-full bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400/40"
+                className="form-select"
                 required
               >
                 <option value="">Select Branch</option>
@@ -321,29 +319,29 @@ const StudentSignup = () => {
 
             {/* Academic Details */}
             <div>
-              <label className="block text-sm text-white/80 mb-1">Academic Details</label>
+              <label className="form-label">Academic Details</label>
               <textarea
                 name="academicDetails"
                 value={formData.academicDetails}
                 onChange={handleChange}
                 placeholder="Previous academic records, grades, etc."
                 rows="3"
-                className="w-full bg-[#2b2f3a] text-white placeholder-white/40 border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400/40"
+                className="form-textarea"
               ></textarea>
             </div>
 
             {/* Uploads */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="form-grid">
               <div>
-                <label className="block text-sm text-white/80 mb-1">Documents (PDF)</label>
+                <label className="form-label">Documents (PDF)</label>
                 <input
                   type="file"
                   name="documents"
                   accept="application/pdf"
                   onChange={handleChange}
-                  className="block w-full text-sm bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-white file:text-gray-800 hover:file:bg-gray-100"
+                  className="form-file-input"
                 />
-                <p className="mt-1 text-xs text-white/50">Max 10MB. Combine multiple pages into one PDF if possible.</p>
+                <p className="form-file-note">Max 10MB. Combine multiple pages into one PDF if possible.</p>
               </div>
 
               <FormInput
@@ -352,27 +350,27 @@ const StudentSignup = () => {
                 value={formData.counsellingBook}
                 onChange={handleChange}
                 placeholder="Enter counselling book details"
-                className="bg-[#2b2f3a] border-white/10 text-white placeholder-white/40"
+                className="form-input"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-white/80 mb-1">Scholarship Document (PDF)</label>
+              <label className="form-label">Scholarship Document (PDF)</label>
               <input
                 type="file"
                 name="scholarshipDoc"
                 accept="application/pdf"
                 onChange={handleChange}
-                className="block w-full text-sm bg-[#2b2f3a] text-white border border-white/10 rounded-lg px-3 py-2.5 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-white file:text-gray-800 hover:file:bg-gray-100"
+                className="form-file-input"
               />
-              <p className="mt-1 text-xs text-white/50">Optional. Upload only if applicable.</p>
+              <p className="form-file-note">Optional. Upload only if applicable.</p>
             </div>
 
             {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg shadow-lg shadow-purple-900/30 transition"
+              className="form-submit-button"
             >
               {loading ? "Submitting..." : "Create Account"}
             </button>
@@ -388,7 +386,7 @@ export default StudentSignup;
 /* Icons */
 function CheckIcon() {
   return (
-    <svg className="h-5 w-5 text-emerald-300" viewBox="0 0 24 24" fill="none">
+    <svg className="check-icon" viewBox="0 0 24 24" fill="none">
       <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );

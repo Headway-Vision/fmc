@@ -4,6 +4,7 @@ import "./App.css";
 import "./index.css";
 
 // Components
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomePage from "./components/HomePage";
 
@@ -34,8 +35,9 @@ function App() {
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
+        {/* Navbar */}
+        <Navbar />
 
-        
         {/* Main Content */}
         <main className="flex-grow">
           <Routes>

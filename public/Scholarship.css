@@ -1,0 +1,221 @@
+/* Container */
+.scholarships-loans-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #eff6ff, #e0e7ff);
+  padding: 1.5rem;
+}
+
+/* Page Heading */
+.page-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  text-align: center;
+  color: #4f46e5;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .page-title {
+    font-size: 2.25rem;
+  }
+}
+
+/* Unified Card */
+.unified-card {
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  transition: box-shadow 0.2s;
+}
+
+.unified-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  border-bottom: 4px solid transparent;
+  background: linear-gradient(to right, #4f46e5, #2563eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  padding-bottom: 0.25rem;
+}
+
+/* Section Headers */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: #4f46e5;
+}
+
+.section-icon.eligible {
+  color: #16a34a;
+}
+
+.section-icon.government {
+  color: #2563eb;
+}
+
+.section-icon.loan {
+  color: #ec4899;
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Applied Scholarships Form */
+.scholarships-form-section {
+  margin-bottom: 2rem;
+}
+
+.scholarships-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .scholarships-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-label {
+  display: block;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.full-width {
+  grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+  .full-width {
+    grid-column: span 2;
+  }
+}
+
+/* Eligible Scholarships */
+.eligible-scholarships-section {
+  margin-bottom: 2rem;
+}
+
+.section-text {
+  color: #4b5563;
+  margin-bottom: 0.75rem;
+}
+
+.scholarships-list {
+  list-style: disc;
+  list-style-position: inside;
+  color: #4b5563;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Government Schemes */
+.government-schemes-section {
+  margin-bottom: 2rem;
+}
+
+.schemes-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .schemes-form {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.schemes-list {
+  list-style: disc;
+  list-style-position: inside;
+  color: #4b5563;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Loan Applications */
+.loan-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .loan-form {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.calculate-button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #4f46e5;
+  color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s;
+}
+
+.calculate-button:hover {
+  background: #4338ca;
+}
+
+.emi-result {
+  margin-top: 0.75rem;
+  color: #374151;
+}
+
+/* New Opportunities Alert */
+.opportunities-alert {
+  max-width: 48rem;
+  margin: 2.5rem auto 0;
+  background: linear-gradient(to right, #4f46e5, #2563eb);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.alert-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}

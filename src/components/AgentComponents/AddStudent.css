@@ -38,14 +38,61 @@
 .form-group-row { display: flex; gap: 1.5rem; margin-bottom: 1rem; }
 .form-group-column { flex: 1; display: flex; flex-direction: column; gap: .5rem; }
 
-.form-group label { font-size: .9rem; font-weight: 700; color: var(--text-color,#111827); }
+/* Basic Student Details specific styling */
+.basic-details .form-group label {
+  font-size: .9rem; 
+  font-weight: 700; 
+  color: var(--primary-color, #3b82f6); /* Theme primary color for labels */
+  transition: color .2s;
+}
+.basic-details .form-group label::after {
+  content: '*';
+  color: var(--danger-color, #ef4444); /* Red asterisk for required fields */
+  margin-left: 4px;
+  display: inline-block;
+}
+.basic-details .input {
+  width: 100%; 
+  padding: .6rem .75rem; 
+  font-size: .92rem;
+  border-radius: 10px; 
+  border: 1px solid var(--border-color, #e5e7eb);
+  background: var(--card-bg, #fff); 
+  color: var(--text-color, #111827);
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.basic-details .input:focus {
+  border-color: var(--primary-color, #3b82f6);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.2);
+  background: rgba(59,130,246,.05); /* Subtle theme-colored background on focus */
+}
+.basic-details .input:hover {
+  border-color: var(--primary-dark, #2563eb); /* Darker theme color on hover */
+}
+.basic-details textarea.input { resize: vertical; min-height: 80px; }
+.basic-details select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 1rem;
+}
+.basic-details .form-group-column:nth-child(odd) .input {
+  border-left: 3px solid var(--primary-color, #3b82f6); /* Theme-colored left border for odd columns */
+}
+.basic-details .form-group-column:nth-child(even) .input {
+  border-left: 3px solid var(--success-color, #22c55e); /* Alternate theme color for even columns */
+}
+
+.form-group label { font-size: .9rem; font-weight: 700; color: var(--text-color, #111827); }
 .input {
   width: 100%; padding: .6rem .75rem; font-size: .92rem;
-  border-radius: 10px; border: 1px solid var(--border-color,#e5e7eb);
-  background: var(--card-bg,#fff); color: var(--text-color,#111827);
+  border-radius: 10px; border: 1px solid var(--border-color, #e5e7eb);
+  background: var(--card-bg, #fff); color: var(--text-color, #111827);
   transition: border-color .2s, box-shadow .2s;
 }
-.input:focus { border-color: var(--primary-color,#3b82f6); outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,.2); }
+.input:focus { border-color: var(--primary-color, #3b82f6); outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,.2); }
 textarea.input { resize: vertical; min-height: 80px; }
 
 /* ===== Buttons ===== */
@@ -54,51 +101,51 @@ textarea.input { resize: vertical; min-height: 80px; }
   padding: .6rem 1rem; font-size: .9rem; font-weight: 700;
   border-radius: 10px; cursor: pointer;
   transition: transform .15s, background .2s, border-color .2s;
-  background: transparent; border: 1px solid var(--border-color,#e5e7eb); color: var(--text-color,#111827);
+  background: transparent; border: 1px solid var(--border-color, #e5e7eb); color: var(--text-color, #111827);
 }
 .btn:hover { transform: translateY(-2px); }
-.btn-primary { background: var(--primary-color,#3b82f6); color: #fff; border: none; }
-.btn-primary:hover { background: var(--primary-dark,#2563eb); }
-.btn-outline { background: transparent; border: 1px solid var(--border-color,#e5e7eb); }
+.btn-primary { background: var(--primary-color, #3b82f6); color: #fff; border: none; }
+.btn-primary:hover { background: var(--primary-dark, #2563eb); }
+.btn-outline { background: transparent; border: 1px solid var(--border-color, #e5e7eb); }
 .btn-sm { padding: .35rem .7rem; font-size: .85rem; border-radius: 8px; }
 
 /* ===== Upload UI ===== */
 .document-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
 @media (max-width: 700px) { .document-grid { grid-template-columns: 1fr; } }
 .upload-tile {
-  border: 1px dashed var(--border-color,#e5e7eb);
-  border-radius: 12px; padding: .9rem; background: var(--card-bg,#fff);
+  border: 1px dashed var(--border-color, #e5e7eb);
+  border-radius: 12px; padding: .9rem; background: var(--card-bg, #fff);
   transition: border-color .2s, background .2s, box-shadow .2s;
 }
-.upload-tile.drag-active { border-color: var(--primary-color,#3b82f6); background: rgba(59,130,246,.04); box-shadow: 0 0 0 3px rgba(59,130,246,.12) inset; }
-.upload-tile.has-error { border-color: var(--danger-color,#ef4444); }
+.upload-tile.drag-active { border-color: var(--primary-color, #3b82f6); background: rgba(59,130,246,.04); box-shadow: 0 0 0 3px rgba(59,130,246,.12) inset; }
+.upload-tile.has-error { border-color: var(--danger-color, #ef4444); }
 .upload-hitarea { display: flex; align-items: center; gap: .75rem; outline: none; }
 .upload-icon { width: 24px; height: 24px; opacity: .8; }
 .upload-text { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; }
 .upload-title { font-weight: 700; }
-.upload-subtitle { color: var(--muted-text,#6b7280); }
+.upload-subtitle { color: var(--muted-text, #6b7280); }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 .file-chip {
   display: inline-flex; align-items: center; gap: .5rem; margin-top: .75rem; padding: .35rem .6rem;
-  background: var(--bg-chip,#f3f4f6); border: 1px solid var(--border-color,#e5e7eb); border-radius: 9999px; font-size: .86rem;
+  background: var(--bg-chip, #f3f4f6); border: 1px solid var(--border-color, #e5e7eb); border-radius: 9999px; font-size: .86rem;
 }
 .chip-icon { width: 16px; height: 16px; opacity: .85; }
 .chip-name { max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.chip-size { color: var(--muted-text,#6b7280); }
-.chip-action { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 9999px; border: 1px solid var(--border-color,#e5e7eb); background: #fff; margin-left: .25rem; cursor: pointer; }
-.chip-action:hover { border-color: var(--primary-color,#3b82f6); }
+.chip-size { color: var(--muted-text, #6b7280); }
+.chip-action { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 9999px; border: 1px solid var(--border-color, #e5e7eb); background: #fff; margin-left: .25rem; cursor: pointer; }
+.chip-action:hover { border-color: var(--primary-color, #3b82f6); }
 .chip-action svg { width: 16px; height: 16px; }
-.field-error { margin-top: .5rem; color: var(--danger-color,#ef4444); font-size: .85rem; font-weight: 600; }
+.field-error { margin-top: .5rem; color: var(--danger-color, #ef4444); font-size: .85rem; font-weight: 600; }
 
 /* ===== Subjects (pills/chips) ===== */
 .pill-grid { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .75rem; }
 .pill {
   padding: .4rem .7rem; border-radius: 9999px; font-weight: 600; font-size: .86rem;
-  border: 1px solid var(--border-color,#e5e7eb); background: #fff; cursor: pointer;
+  border: 1px solid var(--border-color, #e5e7eb); background: #fff; cursor: pointer;
   transition: background .2s, border-color .2s, color .2s, transform .15s;
 }
 .pill:hover { transform: translateY(-1px); }
-.pill.selected { background: rgba(59,130,246,.1); border-color: var(--primary-color,#3b82f6); color: var(--primary-dark,#2563eb); }
+.pill.selected { background: rgba(59,130,246,.1); border-color: var(--primary-color, #3b82f6); color: var(--primary-dark, #2563eb); }
 
 .add-subject-row { display: flex; gap: .5rem; align-items: center; }
 .add-btn { display: inline-flex; align-items: center; gap: .35rem; }
@@ -106,20 +153,20 @@ textarea.input { resize: vertical; min-height: 80px; }
 .selected-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
 .tag {
   display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .6rem; font-size: .85rem; font-weight: 600;
-  background: var(--bg-chip,#f3f4f6); border: 1px solid var(--border-color,#e5e7eb); border-radius: 9999px;
+  background: var(--bg-chip, #f3f4f6); border: 1px solid var(--border-color, #e5e7eb); border-radius: 9999px;
 }
 .tag-close {
-  background: #fff; border: 1px solid var(--border-color,#e5e7eb);
+  background: #fff; border: 1px solid var(--border-color, #e5e7eb);
   width: 22px; height: 22px; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center;
   cursor: pointer;
 }
 
 /* ===== Review ===== */
-.review-section h3 { margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; font-size: 1rem; font-weight: 800; color: var(--text-color,#111827); }
-.edit-btn { background: transparent; border: 1px solid var(--border-color,#e5e7eb); padding: .25rem .6rem; border-radius: 8px; cursor: pointer; }
+.review-section h3 { margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; font-size: 1rem; font-weight: 800; color: var(--text-color, #111827); }
+.edit-btn { background: transparent; border: 1px solid var(--border-color, #e5e7eb); padding: .25rem .6rem; border-radius: 8px; cursor: pointer; }
 .review-files a {
   display: inline-block;
-  max-width: 200px; /* Adjust as needed */
+  max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -141,7 +188,6 @@ textarea.input { resize: vertical; min-height: 80px; }
 }
 .checkbox-row { display: flex; gap: .6rem; align-items: center; }
 
-
 .file-chip {
   display: flex;
   align-items: center;
@@ -157,7 +203,7 @@ textarea.input { resize: vertical; min-height: 80px; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px; /* Adjust this value based on your design */
+  max-width: 150px;
 }
 
 .chip-name:hover {
@@ -192,11 +238,11 @@ textarea.input { resize: vertical; min-height: 80px; }
 
 .form-section-title span {
   font-size: 0.9em;
-  color: #555; /* Adjust color as needed */
+  color: #555;
   margin-left: 8px;
 }
 
-.univeristy-title{
+.univeristy-title {
   font-weight: bold;
-  font-size:1.2rem
+  font-size: 1.2rem;
 }

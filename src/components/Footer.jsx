@@ -96,7 +96,7 @@ const Footer = () => {
             </ul>
           </FooterSection>
 
-          <FooterSection title="Top Exams" id="exams">
+          <FooterSection title="Top Exams" id="exams">npm 
             <ul className="space-y-2 text-sm text-gray-300 ml-1">
               <li>CAT</li>
               <li>GATE</li>

@@ -3,14 +3,14 @@
   min-height: 100vh;
   background: linear-gradient(180deg, #A5B4FC 0%, #C4B5FD 50%, #F5D0FE 100%);
   color: #0F172A;
-  font-family: 'Inter', sans-serif; /* Added for consistent typography */
+  font-family: 'Inter', sans-serif;
 }
 
 /* Navbar */
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 50; /* Increased for better layering */
+  z-index: 50;
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.85);
@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 80rem; /* Increased for larger screens */
+  max-width: 80rem;
   margin: 0 auto;
   padding: 1rem 1.5rem;
 }
@@ -44,7 +44,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease; /* Added for subtle hover effect */
+  transition: transform 0.2s ease;
 }
 
 .navbar-logo-icon:hover {
@@ -68,7 +68,7 @@
   display: none;
   align-items: center;
   gap: 2rem;
-  font-size: 0.9375rem; /* Slightly larger for readability */
+  font-size: 0.9375rem;
   color: #1E293B;
 }
 
@@ -151,6 +151,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   backdrop-filter: blur(6px);
   overflow: hidden;
+  padding: 1.5rem; /* Added padding for content */
 }
 
 .card-container:hover {
@@ -225,7 +226,7 @@
 /* Section Component */
 .section-container {
   width: 100%;
-  max-width: 80rem; /* Increased for larger screens */
+  max-width: 80rem;
   margin: 0 auto;
   padding: 4rem 1.5rem;
 }
@@ -287,71 +288,11 @@
 }
 
 .section-counselor-button:hover,
+.section爆
+
 .section-counselor-button:focus {
   background: linear-gradient(90deg, #4338BA, #6D28C9);
   outline: none;
-}
-
-/* Institute Card Component */
-.institute-card-container {
-  flex: 0 0 22rem; /* Slightly larger for better visibility */
-  scroll-snap-align: center;
-}
-
-.institute-card {
-  border-radius: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-  transition: box-shadow 0.3s ease;
-  backdrop-filter: blur(6px);
-  overflow: hidden;
-}
-
-.institute-card:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.institute-image {
-  position: relative;
-  width: 100%;
-  height: 12rem;
-  overflow: hidden;
-}
-
-.institute-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.institute-card:hover .institute-img {
-  transform: scale(1.08);
-}
-
-.institute-img-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent);
-  pointer-events: none;
-}
-
-.institute-content {
-  padding: 1.25rem;
-}
-
-.institute-title {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #0F172A;
-}
-
-.institute-desc {
-  margin-top: 0.375rem;
-  font-size: 0.9375rem;
-  color: #4B5563;
-  line-height: 1.5;
 }
 
 /* Hero Section */
@@ -665,49 +606,21 @@
   margin-bottom: 0.75rem;
 }
 
-/* Institutes Section */
-.institutes-container {
-  position: relative;
+/* Institutes Grid */
+.institutes-grid {
+  display: grid;
+  gap: 1.5rem;
 }
 
-.institutes-background {
-  position: absolute;
-  inset: 0;
-  z-index: -10;
-  border-radius: 1rem;
-  background: linear-gradient(90deg, #C7D2FE, #EDE9FE, #F5D0FE);
-  pointer-events: none;
-}
-
-.institutes-scroller {
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.55);
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(6px);
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-}
-
-.institutes-content {
-  display: flex;
-  gap: 2rem; /* Increased for better spacing */
-}
-
-@media (min-width: 1024px) {
-  .institutes-content > * {
-    width: calc((100vw - 3rem - 3rem - 6rem) / 3); /* Adjusted for 2rem gap */
+@media (min-width: 640px) {
+  .institutes-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1280px) {
-  .institutes-content > * {
-    width: calc((80rem - 3rem - 3rem - 6rem) / 3); /* Adjusted for 2rem gap */
+@media (min-width: 1024px) {
+  .institutes-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -725,7 +638,7 @@
 
 .careers-card {
   border-radius: 1.25rem;
-  border: 1px solid rgba(255, 255 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   background: #C7D2FE;
   padding: 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);

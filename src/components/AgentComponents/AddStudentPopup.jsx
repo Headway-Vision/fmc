@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { FiUpload, FiFileText, FiX, FiExternalLink, FiPlus } from 'react-icons/fi';
-import './Addstudent.css';
+import './AddStudent.css';
 
 /* ---------- State & Constants ---------- */
 const initialState = {
@@ -17,8 +17,8 @@ const initialState = {
   stream: '',
   schoolName: '',
   yearOfPassing: '',
-  subjects: [],                 // <-- now an array
-  totalPercentage: '',          // <-- replaces `marks`
+  subjects: [],
+  totalPercentage: '',
   rollNumber: '',
   course: '',
   specialization: '',
@@ -92,7 +92,7 @@ const AddStudentPopup = ({
 }) => {
   const [formData, setFormData] = useState(initialState);
   const [step, setStep] = useState(1);
-  const [fileErrors, setFileErrors] = useState({}); // { fieldName: 'message' }
+  const [fileErrors, setFileErrors] = useState({});
   const [customSubject, setCustomSubject] = useState('');
 
   const courses = ['B.Sc.', 'B.Com', 'BA', 'B.Tech'];
@@ -100,8 +100,6 @@ const AddStudentPopup = ({
   useEffect(() => {
     if (editingStudent?.details) {
       const details = editingStudent.details;
-
-      // Backward compatibility: coerce subjects into array
       let coercedSubjects = details.subjects;
       if (typeof coercedSubjects === 'string') {
         coercedSubjects = coercedSubjects
@@ -422,17 +420,17 @@ const AddStudentPopup = ({
             <form onSubmit={handleSubmit} className="student-form" noValidate>
               {/* -------- Step 1 -------- */}
               {step === 1 && (
-                <div className="form-section">
+                <div className="form-section basic-details">
                   <h2 className="form-section-title">Basic Student Details</h2>
 
                   <div className="form-group-row">
                     <div className="form-group-column">
-                      <label htmlFor="fullName">Full Name *</label>
+                      <label htmlFor="fullName">Full Name</label>
                       <input type="text" id="fullName" name="fullName" autoComplete="name"
                         value={formData.fullName} onChange={handleInputChange} className="input" required />
                     </div>
                     <div className="form-group-column">
-                      <label htmlFor="dateOfBirth">Date of Birth *</label>
+                      <label htmlFor="dateOfBirth">Date of Birth</label>
                       <input type="date" id="dateOfBirth" name="dateOfBirth"
                         value={formData.dateOfBirth} onChange={handleInputChange} className="input" required />
                     </div>
@@ -440,7 +438,7 @@ const AddStudentPopup = ({
 
                   <div className="form-group-row">
                     <div className="form-group-column">
-                      <label htmlFor="gender">Gender *</label>
+                      <label htmlFor="gender">Gender</label>
                       <select id="gender" name="gender" value={formData.gender} onChange={handleInputChange} className="input" required>
                         <option value="">Select</option>
                         <option>Male</option>
@@ -449,7 +447,7 @@ const AddStudentPopup = ({
                       </select>
                     </div>
                     <div className="form-group-column">
-                      <label htmlFor="contactNumber">Contact Number *</label>
+                      <label htmlFor="contactNumber">Contact Number</label>
                       <input type="tel" id="contactNumber" name="contactNumber" inputMode="tel" placeholder="+91-XXXXXXXXXX"
                         value={formData.contactNumber} onChange={handleInputChange} className="input" required />
                     </div>
@@ -457,12 +455,12 @@ const AddStudentPopup = ({
 
                   <div className="form-group-row">
                     <div className="form-group-column">
-                      <label htmlFor="email">Email ID *</label>
+                      <label htmlFor="email">Email ID</label>
                       <input type="email" id="email" name="email" autoComplete="email"
                         value={formData.email} onChange={handleInputChange} className="input" required />
                     </div>
                     <div className="form-group-column">
-                      <label htmlFor="address">Address *</label>
+                      <label htmlFor="address">Address</label>
                       <textarea id="address" name="address" value={formData.address}
                         onChange={handleInputChange} className="input" rows="2" required />
                     </div>
@@ -470,12 +468,12 @@ const AddStudentPopup = ({
 
                   <div className="form-group-row">
                     <div className="form-group-column">
-                      <label htmlFor="parentName">Parent Name *</label>
+                      <label htmlFor="parentName">Parent Name</label>
                       <input type="text" id="parentName" name="parentName"
                         value={formData.parentName} onChange={handleInputChange} className="input" required />
                     </div>
                     <div className="form-group-column">
-                      <label htmlFor="parentContact">Parent Contact *</label>
+                      <label htmlFor="parentContact">Parent Contact</label>
                       <input type="tel" id="parentContact" name="parentContact" inputMode="tel"
                         value={formData.parentContact} onChange={handleInputChange} className="input" required />
                     </div>
@@ -506,7 +504,6 @@ const AddStudentPopup = ({
                     <div className="form-group-column">
                       <label htmlFor="stream">Stream *</label>
                       <select id="stream" name="stream" value={formData.stream} onChange={(e) => {
-                        // reset subjects when stream changes
                         setFormData(prev => ({ ...prev, stream: e.target.value, subjects: [] }));
                       }} className="input" required>
                         <option value="">Select</option>
@@ -518,10 +515,8 @@ const AddStudentPopup = ({
                     </div>
                   </div>
 
-                  {/* Subjects UI */}
                   <div className="form-group">
                     <label>Subjects *</label>
-
                     {!formData.stream ? (
                       <p className="muted">Select a <strong>Stream</strong> to view suggested subjects.</p>
                     ) : (
@@ -542,7 +537,6 @@ const AddStudentPopup = ({
                             );
                           })}
                         </div>
-
                         <div className="add-subject-row">
                           <input
                             type="text"
@@ -557,7 +551,6 @@ const AddStudentPopup = ({
                             <FiPlus /> Add
                           </button>
                         </div>
-
                         {formData.subjects.length > 0 && (
                           <div className="selected-chips">
                             {formData.subjects.map(s => (
@@ -715,12 +708,10 @@ const AddStudentPopup = ({
               )}
 
               {/* -------- Step 4 -------- */}
-             {step === 4 && (
+              {step === 4 && (
                 <div className="form-section">
                   <div className='univeristy-title'>{formData.university && <span>- {formData.university}</span>}</div>
-                  <h2 className="form-section-title">
-                    Review & Declaration 
-                  </h2>
+                  <h2 className="form-section-title">Review & Declaration</h2>
 
                   <div className="review-section">
                     <h3>
@@ -796,12 +787,8 @@ const AddStudentPopup = ({
                   </div>
 
                   <div className="form-actions">
-                    <button type="button" className="btn" onClick={prevStep}>
-                      Back
-                    </button>
-                    <button type="submit" className="btn btn-primary">
-                      Submit
-                    </button>
+                    <button type="button" className="btn" onClick={prevStep}>Back</button>
+                    <button type="submit" className="btn btn-primary">Submit</button>
                   </div>
                 </div>
               )}

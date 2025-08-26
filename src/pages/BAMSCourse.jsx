@@ -44,7 +44,7 @@ export default function BAMSCoursePage() {
   return (
     <div className="page-container">
       {/* Navbar */}
-      <header className="navbar">
+      <header className="navbar" style={{ backgroundColor: '#cbcfff' }}>
         <div className="navbar-content">
           <div className="navbar-logo">
             <div className="navbar-logo-icon" aria-label="BAMS logo">BAMS</div>

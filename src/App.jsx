@@ -27,17 +27,14 @@ import BAMSCoursePage from "./pages/BAMSCourse";
 // University & Dashboard
 import UniversityRegister from "./pages/UniversityRegister";
 import UniversityPage from "./pages/UniversityPage";
-import UniversityDashboard from "./dashoard/UniversityDashboard";
-
+import UniversityDashboard from "./dashboard/UniversityDashboard";
 import AgentDashboard from "./AgentDashboard/Agent";
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <div className="flex flex-col min-h-screen">
-        {/* Navbar */}
-        <Navbar />
-
         {/* Main Content */}
         <main className="flex-grow">
           <Routes>
@@ -70,15 +67,12 @@ function App() {
             {/* 404 Fallback */}
             <Route
               path="*"
-              element={
-                <div className="p-6 text-center text-red-600">Page Not Found</div>
-              }
+              element={<div className="p-6 text-center text-red-600">Page Not Found</div>}
             />
           </Routes>
         </main>
-
-        <Footer />
       </div>
+      <Footer />
     </Router>
   );
 }

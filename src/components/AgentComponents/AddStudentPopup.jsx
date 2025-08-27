@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { FiUpload, FiFileText, FiX, FiExternalLink, FiPlus } from 'react-icons/fi';
+import axios from 'axios';
+import { db, auth } from '../../firebase';
+import { collection, addDoc, updateDoc, doc } from 'firebase/firestore';
 import './AddStudent.css';
 
 /* ---------- State & Constants ---------- */
@@ -41,7 +44,7 @@ const initialState = {
 const DOCUMENT_FIELDS = [
   { name: 'marksheet', label: 'Marksheet', accept: 'image/jpeg,image/png,application/pdf', required: true },
   { name: 'tc', label: 'Transfer Certificate (TC)', accept: 'image/jpeg,image/png,application/pdf', required: true },
-  { name: 'migration', label: 'Migration', accept: 'image/jpeg,image/png,application/pdf', required: false },
+  { name: 'migration', label: 'Migration', accept: 'image/jpeg,image/png,application/pdf', required: true },
   { name: 'photo', label: 'Passport Photo', accept: 'image/jpeg,image/png', required: true },
   { name: 'idProof', label: 'ID Proof', accept: 'image/jpeg,image/png,application/pdf', required: true },
 ];
@@ -81,6 +84,22 @@ function formatBytes(bytes) {
   const i = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), sizes.length - 1);
   return `${(bytes / Math.pow(1024, i)).toFixed(i === 0 ? 0 : 2)} ${sizes[i]}`;
 }
+
+// Cloudinary upload function
+const uploadToCloudinary = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', 'universityproject'); // <-- Replace with your preset
+  formData.append('folder', 'students'); // Optional folder
+
+  try {
+    const response = await axios.post('https://api.cloudinary.com/v1_1/dapjccnab/auto/upload', formData);
+    return response.data.secure_url;
+  } catch (error) {
+    console.error('Cloudinary upload error:', error);
+    throw new Error('Failed to upload file to Cloudinary');
+  }
+};
 
 /* ---------- Component ---------- */
 const AddStudentPopup = ({
@@ -222,6 +241,7 @@ const AddStudentPopup = ({
     }
   };
 
+  // Step navigation functions
   const nextStep = () => {
     if (step === 1 && !validateStep1()) return;
     if (step === 2 && !validateStep2()) return;
@@ -260,7 +280,6 @@ const AddStudentPopup = ({
   const validateStep3 = () => {
     const hasCourse = !!formData.course;
     const hasUniversity = !!formData.university;
-    const docsOk = requiredDocs.every(doc => formData.documents[doc]);
     if (!hasCourse) {
       alert('Please choose a course.');
       return false;
@@ -269,47 +288,74 @@ const AddStudentPopup = ({
       alert('Please choose a university.');
       return false;
     }
-    if (!docsOk) {
-      alert('Please upload all required documents.');
-      return false;
-    }
     const anyFileError = Object.values(fileErrors).some(Boolean);
     if (anyFileError) {
       alert('Please fix file upload errors.');
       return false;
     }
+    const missingDocs = requiredDocs.filter(doc => !formData.documents[doc]);
+    if (missingDocs.length > 0) {
+      alert(`Please upload all required documents: ${missingDocs.join(', ')}.`);
+      return false;
+    }
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.declaration) {
       alert('Please agree to the declaration.');
       return;
     }
-    if (editingStudent) {
-      const updated = {
-        ...editingStudent,
+
+    try {
+      // ---------- Upload documents to Cloudinary ----------
+      const documentUrls = {};
+      for (const docName of Object.keys(formData.documents)) {
+        const file = formData.documents[docName];
+        if (file) {
+          const url = await uploadToCloudinary(file); // Upload to Cloudinary
+          documentUrls[docName] = url;
+        }
+      }
+
+      // Upload payment receipt if present
+      let paymentReceiptUrl = null;
+      if (formData.paymentReceipt) {
+        paymentReceiptUrl = await uploadToCloudinary(formData.paymentReceipt);
+      }
+
+      // ---------- Prepare student data ----------
+      const studentData = {
         name: formData.fullName,
         email: formData.email,
         university: formData.university,
-        details: formData,
+        status: editingStudent ? editingStudent.status : 'Pending',
+        details: {
+          ...formData,
+          documents: documentUrls,
+          paymentReceipt: paymentReceiptUrl,
+        },
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
-      onUpdateStudent(editingStudent.id, updated);
-    } else {
-      const newStudent = {
-        id: Date.now(),
-        name: formData.fullName,
-        email: formData.email,
-        university: formData.university,
-        status: 'Pending',
-        details: formData,
-      };
-      onAddStudent(newStudent);
+
+      if (editingStudent) {
+        const studentDocRef = doc(db, 'students', editingStudent.id);
+        await updateDoc(studentDocRef, studentData);
+        onUpdateStudent(editingStudent.id, { id: editingStudent.id, ...studentData });
+      } else {
+        const docRef = await addDoc(collection(db, 'students'), studentData);
+        onAddStudent({ id: docRef.id, ...studentData });
+      }
+
+      onClose();
+      setFormData(initialState);
+      setStep(1);
+    } catch (error) {
+      console.error('Error saving student data:', error);
+      alert('An error occurred while saving the data. Please try again.');
     }
-    onClose();
-    setFormData(initialState);
-    setStep(1);
   };
 
   if (!isOpen) return null;
@@ -666,7 +712,7 @@ const AddStudentPopup = ({
                   </div>
 
                   <div className="form-group">
-                    <label className="form-subtitle">Documents <span className="muted">(Max {MAX_FILE_MB}MB each)</span></label>
+                    <label className="form-subtitle">Documents <span className="muted">(Required, Max {MAX_FILE_MB}MB each)</span></label>
                     <div className="document-grid">
                       {DOCUMENT_FIELDS.map(df => (
                         <UploadTile

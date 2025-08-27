@@ -1,175 +1,136 @@
-// src/pages/Documents.js
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEdit, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc
-} from "firebase/firestore";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject
-} from "firebase/storage";
-import { db, storage } from "../../firebase";
+import { faEye, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
 import "./Documents.css";
+import { db } from "../../firebase";
+import { collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc, doc as firestoreDoc } from "firebase/firestore";
 
 export default function Documents() {
-  const [documents, setDocuments] = useState([]);
+  const [documents, setDocuments] = useState([]); // Uploaded documents
   const [previewDoc, setPreviewDoc] = useState(null);
 
-  // 🔹 Fetch documents from Firestore
+  // Fetch existing documents from Firestore
   useEffect(() => {
     const fetchDocuments = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "documents"));
-        const docsData = querySnapshot.docs.map((d) => ({
-          id: d.id,
-          ...d.data(),
-        }));
-        setDocuments(docsData);
-      } catch (error) {
-        console.error("Error fetching documents:", error);
-      }
+      const q = query(collection(db, "documents"), orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      const docsArray = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setDocuments(docsArray);
     };
 
     fetchDocuments();
   }, []);
 
-  // 🔹 Handle upload to Firebase Storage + Firestore
-  const handleUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  // Save Cloudinary file metadata to Firestore
+  const saveToFirestore = async (fileInfo) => {
+    try {
+      const docRef = await addDoc(collection(db, "documents"), {
+        name: fileInfo.original_filename + "." + fileInfo.format,
+        type: fileInfo.resource_type,
+        url: fileInfo.secure_url,
+        cloudinaryId: fileInfo.public_id,
+        folder: fileInfo.folder || "",
+        createdAt: serverTimestamp(),
+      });
+      console.log("Saved in Firestore with ID:", docRef.id);
+    } catch (error) {
+      console.error("Error saving to Firestore:", error);
+    }
+  };
+
+  // Open Cloudinary Upload Widget
+  const handleUpload = () => {
+    const myWidget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: "dapjccnab",           // replace with your Cloudinary cloud name
+        uploadPreset: "universityproject",     // your unsigned preset
+        multiple: true,
+        resourceType: "auto",
+      },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+          console.log("Uploaded:", result.info);
+
+          // Save metadata in Firestore
+          saveToFirestore(result.info);
+
+          // Update local state for immediate UI
+          const newDoc = {
+            id: result.info.public_id,
+            name: result.info.original_filename + "." + result.info.format,
+            type: result.info.resource_type,
+            url: result.info.secure_url,
+          };
+          setDocuments((prev) => [newDoc, ...prev]);
+        } else if (error) {
+          console.error("Upload error:", error);
+          alert("Failed to upload document");
+        }
+      }
+    );
+
+    myWidget.open();
+  };
+
+  // Delete document from Firestore (files remain in Cloudinary)
+  const handleDelete = async (docItem) => {
+    if (!window.confirm("Delete this document?")) return;
 
     try {
-      // 1. Upload file to Firebase Storage
-      const storageRef = ref(storage, `documents/${Date.now()}-${file.name}`);
-      await uploadBytes(storageRef, file);
+      // Delete from Firestore
+      await deleteDoc(firestoreDoc(db, "documents", docItem.id));
 
-      // 2. Get file download URL
-      const downloadURL = await getDownloadURL(storageRef);
-
-      // 3. Save metadata in Firestore
-      const docRef = await addDoc(collection(db, "documents"), {
-        name: file.name,
-        type: file.type,
-        url: downloadURL,
-        storagePath: storageRef.fullPath, // save storage path for deletion
-        createdAt: new Date(),
-      });
-
-      // 4. Update local state
-      setDocuments((prev) => [
-        ...prev,
-        {
-          id: docRef.id,
-          name: file.name,
-          type: file.type,
-          url: downloadURL,
-          storagePath: storageRef.fullPath,
-        },
-      ]);
+      // Remove from local state
+      setDocuments((prev) => prev.filter((doc) => doc.id !== docItem.id));
     } catch (error) {
-      console.error("Error uploading document:", error);
+      console.error("Error deleting document:", error);
+      alert("Failed to delete document");
     }
-  };
-
-  // 🔹 Handle delete from Firestore + Storage
-  const handleDelete = async (id, storagePath) => {
-    if (window.confirm("Delete this document?")) {
-      try {
-        // 1. Delete from Firestore
-        await deleteDoc(doc(db, "documents", id));
-
-        // 2. Delete from Firebase Storage
-        const storageRef = ref(storage, storagePath);
-        await deleteObject(storageRef);
-
-        // 3. Update local state
-        setDocuments((prev) => prev.filter((doc) => doc.id !== id));
-      } catch (error) {
-        console.error("Error deleting document:", error);
-      }
-    }
-  };
-
-  const handleEdit = (id) => {
-    alert("Edit feature coming soon for document ID: " + id);
   };
 
   return (
     <div className="documents-page">
-      {/* Upload Section */}
       <div className="upload-section">
-        <label className="upload-btn">
-          <FontAwesomeIcon icon={faUpload} /> Upload Document
-          <input
-            type="file"
-            accept=".pdf,.jpg,.jpeg,.png"
-            hidden
-            onChange={handleUpload}
-          />
-        </label>
+        <button className="upload-btn" onClick={handleUpload}>
+          <FontAwesomeIcon icon={faUpload} /> Select Documents
+        </button>
       </div>
 
-      {/* No documents message */}
-      {documents.length === 0 && (
+      {/* Display uploaded documents */}
+      {documents.length > 0 ? (
+        <div className="documents-grid">
+          {documents.map((doc) => (
+            <div key={doc.id} className="document-card">
+              <div className="doc-icon">{doc.type === "image" ? "🖼️" : "📄"}</div>
+              <p className="doc-name">{doc.name}</p>
+              <div className="doc-actions">
+                <button className="btn view" onClick={() => setPreviewDoc(doc)}>
+                  <FontAwesomeIcon icon={faEye} /> View
+                </button>
+                <button className="btn delete" onClick={() => handleDelete(doc)}>
+                  <FontAwesomeIcon icon={faTrash} /> Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
         <p className="no-docs">No documents uploaded yet.</p>
       )}
 
-      {/* Documents Grid */}
-      <div className="documents-grid">
-        {documents.map((doc) => (
-          <div key={doc.id} className="document-card">
-            <div className="doc-icon">
-              {doc.type.includes("pdf") ? "📄" : "🖼️"}
-            </div>
-            <p className="doc-name">{doc.name}</p>
-            <div className="doc-actions">
-              <button className="btn view" onClick={() => setPreviewDoc(doc)}>
-                <FontAwesomeIcon icon={faEye} /> View
-              </button>
-              <button className="btn edit" onClick={() => handleEdit(doc.id)}>
-                <FontAwesomeIcon icon={faEdit} /> Edit
-              </button>
-              <button
-                className="btn delete"
-                onClick={() => handleDelete(doc.id, doc.storagePath)}
-              >
-                <FontAwesomeIcon icon={faTrash} /> Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Preview Modal */}
+      {/* Preview modal */}
       {previewDoc && (
         <div className="modal-overlay" onClick={() => setPreviewDoc(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="modal-close"
-              onClick={() => setPreviewDoc(null)}
-            >
-              ✖
-            </button>
+            <button className="modal-close" onClick={() => setPreviewDoc(null)}>✖</button>
             <h3>{previewDoc.name}</h3>
-            {previewDoc.type.includes("pdf") ? (
-              <iframe
-                src={previewDoc.url}
-                title="Document Preview"
-                className="doc-preview"
-              ></iframe>
+            {previewDoc.type === "image" ? (
+              <img src={previewDoc.url} alt="Preview" className="doc-preview" />
             ) : (
-              <img
-                src={previewDoc.url}
-                alt="Preview"
-                className="doc-preview"
-              />
+              <iframe src={previewDoc.url} title="Document Preview" className="doc-preview"></iframe>
             )}
           </div>
         </div>

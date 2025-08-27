@@ -1,9 +1,8 @@
 // src/ProfileForm.jsx
 import React, { useState } from "react";
 import "./ProfileForm.css";
-import { collection, addDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "../../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const universityTypes = ['Government', 'Private', 'Deemed', 'Central', 'State'];
 const affiliations = ['UGC', 'AICTE', 'NAAC', 'ICAR', 'BCI', 'MCI', 'Others'];
@@ -28,30 +27,28 @@ export default function ProfileForm() {
     placementCellContactEmail: "", adminEmail: "", password: "", confirmPassword: "",
     about: "",
   });
+  const [uploading, setUploading] = useState(false);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
       if (name === "images" || name === "videos") {
-        setForm((f) => ({ ...f, [name]: Array.from(files) }));
+        setForm(f => ({ ...f, [name]: Array.from(files) }));
       } else {
-        setForm((f) => ({ ...f, [name]: files[0] }));
+        setForm(f => ({ ...f, [name]: files[0] }));
       }
     } else {
-      setForm((f) => ({ ...f, [name]: value }));
+      setForm(f => ({ ...f, [name]: value }));
     }
   };
 
-  // Handle nested altContact
   const handleAltContactChange = (e) => {
     const { name, value } = e.target;
-    setForm((f) => ({ ...f, altContact: { ...f.altContact, [name]: value } }));
+    setForm(f => ({ ...f, altContact: { ...f.altContact, [name]: value } }));
   };
 
-  // Dynamic additional contacts
   const addContact = () => {
-    setForm((f) => ({
+    setForm(f => ({
       ...f,
       contacts: [...f.contacts, { type: "", countryCode: "", name: "", email: "", phone: "" }]
     }));
@@ -61,63 +58,83 @@ export default function ProfileForm() {
     const { name, value } = e.target;
     const updatedContacts = [...form.contacts];
     updatedContacts[index][name] = value;
-    setForm((f) => ({ ...f, contacts: updatedContacts }));
+    setForm(f => ({ ...f, contacts: updatedContacts }));
   };
 
   const removeContact = (index) => {
     const updatedContacts = form.contacts.filter((_, i) => i !== index);
-    setForm((f) => ({ ...f, contacts: updatedContacts }));
+    setForm(f => ({ ...f, contacts: updatedContacts }));
   };
 
-  // Handle form submission with Firebase integration
+  // Upload a single file to Cloudinary
+  const uploadToCloudinary = async (file, folder) => {
+    if (!file) return null;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "universityproject"); // your unsigned preset
+    if (folder) formData.append("folder", folder);
+
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/dapjccnab/${file.type.startsWith("image") ? "image" : file.type.startsWith("video") ? "video" : "raw"}/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      return {
+        url: data.secure_url,
+        public_id: data.public_id,
+        folder: folder || "",
+        type: file.type.startsWith("image") ? "image" : file.type.startsWith("video") ? "video" : "raw",
+        name: data.original_filename + "." + data.format
+      };
+    } catch (err) {
+      console.error("Cloudinary upload error:", err);
+      return null;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUploading(true);
+
     try {
-      let logoURL = "", brochureURL = "", imagesURLs = [], videosURLs = [];
+      // Upload files to Cloudinary
+      const logoData = await uploadToCloudinary(form.logo, "logos");
+      const brochureData = await uploadToCloudinary(form.brochure, "brochures");
+      const coursesData = await uploadToCloudinary(form.coursesFile, "courses");
 
-      if (form.logo) {
-        const logoRef = ref(storage, `logos/${form.logo.name}`);
-        await uploadBytes(logoRef, form.logo);
-        logoURL = await getDownloadURL(logoRef);
+      const imagesData = [];
+      for (let img of form.images) {
+        const data = await uploadToCloudinary(img, "images");
+        if (data) imagesData.push(data);
       }
 
-      if (form.brochure) {
-        const brochureRef = ref(storage, `brochures/${form.brochure.name}`);
-        await uploadBytes(brochureRef, form.brochure);
-        brochureURL = await getDownloadURL(brochureRef);
+      const videosData = [];
+      for (let vid of form.videos) {
+        const data = await uploadToCloudinary(vid, "videos");
+        if (data) videosData.push(data);
       }
 
-      if (form.images.length > 0) {
-        for (let img of form.images) {
-          const imgRef = ref(storage, `images/${img.name}`);
-          await uploadBytes(imgRef, img);
-          imagesURLs.push(await getDownloadURL(imgRef));
-        }
-      }
-
-      if (form.videos.length > 0) {
-        for (let vid of form.videos) {
-          const vidRef = ref(storage, `videos/${vid.name}`);
-          await uploadBytes(vidRef, vid);
-          videosURLs.push(await getDownloadURL(vidRef));
-        }
-      }
-
+      // Prepare Firestore data
       const formData = {
         ...form,
-        logo: logoURL,
-        brochure: brochureURL,
-        images: imagesURLs,
-        videos: videosURLs
+        createdAt: serverTimestamp()
       };
+      if (logoData) formData.logo = logoData;
+      if (brochureData) formData.brochure = brochureData;
+      if (coursesData) formData.coursesFile = coursesData;
+      if (imagesData.length > 0) formData.images = imagesData;
+      if (videosData.length > 0) formData.videos = videosData;
 
+      // Save to Firestore
       const docRef = await addDoc(collection(db, "universities"), formData);
       console.log("Document saved with ID:", docRef.id);
       alert("University profile saved successfully!");
-      // Optional: reset form after submission
+
+      // Reset form
       setForm({
         name: "", established: "", website: "", type: "", affiliation: "",
-        address: "", city: "", pincode: "", state: "", contact: "",
+        address: "", city: "", pincode: "", contact: "", state: "",
         altContact: { countryCode: "", phone: "" }, contacts: [],
         streams: "", students: "", faculty: "", hostel: "", campusArea: "",
         coursesFile: null, logo: null, brochure: null, images: [], videos: [],
@@ -125,20 +142,22 @@ export default function ProfileForm() {
         placementCellContactEmail: "", adminEmail: "", password: "", confirmPassword: "",
         about: "",
       });
-    } catch (error) {
-      console.error("Error saving form:", error);
+    } catch (err) {
+      console.error("Error saving form:", err);
       alert("Failed to save profile. Check console for details.");
     }
+
+    setUploading(false);
   };
 
   return (
     <form className="profile-form" onSubmit={handleSubmit} noValidate>
-      {/* 1. Basic Information */}
+      {/* Basic Info */}
       <section>
         <h3>Basic Information</h3>
         <label>
           University Name <small>(required)</small>
-          <input type="text" name="name" required placeholder="Enter university name" value={form.name} onChange={handleChange} />
+          <input type="text" name="name" required value={form.name} onChange={handleChange} />
         </label>
         <label>
           Year Established
@@ -146,12 +165,12 @@ export default function ProfileForm() {
         </label>
         <label>
           Official Website
-          <input type="url" name="website" placeholder="https://www.university.edu" value={form.website} onChange={handleChange} />
+          <input type="url" name="website" value={form.website} onChange={handleChange} />
         </label>
         <label>
           University Type <small>(required)</small>
           <select name="type" required value={form.type} onChange={handleChange}>
-            <option value="">Select university type</option>
+            <option value="">Select type</option>
             {universityTypes.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
         </label>
@@ -164,23 +183,19 @@ export default function ProfileForm() {
         </label>
       </section>
 
-      {/* 2. Location Details */}
+      {/* Location */}
       <section>
         <h3>Location Details</h3>
-        <label>
-          Address
+        <label>Address
           <input type="text" name="address" value={form.address} onChange={handleChange} />
         </label>
-        <label>
-          City
+        <label>City
           <input type="text" name="city" value={form.city} onChange={handleChange} />
         </label>
-        <label>
-          Pincode
+        <label>Pincode
           <input type="text" name="pincode" value={form.pincode} onChange={handleChange} />
         </label>
-        <label>
-          State
+        <label>State
           <select name="state" value={form.state} onChange={handleChange}>
             <option value="">Select state</option>
             {states.map(s => <option key={s} value={s}>{s}</option>)}
@@ -188,52 +203,42 @@ export default function ProfileForm() {
         </label>
       </section>
 
-      {/* 3. Contact Information */}
+      {/* Contact Info */}
       <section>
         <h3>Contact Information</h3>
-        <label>
-          Contact Email / Phone
+        <label>Primary Contact
           <input type="text" name="contact" value={form.contact} onChange={handleChange} />
         </label>
-
-        <label>
-          Alternate Contact Country Code
+        <label>Alt Contact Country Code
           <select name="countryCode" value={form.altContact.countryCode} onChange={handleAltContactChange}>
-            <option value="">Select country code</option>
+            <option value="">Select</option>
             {countryCodes.map(cc => <option key={cc} value={cc}>{cc}</option>)}
           </select>
         </label>
-        <label>
-          Alternate Contact Phone
+        <label>Alt Contact Phone
           <input type="text" name="phone" value={form.altContact.phone} onChange={handleAltContactChange} />
         </label>
 
-        {/* Dynamic Additional Contacts */}
+        {/* Additional Contacts */}
         <div className="additional-contacts">
           <h4>Additional Contacts</h4>
-          {form.contacts.map((contact, idx) => (
-            <div key={idx} className="additional-contact">
-              <label>Contact Type
-                <select name="type" value={contact.type} onChange={(e) => handleContactChange(idx, e)}>
-                  <option value="">Select contact type</option>
+          {form.contacts.map((c, idx) => (
+            <div key={idx}>
+              <label>Type
+                <select name="type" value={c.type} onChange={e => handleContactChange(idx, e)}>
+                  <option value="">Select</option>
                   {contactTypes.map(ct => <option key={ct} value={ct}>{ct}</option>)}
                 </select>
               </label>
               <label>Country Code
-                <select name="countryCode" value={contact.countryCode} onChange={(e) => handleContactChange(idx, e)}>
-                  <option value="">Select country code</option>
+                <select name="countryCode" value={c.countryCode} onChange={e => handleContactChange(idx, e)}>
+                  <option value="">Select</option>
                   {countryCodes.map(cc => <option key={cc} value={cc}>{cc}</option>)}
                 </select>
               </label>
-              <label>Name
-                <input type="text" name="name" value={contact.name} onChange={(e) => handleContactChange(idx, e)} />
-              </label>
-              <label>Email
-                <input type="email" name="email" value={contact.email} onChange={(e) => handleContactChange(idx, e)} />
-              </label>
-              <label>Phone
-                <input type="text" name="phone" value={contact.phone} onChange={(e) => handleContactChange(idx, e)} />
-              </label>
+              <label>Name <input type="text" name="name" value={c.name} onChange={e => handleContactChange(idx, e)} /></label>
+              <label>Email <input type="email" name="email" value={c.email} onChange={e => handleContactChange(idx, e)} /></label>
+              <label>Phone <input type="text" name="phone" value={c.phone} onChange={e => handleContactChange(idx, e)} /></label>
               <button type="button" onClick={() => removeContact(idx)}>Remove</button>
             </div>
           ))}
@@ -241,90 +246,51 @@ export default function ProfileForm() {
         </div>
       </section>
 
-      {/* 4. Academic Details */}
+      {/* Academic */}
       <section>
         <h3>Academic Details</h3>
-        <label>Popular Streams
-          <input type="text" name="streams" value={form.streams} onChange={handleChange} />
-        </label>
-        <label>Total Students
-          <input type="number" name="students" value={form.students} onChange={handleChange} />
-        </label>
-        <label>Total Faculty
-          <input type="number" name="faculty" value={form.faculty} onChange={handleChange} />
-        </label>
-        <label>Hostel Available
-          <input type="text" name="hostel" value={form.hostel} onChange={handleChange} />
-        </label>
-        <label>Campus Area (in acres)
-          <input type="number" name="campusArea" value={form.campusArea} onChange={handleChange} />
-        </label>
-        <label>Courses Excel File
-          <input type="file" name="coursesFile" onChange={handleChange} />
-        </label>
+        <label>Streams <input type="text" name="streams" value={form.streams} onChange={handleChange} /></label>
+        <label>Total Students <input type="number" name="students" value={form.students} onChange={handleChange} /></label>
+        <label>Total Faculty <input type="number" name="faculty" value={form.faculty} onChange={handleChange} /></label>
+        <label>Hostel <input type="text" name="hostel" value={form.hostel} onChange={handleChange} /></label>
+        <label>Campus Area <input type="number" name="campusArea" value={form.campusArea} onChange={handleChange} /></label>
+        <label>Courses Excel File <input type="file" name="coursesFile" onChange={handleChange} /></label>
       </section>
 
-      {/* 5. Media */}
+      {/* Media */}
       <section>
         <h3>Media</h3>
-        <label>Logo Upload
-          <input type="file" name="logo" accept="image/*" onChange={handleChange} />
-        </label>
-        <label>Brochure Upload
-          <input type="file" name="brochure" accept="application/pdf" onChange={handleChange} />
-        </label>
-        <label>Images Upload
-          <input type="file" name="images" accept="image/*" multiple onChange={handleChange} />
-        </label>
-        <label>Videos Upload
-          <input type="file" name="videos" accept="video/mp4" multiple onChange={handleChange} />
-        </label>
+        <label>Logo <input type="file" name="logo" accept="image/*" onChange={handleChange} /></label>
+        <label>Brochure <input type="file" name="brochure" accept="application/pdf" onChange={handleChange} /></label>
+        <label>Images <input type="file" name="images" accept="image/*" multiple onChange={handleChange} /></label>
+        <label>Videos <input type="file" name="videos" accept="video/mp4" multiple onChange={handleChange} /></label>
       </section>
 
-      {/* 6. Placement & Career Services */}
+      {/* Placement */}
       <section>
         <h3>Placement & Career Services</h3>
-        <label>Placement Rate (%)
-          <input type="number" name="placementRate" value={form.placementRate} onChange={handleChange} />
-        </label>
-        <label>Top Recruiters
-          <input type="text" name="topRecruiters" value={form.topRecruiters} onChange={handleChange} />
-        </label>
-        <label>Average Package
-          <input type="text" name="averagePackage" value={form.averagePackage} onChange={handleChange} />
-        </label>
-        <label>Highest Package
-          <input type="text" name="highestPackage" value={form.highestPackage} onChange={handleChange} />
-        </label>
-        <label>Placement Cell Contact Email
-          <input type="email" name="placementCellContactEmail" value={form.placementCellContactEmail} onChange={handleChange} />
-        </label>
+        <label>Placement Rate <input type="number" name="placementRate" value={form.placementRate} onChange={handleChange} /></label>
+        <label>Top Recruiters <input type="text" name="topRecruiters" value={form.topRecruiters} onChange={handleChange} /></label>
+        <label>Average Package <input type="text" name="averagePackage" value={form.averagePackage} onChange={handleChange} /></label>
+        <label>Highest Package <input type="text" name="highestPackage" value={form.highestPackage} onChange={handleChange} /></label>
+        <label>Placement Cell Contact Email <input type="email" name="placementCellContactEmail" value={form.placementCellContactEmail} onChange={handleChange} /></label>
       </section>
 
-      {/* 7. Admin Credentials */}
+      {/* Admin */}
       <section>
         <h3>Admin Credentials</h3>
-        <label>Admin Login Email <small>(required)</small>
-          <input type="email" name="adminEmail" required value={form.adminEmail} onChange={handleChange} />
-        </label>
-        <label>Password <small>(required)</small>
-          <input type="password" name="password" required value={form.password} onChange={handleChange} />
-        </label>
-        <label>Confirm Password <small>(required)</small>
-          <input type="password" name="confirmPassword" required value={form.confirmPassword} onChange={handleChange} />
-        </label>
+        <label>Admin Email <input type="email" name="adminEmail" required value={form.adminEmail} onChange={handleChange} /></label>
+        <label>Password <input type="password" name="password" required value={form.password} onChange={handleChange} /></label>
+        <label>Confirm Password <input type="password" name="confirmPassword" required value={form.confirmPassword} onChange={handleChange} /></label>
       </section>
 
-      {/* 8. About University */}
+      {/* About */}
       <section>
         <h3>About University</h3>
-        <label>
-          Brief Description
-          <textarea name="about" rows="5" value={form.about} onChange={handleChange} />
-        </label>
+        <textarea name="about" rows="5" value={form.about} onChange={handleChange} />
       </section>
 
-      <button type="submit" className="ud-btn">Submit</button>
+      <button type="submit" className="ud-btn" disabled={uploading}>{uploading ? "Uploading..." : "Submit"}</button>
     </form>
   );
 }
